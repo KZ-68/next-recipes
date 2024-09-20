@@ -1,0 +1,46 @@
+import { formatDate } from '@/lib/utils';
+import { Trash2Icon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import React from 'react'
+
+interface CommentProps {
+    comment: CommentType;
+    article: ArticleWithTagsAndComments;
+}
+
+const Comment:React.FC<CommentProps> = ({comment, article}) => {
+
+    const router = useRouter();
+
+    const handleDelete = async () => {
+
+        const confirmDelete = window.confirm('Are you sure you want to delete this comment ?')
+        if(!confirmDelete) return;
+
+        try {
+            const res = await fetch(`/api/comment/${comment.id}/delete`, {
+                method: 'DELETE'
+            })
+
+            location.reload();
+        } catch(error) {
+            console.error("Error deleting comment")
+        }
+    }
+
+    return (
+        <li key={comment.id} className='flex-row m-5 group border border-slate-500 p-6 rounded-sm'>
+            <div className='flex flex-col gap-1'>
+                <h3>{comment.userId}</h3>
+                <p className='text-sm text-slate-300'>{formatDate(article.createdAt)}</p>
+                <p>{comment.text}</p>
+            </div>
+            <div className='sm:top-5 sm:right-5 my-4'>
+                <button className="flex gap-2 px-5 py-2 rounded-md bg-red-500 hover:bg-red-600 text-xs" 
+                onClick={handleDelete}><Trash2Icon size={15} />Delete</button>
+            </div>
+        </li>
+    )
+}
+
+export default Comment
