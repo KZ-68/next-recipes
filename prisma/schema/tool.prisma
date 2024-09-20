@@ -1,0 +1,8 @@
+model Tool {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    name String
+    slug String @unique
+    image_url String
+ 
+    recipeTools ToolRecipe[]
+}

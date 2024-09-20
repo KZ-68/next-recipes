@@ -1,0 +1,13 @@
+model CommentRecipe {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    text String
+
+    recipeId String @db.ObjectId
+    recipe Recipe? @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+ 
+    userId String
+ 
+    createdAt DateTime @default(now())
+ 
+    @@index([recipeId])
+}

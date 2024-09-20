@@ -1,0 +1,10 @@
+model Step {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    text String
+    order Int
+
+    recipeId String @db.ObjectId
+    recipe Recipe @relation(fields: [recipeId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+ 
+    @@index([recipeId])
+}
