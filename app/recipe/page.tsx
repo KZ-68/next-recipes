@@ -23,7 +23,7 @@ const RecipePage = () => {
     return (
         <>
             <Button href='https://elan-formation.fr/accueil' label='Retour'/>
-            <h1 className='text-4xl font-bold mt-4 mb-6'>Blog</h1>
+            <h1 className='text-4xl font-bold mt-4 mb-6'>Recipes</h1>
             <Swiper
             spaceBetween={50}
             slidesPerView={3}
