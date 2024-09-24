@@ -51,7 +51,7 @@ interface ToolType {
 
 interface ToolRecipeType {
     id: string;
-    ingredient: ToolType;
+    tool: ToolType;
 }
 
 interface StepType {

@@ -1,8 +1,5 @@
 model ToolRecipe {
     id String @id @default(auto()) @map("_id") @db.ObjectId
-    name String
-    slug String @unique
-    image_url String
 
     recipeId String @db.ObjectId
     recipe Recipe @relation(fields: [recipeId], references: [id], onUpdate: Cascade, onDelete: Cascade)
