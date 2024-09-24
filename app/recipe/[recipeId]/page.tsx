@@ -32,18 +32,18 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string}}) => {
             </section>
 
             <section className='flex flex-row my-7'>
-                <aside className='flex flex-col'>
+                <aside className='flex flex-col w-4/6 px-6'>
                     <h2 className='flex flex-row text-xl'><ListChecksIcon className='mr-5'/>Instructions</h2>
                     <p className='py-4'>{recipe?.instruction}</p>
                 </aside>
-                <aside>
+                <aside className='flex flex-col w-2/6 px-4 gap-4'>
                     <h2 className='flex flex-row'><CookingPotIcon className='mr-4'/>Ingredients and Tools</h2>
                     <TabGroup>
-                        <TabList>
-                            <Tab>Igredients</Tab>
-                            <Tab>Tools</Tab>
+                        <TabList className='flex flex-row gap-4'>
+                            <Tab className='p-2 bg-orange-700 rounded-xl'>Ingredients</Tab>
+                            <Tab className='p-2 bg-orange-700 rounded-xl'>Tools</Tab>
                         </TabList>
-                    <TabPanels>
+                    <TabPanels className='py-4'>
                         <TabPanel>
                             {recipe?.ingredients && recipe.ingredients.length > 0 ? (
                                 recipe?.ingredients.map(
@@ -57,12 +57,25 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string}}) => {
                             ) : 
                             (
                                 <p>
-                                    Aucun ingrédient ajouté sur cette recette.
+                                    Aucun ingrédient à été ajouté sur cette recette.
                                 </p>
                             )}
                         </TabPanel>
                         <TabPanel>
-
+                            {recipe?.tools && recipe.tools.length > 0 ? (
+                                recipe?.tools.map(
+                                    (tool: ToolRecipeType) => (
+                                        <div key={tool.id}>
+                                            <h3>{tool.tool.name}</h3>
+                                        </div>
+                                )
+                            )
+                            ) : 
+                            (
+                                <p>
+                                    Aucun ustensile a été ajouté sur cette recette.
+                                </p>
+                            )}
                         </TabPanel>
                     </TabPanels>
                     </TabGroup>
