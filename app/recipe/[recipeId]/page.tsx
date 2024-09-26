@@ -32,18 +32,18 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string}}) => {
             </section>
 
             <section className='flex flex-row my-7'>
-                <aside className='flex flex-col w-4/6 px-6'>
-                    <h2 className='flex flex-row text-xl'><ListChecksIcon className='mr-5'/>Instructions</h2>
+                <aside className='flex flex-col w-3/6 px-6'>
+                    <h2 className='flex flex-row text-xl text-orange-500'><ListChecksIcon className='mr-5'/>Instructions</h2>
                     <p className='py-4'>{recipe?.instruction}</p>
                 </aside>
-                <aside className='flex flex-col w-2/6 px-4 gap-4'>
-                    <h2 className='flex flex-row'><CookingPotIcon className='mr-4'/>Ingredients and Tools</h2>
-                    <TabGroup>
-                        <TabList className='flex flex-row gap-4'>
-                            <Tab className='p-2 bg-orange-700 rounded-xl'>Ingredients</Tab>
-                            <Tab className='p-2 bg-orange-700 rounded-xl'>Tools</Tab>
+                <aside className='flex flex-col w-3/6 px-4 gap-4'>
+                    <h2 className='flex flex-row text-orange-500'><CookingPotIcon className='mr-4'/>Ingredients and Tools</h2>
+                    <TabGroup className='border border-gray-600 rounded-lg'>
+                        <TabList className='flex flex-row gap-4 py-4 px-2 bg-slate-700'>
+                            <Tab className='p-2 bg-orange-600 rounded-xl'>Ingredients</Tab>
+                            <Tab className='p-2 bg-orange-600 rounded-xl'>Tools</Tab>
                         </TabList>
-                    <TabPanels className='py-4'>
+                    <TabPanels className='py-4 px-2'>
                         <TabPanel>
                             {recipe?.ingredients && recipe.ingredients.length > 0 ? (
                                 recipe?.ingredients.map(

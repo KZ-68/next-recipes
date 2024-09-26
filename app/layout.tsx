@@ -21,7 +21,7 @@ export default function RootLayout({
       <header>
         <NavBar />
       </header>
-        <main className="bg-slate-800 min-h-screen p-6 text-white">
+        <main className="bg-slate-900 min-h-screen p-6 text-white">
           {children}
         </main>
       </body>
