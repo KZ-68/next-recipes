@@ -32,7 +32,7 @@ const RecipePage = () => {
             >
                 {recipes.map((recipe: RecipeType) => (
                     <SwiperSlide key={recipe.id}>
-                        <RecipeCard recipe={recipe}/>
+                        <RecipeCard recipe={recipe} category={recipe.category}/>
                     </SwiperSlide>
                 ))}
             </Swiper>

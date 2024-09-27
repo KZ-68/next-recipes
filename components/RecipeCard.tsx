@@ -7,9 +7,10 @@ import Image from 'next/image';
 
 interface RecipeCardProps {
     recipe: RecipeType;
+    category: CategoryType;
 }
 
-const RecipeCard:React.FC<RecipeCardProps> = ({recipe}) => {
+const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
 
     const router = useRouter();
 
@@ -45,7 +46,7 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe}) => {
                 <h2 className='text-2xl md:text-xl font-bold'>{recipe.title}</h2>
                 
                 <div className='flex flex-wrap gap-2 my-4 md:leading-8'>
-                <Category text={recipe.category.name} key={recipe.category.id}/>
+                <Category text={category.name} key={category.id}/>
                 </div>
                 
                 <p className='line-clamp-4'><TimerIcon/> {recipe.duration} mins</p>
