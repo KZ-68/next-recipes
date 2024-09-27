@@ -2,8 +2,9 @@
 import CommentRecipe from '@/components/CommentRecipe'
 import Category from '@/components/Category'
 import React, { useEffect, useState } from 'react'
-import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon } from 'lucide-react'
+import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon } from 'lucide-react'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import Image from 'next/image'
 
 const RecipeDetailPage = ({params} : {params : {recipeId: string}}) => {
 
@@ -20,15 +21,17 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string}}) => {
 
     return (
         <div className='mx-8'>
-            <section className='flex flex-row'>
-                <aside className='flex flex-col rounded-l-md py-14 px-60 md:px-40 my-4 bg-slate-700'>
-                    <h1 className='mb-3 text-3xl'>{recipe?.title}</h1>
-                    <div className='my-5 flex flex-row flex-wrap gap-4 justify-center'>
+            <section className='flex flex-row mx-5'>
+                <aside className='flex flex-col flex-wrap rounded-l-md py-16 px-56 bg-slate-700 justify-center items-center'>
+                    <h1 className='mb-3 text-3xl w-72 text-center'>{recipe?.title}</h1>
+                    <div className='my-5 flex flex-row gap-4 content-center'>
                         <Category key={recipe?.category.id} text={recipe?.category.name}/>
                         <p className='flex flex-row gap-1'><TimerIcon/>{recipe?.duration} mins</p>
                     </div>
                 </aside>
-                <aside></aside>
+                <aside>
+                    <Image className='rounded-r-md aspect-video object-cover h-96' src={`/images/${recipe?.image_url}`} alt="Recipe Image" width="1000" height="500"/>
+                </aside>
             </section>
 
             <section className='flex flex-row my-7'>
@@ -39,27 +42,34 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string}}) => {
                 <aside className='flex flex-col w-3/6 px-4 gap-4'>
                     <h2 className='flex flex-row text-orange-500'><CookingPotIcon className='mr-4'/>Ingredients and Tools</h2>
                     <TabGroup className='border border-gray-600 rounded-lg'>
-                        <TabList className='flex flex-row gap-4 py-4 px-2 bg-slate-700'>
-                            <Tab className='p-2 bg-orange-600 rounded-xl'>Ingredients</Tab>
-                            <Tab className='p-2 bg-orange-600 rounded-xl'>Tools</Tab>
+                        <TabList className='flex flex-row gap-4 py-4 px-4 bg-slate-700'>
+                            <Tab className='py-2 px-4 bg-orange-600 rounded-xl'>Ingredients</Tab>
+                            <Tab className='py-2 px-4 bg-orange-600 rounded-xl'>Tools</Tab>
                         </TabList>
                     <TabPanels className='py-4 px-2'>
                         <TabPanel>
                             {recipe?.ingredients && recipe.ingredients.length > 0 ? (
                                 recipe?.ingredients.map(
                                     (ingredient: IngredientRecipeType) => (
-                                        <div key={ingredient.id}>
+                                        <div className='flex flex-col content-center max-w-fit items-center' key={ingredient.id}>
+                                            {ingredient.ingredient.image_url == null ? (
+                                                <Image className='rounded-r-md aspect-video object-cover' src={`/images/${ingredient.ingredient.image_url}`} alt="Recipe Image" width="1000" height="500"/>
+                                            ) : 
+                                            (
+                                                <ImageIcon size={96}/>
+                                            )
+                                            }
                                             <h3>{ingredient.ingredient.name}</h3>
                                             <p>{ingredient.quantity} {ingredient.unit}</p>
                                         </div>
+                                    )
                                 )
-                            )
-                            ) : 
-                            (
-                                <p>
-                                    Aucun ingrédient à été ajouté sur cette recette.
-                                </p>
-                            )}
+                                ) : 
+                                (
+                                    <p>
+                                        Aucun ingrédient à été ajouté sur cette recette.
+                                    </p>
+                                )}
                         </TabPanel>
                         <TabPanel>
                             {recipe?.tools && recipe.tools.length > 0 ? (
@@ -81,8 +91,25 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string}}) => {
                     </TabGroup>
                 </aside>
             </section>
+
+            <section className='my-7 px-6'>
+                <h2 className='flex flex-row'><WaypointsIcon/> Steps ({recipe?.steps.length})</h2>
+                {recipe?.steps && recipe.steps.length > 0 ? (
+                    recipe?.steps.map(
+                        (step: StepType) => (
+                            <div className='flex flex-col flex-wrap rounded-l-md py-48 px-56 my-6 bg-slate-700 justify-center items-center' key={step.id}>
+                                <h3>{step.order}</h3>
+                                <p>{step.text}</p>
+                            </div>
+                        )
+                    )
+                ) : 
+                (
+                    <div>No step can be found for this recipe</div>
+                )}
+            </section>
             
-            <div className='p-4 mt-8 bg-slate-900 rounded-md'>
+            <div className='my-7 px-6 bg-slate-900 rounded-md'>
                 <h2 className='mb-4 text-xl'>Les commentaires ({recipe?.comments.length}) :</h2>
                 <ul>
                     {recipe?.comments && recipe.comments.length > 0 ? (
