@@ -14,6 +14,31 @@ export async function GET(req: NextRequest, {params} : {params : {recipeId: stri
                     "orderBy": {
                         "createdAt": "desc"
                     }
+                },
+                "steps": {
+                    "orderBy": {
+                        "order": "asc"
+                    }
+                },
+                "ingredients": {
+                    "include": {
+                        "ingredient":true
+                    },
+                    "orderBy": {
+                        "ingredient": {
+                            "name": "asc"
+                        }
+                    }
+                },
+                "tools": {
+                    "include": {
+                        "tool":true
+                    },
+                    "orderBy": {
+                        "tool": {
+                            "name": "asc"
+                        }
+                    }
                 }
             }
         })
