@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from './Button'
 import { useRouter } from 'next/navigation';
-import { Gauge } from 'lucide-react';
+import { Gauge, TimerIcon } from 'lucide-react';
 import Category from './Category';
 import Image from 'next/image';
 
@@ -37,25 +37,27 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe}) => {
     }
 
     return (
-        <div className='w-80 group border border-slate-500 p-6 rounded-md hover:bg-slate-700 cursor-pointer duration-300 md:h-full' key={recipe.id}>
-            <div>
-                <Image loader={()=>`../public/images/${recipe.image_url}`} src={`../public/images/${recipe.image_url}`} alt="recipe image" width="300" height="300"/>
-            </div>
-            <h2 className='text-2xl md:text-xl font-bold'>{recipe.title}</h2>
+        <div className='w-80 group rounded-lg bg-slate-800 cursor-pointer duration-300 md:h-full' key={recipe.id}>
             
-            <div className='flex flex-wrap gap-2 my-4 md:leading-8'>
-            <Category text={recipe.category.name} key={recipe.category.id}/>
-            </div>
+            <Image className='rounded-t-lg' src={`/images/${recipe.image_url}`} alt="Recipe Image" width="320" height="250"/>
             
-            <p className='line-clamp-4'>{recipe.duration}</p>
+            <div className='flex flex-col items-start px-5 py-4'>
+                <h2 className='text-2xl md:text-xl font-bold'>{recipe.title}</h2>
+                
+                <div className='flex flex-wrap gap-2 my-4 md:leading-8'>
+                <Category text={recipe.category.name} key={recipe.category.id}/>
+                </div>
+                
+                <p className='line-clamp-4'><TimerIcon/> {recipe.duration} mins</p>
 
-            <div className='flex flex-row'>
-                {gaugeArray.map((gaugeIcon:any)=> (
-                    <Gauge key={gaugeIcon}/>
-                ))}
+                <div className='flex flex-row'>
+                    {gaugeArray.map((gaugeIcon:any)=> (
+                        <Gauge key={gaugeIcon}/>
+                    ))}
+                </div>
+                
+                <Button href={`recipe/${recipe.id}`} key={recipe.id} label='View Recipe ->' />
             </div>
-            
-            <Button href={`recipe/${recipe.id}`} key={recipe.id} label='View Recipe ->' />
         </div>
     )
 }
