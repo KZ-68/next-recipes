@@ -28,6 +28,7 @@ interface ArticleWithTagsAndComments {
 interface CategoryType {
     id: string;
     name: string;
+    recipes: RecipeType[];
 }
 
 interface IngredientType {
