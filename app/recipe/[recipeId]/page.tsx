@@ -20,7 +20,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
         const fetchrecipe = async () => {
             const response = await fetch(`/api/recipe/${params.recipeId}`)
             const dataRecipe : RecipeType = await response.json()
-            const responseCategory = await fetch(`/api/recipe/${params.recipeId}/${dataRecipe.category.id}`)
+            const responseCategory = await fetch(`/api/recipe/${params.recipeId}/suggestion/${dataRecipe.category.id}`)
             const dataCategory : CategoryType = await responseCategory.json()
             setRecipe(dataRecipe)
             setCategory(dataCategory)
@@ -103,8 +103,11 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             </section>
 
             <section>
-            <h2 className='flex flex-row gap-3 text-orange-600'><WaypointsIcon/> Steps ({recipe?.steps.length})</h2>
-            <Swiper
+                <hgroup className='flex flex-row gap-3'>
+                    <WaypointsIcon/>
+                    <h2 className=' text-orange-600'>Steps ({recipe?.steps.length})</h2>
+                </hgroup>
+                <Swiper
                 pagination={true}
                 modules={[Pagination]}
                 spaceBetween={50}
@@ -130,12 +133,12 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 </Swiper>
             </section>
 
-            <section>
-                <h2 className='flex flex-row gap-3'>Suggestions</h2>
-                <div>
+            <section className='flex flex-col'>
+                <h2 className='flex flex-row gap-3 my-3 text-lg text-orange-400'>Suggestions</h2>
+                <div className='flex flex-row gap-4 h-full'>
                     {category?.recipes.map((recipe: RecipeType) => (
-                        <SuggestionCard key={category.id} recipe={recipe} category={category}/>
-                    ))}
+                        <SuggestionCard key={category.id} recipe={recipe} />
+                    ))}    
                 </div>
             </section>
             
