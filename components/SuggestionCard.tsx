@@ -1,28 +1,16 @@
-import React, { useEffect, useState }  from 'react'
+import React from 'react'
+import Image from 'next/image';
 
 interface SuggestionCardProps {
     recipe: RecipeType;
-    category: CategoryType;
 }
 
-const SuggestionCard:React.FC<SuggestionCardProps> = ({recipe, category}) => {
-
-    const recipeSuggestion = recipe;
-    const [recipeCategorySuggestion, setRecipeCategorySuggestion] = useState<CategoryType>(category)
-
-    useEffect(() => {
-        const fetchrecipe = async () => {
-            const response = await fetch(`/api/recipe/${recipeSuggestion.id}/suggestion/${recipeCategorySuggestion.id}`)
-            const data: CategoryType = await response.json()
-            setRecipeCategorySuggestion(data) 
-        }
-
-        fetchrecipe()
-    }, [recipeSuggestion.id, recipeCategorySuggestion.id])
+const SuggestionCard:React.FC<SuggestionCardProps> = ({recipe}) => {
     
     return (
-        <div className='group border border-slate-500 p-6 rounded-md hover:bg-slate-700 cursor-pointer hover:translate-y-2 duration-300 md:h-full' key={recipeSuggestion?.id}>
-            {recipeSuggestion.title}
+        <div className='group h-full border border-slate-500 p-6 rounded-md hover:bg-slate-700 cursor-pointer hover:translate-y-2 duration-300' key={recipe?.id}>
+            <Image className='rounded-t-lg' src={`/images/${recipe.image_url}`} alt="Recipe Image" width="320" height="250"/>
+            {recipe.title}
         </div>
     )
 }
