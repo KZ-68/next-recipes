@@ -2,7 +2,7 @@
 import CommentRecipe from '@/components/CommentRecipe'
 import Category from '@/components/Category'
 import React, { useEffect, useState } from 'react'
-import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon } from 'lucide-react'
+import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon, Lightbulb } from 'lucide-react'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import Image from 'next/image'
 import { Pagination } from 'swiper/modules';
@@ -15,6 +15,24 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
 
     const [recipe, setRecipe] = useState<RecipeType | null>(null)
     const [category, setCategory] = useState<CategoryType | null>(null)
+
+    const rating = recipe?.rating;
+
+    const getGaugeIcon = () => {
+        const gaugeArray = [];
+        for (let id = 0; id < 5; id++) {
+            if(rating) {
+                if(id <= rating) {
+                    gaugeArray.push(<Gauge color='#e06020' key={id}></Gauge>);
+                } else {
+                gaugeArray.push(<Gauge key={id}></Gauge>);
+                }
+            } else {
+                gaugeArray.push(<Gauge key={id}></Gauge>);
+            }
+        }
+        return gaugeArray;
+    };
 
     useEffect(() => {
         const fetchrecipe = async () => {
@@ -36,7 +54,10 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     <h1 className='mb-3 text-3xl w-72 text-center'>{recipe?.title}</h1>
                     <div className='my-5 flex flex-row gap-4 content-center'>
                         <Category key={recipe?.category.id} text={recipe?.category.name}/>
-                        <p className='flex flex-row gap-1'><TimerIcon/>{recipe?.duration} mins</p>
+                        <p className='flex flex-row gap-1 w-24'><TimerIcon/>{recipe?.duration} mins</p>
+                        <div className='flex flex-row'>
+                            {getGaugeIcon()}
+                        </div>
                     </div>
                 </aside>
                 <aside>
@@ -52,7 +73,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 <aside className='flex flex-col w-3/6 px-4 gap-4'>
                     <h2 className='flex flex-row text-orange-500'><CookingPotIcon className='mr-4'/>Ingredients and Tools</h2>
                     <TabGroup className='border border-gray-600 rounded-lg'>
-                        <TabList className='flex flex-row gap-4 py-4 px-4 bg-slate-700'>
+                        <TabList className='flex flex-row gap-4 py-4 px-4 bg-slate-700 rounded-t-md'>
                             <Tab className='py-2 px-4 bg-orange-600 rounded-xl'>Ingredients</Tab>
                             <Tab className='py-2 px-4 bg-orange-600 rounded-xl'>Tools</Tab>
                         </TabList>
@@ -66,7 +87,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                                                 <ImageIcon size={96}/>
                                             ) : 
                                             (
-                                                <Image className='rounded-md object-cover py-2' src={`/images/${ingredient.ingredient.image_url}`} alt="Recipe Image" width="150" height="350"/>
+                                                <Image className='rounded-2xl object-cover py-2' src={`/images/${ingredient.ingredient.image_url}`} alt="Recipe Image" width="150" height="150"/>
                                             )
                                             }
                                             <h3>{ingredient.ingredient.name}</h3>
@@ -103,9 +124,9 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             </section>
 
             <section>
-                <hgroup className='flex flex-row gap-3'>
-                    <WaypointsIcon/>
-                    <h2 className=' text-orange-600'>Steps ({recipe?.steps.length})</h2>
+                <hgroup className='flex flex-row gap-3 text-orange-500'>
+                    <WaypointsIcon />
+                    <h2>Steps ({recipe?.steps.length})</h2>
                 </hgroup>
                 <Swiper
                 pagination={true}
@@ -134,7 +155,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             </section>
 
             <section className='flex flex-col'>
-                <h2 className='flex flex-row gap-3 my-3 text-lg text-orange-400'>Suggestions</h2>
+                <h2 className='flex flex-row gap-3 my-3 text-lg text-orange-500'><Lightbulb /> Suggestions</h2>
                 <div className='flex flex-row gap-4 h-full'>
                     {category?.recipes.map((recipe: RecipeType) => (
                         <SuggestionCard key={category.id} recipe={recipe} />
