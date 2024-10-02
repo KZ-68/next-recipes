@@ -15,11 +15,18 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
     const router = useRouter();
 
     const rating = recipe.rating;
-    const gaugeArray = [];
 
-    for (let i = 0; i < rating; i++) {
-        gaugeArray.push(i);
-    }
+    const getGaugeIcon = () => {
+        const gaugeArray = [];
+        for (let id = 0; id < 5; id++) {
+          if(id <= rating) {
+            gaugeArray.push(<Gauge color='#e06020' key={id}></Gauge>);
+          } else {
+            gaugeArray.push(<Gauge key={id}></Gauge>);
+          }
+        }
+        return gaugeArray;
+    };
 
     const handleDelete = async () => {
 
@@ -52,9 +59,7 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
                 <p className='line-clamp-4'><TimerIcon/> {recipe.duration} mins</p>
 
                 <div className='flex flex-row'>
-                    {gaugeArray.map((gaugeIcon:any)=> (
-                        <Gauge key={gaugeIcon}/>
-                    ))}
+                    {getGaugeIcon()}
                 </div>
                 
                 <Button href={`recipe/${recipe.id}`} key={recipe.id} label='View Recipe ->' />
