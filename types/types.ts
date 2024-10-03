@@ -69,6 +69,8 @@ interface RecipeType {
     slug: string;
     rating: number;
     image_url: string;
+    vegan: boolean;
+    healthy: boolean
     createdAt: Date;
     category: CategoryType;
     ingredients: IngredientRecipeType[];
