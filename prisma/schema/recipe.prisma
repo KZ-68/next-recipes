@@ -6,6 +6,8 @@ model Recipe {
     slug String @unique
     rating Int @default(0)
     image_url String
+    vegan Boolean @default(false)
+    healthy Boolean @default(false)
  
     createdAt DateTime @default(now())
 
