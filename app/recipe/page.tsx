@@ -6,6 +6,7 @@ import Button from '@/components/Button'
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
+import { EffectCoverflow, Pagination } from 'swiper/modules';
 
 const RecipePage = () => {
 
@@ -24,18 +25,23 @@ const RecipePage = () => {
         <>
             <Button href='https://elan-formation.fr/accueil' label='Retour'/>
             <h1 className='text-4xl font-bold mt-4 mb-6'>Recipes</h1>
-            <Swiper
-            spaceBetween={50}
-            slidesPerView={3}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
-            >
-                {recipes.map((recipe: RecipeType) => (
-                    <SwiperSlide key={recipe.id}>
-                        <RecipeCard recipe={recipe} category={recipe.category}/>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+            
+                <Swiper
+                pagination={true}
+                effect='coverflow'
+                modules={[Pagination, EffectCoverflow]}
+                spaceBetween={10}
+                slidesPerView={3}
+                onSlideChange={() => console.log('slide change')}
+                onSwiper={(swiper) => console.log(swiper)}
+                >
+                    {recipes.map((recipe: RecipeType) => (
+                        <SwiperSlide className='my-8 mx-4' key={recipe.id}>
+                            <RecipeCard recipe={recipe} category={recipe.category}/>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            
         </>
     )
 }
