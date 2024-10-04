@@ -2,7 +2,7 @@
 import CommentRecipe from '@/components/CommentRecipe'
 import Category from '@/components/Category'
 import React, { useEffect, useState } from 'react'
-import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon, Lightbulb } from 'lucide-react'
+import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon, Lightbulb, MessageSquareQuoteIcon, MessageSquareMoreIcon } from 'lucide-react'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import Image from 'next/image'
 import { Pagination } from 'swiper/modules';
@@ -10,11 +10,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import SuggestionCard from '@/components/SuggestionCard'
+import { useUser } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
 
 const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: string}}) => {
 
+    const router = useRouter();
+
     const [recipe, setRecipe] = useState<RecipeType | null>(null)
-    const [category, setCategory] = useState<CategoryType | null>(null)
+    const [suggestion, setSuggestion] = useState<RecipeType[]>([])
 
     const rating = recipe?.rating;
 
@@ -34,19 +38,40 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
         return gaugeArray;
     };
 
+    const handleCommentSubmit = async (event:any) => {
+
+        const formData = new FormData(event.target);
+        try {
+            const response = await fetch(`/api/recipe/${params.recipeId}/comments`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData),
+            })
+
+            if(response.ok) {
+                console.log(response)
+                const updatedComments = await response.json();
+                setRecipe(prev => prev ? { ...prev, comments: updatedComments} : null)
+            } else {
+                console.error("Error post comment")
+            }
+        } catch(error) {
+            console.error("Error submitting comment", error);
+        }
+    }
+
     useEffect(() => {
         const fetchrecipe = async () => {
             const response = await fetch(`/api/recipe/${params.recipeId}`)
             const dataRecipe : RecipeType = await response.json()
-            const responseCategory = await fetch(`/api/recipe/${params.recipeId}/suggestion/${dataRecipe.category.id}`)
-            const dataCategory : CategoryType = await responseCategory.json()
+            const responseSuggestion = await fetch(`/api/recipe/${dataRecipe.id}/suggestion/${dataRecipe.category.id}/${dataRecipe.id}`)
+            const dataSuggestion : RecipeType[] = await responseSuggestion.json()
             setRecipe(dataRecipe)
-            setCategory(dataCategory)
+            setSuggestion(dataSuggestion)
         }
 
         fetchrecipe()
     }, [params.recipeId, params.categoryId])
-    
     return (
         <div className='mx-8'>
             <section className='flex flex-row mx-5'>
@@ -157,27 +182,35 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             <section className='flex flex-col'>
                 <h2 className='flex flex-row gap-3 my-3 text-lg text-orange-500'><Lightbulb /> Suggestions</h2>
                 <div className='flex flex-row gap-4 h-full'>
-                    {category?.recipes.map((recipe: RecipeType) => (
-                        <SuggestionCard key={category.id} recipe={recipe} />
+                    {suggestion?.map((recipe: RecipeType) => (
+                        <SuggestionCard key={recipe.id} recipe={recipe} />
                     ))}    
                 </div>
             </section>
             
-            <div className='my-7 px-6 bg-slate-900 rounded-md'>
-                <h2 className='mb-4 text-xl'>Les commentaires ({recipe?.comments.length}) :</h2>
+            <section className='my-7 px-6 bg-slate-900 rounded-md'>
+                <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareQuoteIcon/> Comments ({recipe?.comments.length}) :</h2>
                 <ul>
                     {recipe?.comments && recipe.comments.length > 0 ? (
-                        recipe?.comments.map((comment: any) => (
+                        recipe?.comments.map((comment: CommentType) => (
                             <CommentRecipe key={comment.id} comment={comment} recipe={recipe}/>
                         ))
                     ) : (
-                        <p>
-                            Aucun commentaire ajouté sur cet article.
-                            
-                        </p>
+                        <div className='py-6 px-14 bg-slate-800 rounded-lg'>
+                            <p>Aucun commentaire ajouté sur cet article.</p>
+                        </div>
                     )}
                 </ul>
-            </div>
+                <div className='my-10'>
+                    <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Write a comment</h2>
+                    <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
+                        <form className='flex flex-col gap-6' action={handleCommentSubmit}>
+                            <input className='bg-transparent' type="text" name="text" placeholder='Write your comment here...'/>
+                            <button className='w-fit mt-6' type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
         </div>
     )
 }

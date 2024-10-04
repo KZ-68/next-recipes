@@ -21,3 +21,11 @@ export async function GET(req: Request, { params }: { params: { recipeId: string
         return new NextResponse("Internal Error", {status:500})
     }
 }
+
+export async function POST(req: NextRequest) {
+
+    const formData = await req.formData();
+    const text = formData.get('text');
+    
+    return NextResponse.json(text)
+}
