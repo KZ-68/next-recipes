@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Merriweather } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
+import { ClerkProvider, SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 const merriWeather = Merriweather({
   weight: ["300", "400", "700", "900"],
@@ -21,15 +22,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${merriWeather.className} antialiased`}>
-      <header>
-        <NavBar />
-      </header>
-        <main className="bg-slate-900 min-h-screen p-6 text-white">
-          {children}
-        </main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${merriWeather.className} antialiased`}>
+        <header>
+          <nav className="flex flex-row justify-between pr-20 bg-slate-800 text-white">
+            <NavBar />
+            <div className="flex flex-row gap-3">
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+              <SignUpButton />
+            </div>
+          </nav>
+        </header>
+          <main className="bg-slate-900 min-h-screen p-6 text-white">
+            {children}
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
