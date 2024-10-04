@@ -5,9 +5,10 @@ model CommentBlog {
     articleId String @db.ObjectId
     article Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
  
-    userId String
+    userUsername String
  
     createdAt DateTime @default(now())
  
     @@index([articleId])
+    @@unique([userUsername])
 }
