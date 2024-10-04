@@ -4,12 +4,12 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
 
-        const comments = await db.comment.findMany({
+        const commentsRecipe = await db.commentRecipe.findMany({
             "orderBy": {
                 "createdAt": 'desc'
             },
         })
-        return NextResponse.json(comments)
+        return NextResponse.json(commentsRecipe)
     } catch (error) {
         console.log("{COMMENTS}", error)
         return new NextResponse("Internal Error", {status:500})

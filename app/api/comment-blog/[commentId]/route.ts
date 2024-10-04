@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest, {params} : {params : {commentId: string}}) {
     const { commentId } = params;
     try {
-        const comment = await db.comment.findUnique({
+        const comment = await db.commentBlog.findUnique({
             "where": {
                 "id": commentId
             },

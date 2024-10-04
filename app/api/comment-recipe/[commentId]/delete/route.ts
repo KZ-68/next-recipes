@@ -6,18 +6,18 @@ export async function DELETE(req: Request, { params }: { params: { commentId: st
         const { commentId } = params;
 
         // Check if the comment exists
-        const comment = await db.comment.findUnique({
+        const commentRecipe = await db.commentRecipe.findUnique({
             where: {
                 id: commentId
             }
         });
 
-        if (!comment) {
+        if (!commentRecipe) {
             return new NextResponse('Comment Not Found', { status: 404 });
         }
 
         // Delete the comment
-        await db.comment.delete({
+        await db.commentRecipe.delete({
             where: {
                 id: commentId
             }
