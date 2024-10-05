@@ -3,10 +3,12 @@ import { formatDate } from '@/lib/utils';
 import CommentBlog from '@/components/CommentBlog'
 import Tag from '@/components/Tag'
 import React, { useEffect, useState } from 'react'
+import { MessageSquareMoreIcon } from 'lucide-react';
 
 const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
 
     const [article, setArticle] = useState<ArticleWithTagsAndComments | null>(null)
+    const [data, setData] = useState({});
 
     useEffect(() => {
         const fetchArticle = async () => {
@@ -16,6 +18,31 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
         }
         fetchArticle()
     }, [params.articleId])
+
+    const handleCommentSubmit = async(event: React.FormEvent) => {
+        event.preventDefault()
+
+        try {
+            const response = await fetch(`/api/article/${params.articleId}/comments`, {
+                method: 'POST',
+                body: JSON.stringify(data),
+            })
+
+            if(response.status === 200) {
+                const updatedComments = response.json()
+                console.log(updatedComments);
+                setArticle(prev => prev ? { ...prev, comments: updatedComments} : null)
+            } else {
+                console.error("Error post comment")
+            }
+        } catch(error) {
+            console.error("Error submitting comment", error);
+        }
+    }
+    
+    const handleChange = (e:any) => {
+        setData((prevData) => ({...prevData, [e.target.name]:e.target.value}))
+    }
 
     return (
         <div className='mx-10'>
@@ -45,6 +72,15 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
                         </p>
                     )}
                 </ul>
+                <div className='my-10'>
+                    <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Write a comment</h2>
+                    <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
+                        <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
+                            <input className='bg-transparent' type="text" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
+                            <button className='w-fit mt-6' type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
             </section>
         </div>
     )
