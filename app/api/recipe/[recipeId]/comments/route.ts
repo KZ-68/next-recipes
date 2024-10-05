@@ -22,10 +22,23 @@ export async function GET(req: Request, { params }: { params: { recipeId: string
     }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, { params }: { params: { recipeId: string } }) {
 
-    const formData = await req.formData();
-    const text = formData.get('text');
+    try {
+        const { recipeId } = params;
+        const body = await req.json();
+        console.log(body.text)
     
-    return NextResponse.json(text)
+        const newComment = await db.commentRecipe.create({
+          "data": {
+            "text": body.text,
+            "recipeId": recipeId
+          }
+        });
+    
+        console.log(newComment);
+        return NextResponse.json(newComment)
+      } catch (error) {
+        console.log(error);
+      }
 }
