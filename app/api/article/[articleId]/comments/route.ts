@@ -21,3 +21,24 @@ export async function GET(req: Request, { params }: { params: { articleId: strin
         return new NextResponse("Internal Error", {status:500})
     }
 }
+
+export async function POST(req: NextRequest, { params }: { params: { articleId: string } }) {
+
+    try {
+        const { articleId } = params;
+        const body = await req.json();
+        console.log(body.text)
+    
+        const newComment = await db.commentBlog.create({
+          "data": {
+            "text": body.text,
+            "articleId": articleId
+          }
+        });
+    
+        console.log(newComment);
+        return NextResponse.json(newComment)
+      } catch (error) {
+        console.log(error);
+      }
+}
