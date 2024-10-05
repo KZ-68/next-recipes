@@ -31,11 +31,11 @@ export default function RootLayout({
             <div className="flex flex-row gap-3">
               <SignedOut>
                 <SignInButton />
+                <SignUpButton />
               </SignedOut>
               <SignedIn>
                 <UserButton />
               </SignedIn>
-              <SignUpButton />
             </div>
           </nav>
         </header>
