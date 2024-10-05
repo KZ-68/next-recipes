@@ -17,8 +17,15 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
 
     const router = useRouter();
 
+    const { isLoaded, isSignedIn, user } = useUser()
+
+    if (!isLoaded || !isSignedIn) {
+        <form id="recipe-comment-form" hidden={true}></form>
+    }
+
     const [recipe, setRecipe] = useState<RecipeType | null>(null)
     const [suggestion, setSuggestion] = useState<RecipeType[]>([])
+    const [data, setData] = useState({});
 
     const rating = recipe?.rating;
 
@@ -38,19 +45,18 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
         return gaugeArray;
     };
 
-    const handleCommentSubmit = async (event:any) => {
+    const handleCommentSubmit = async(event: React.FormEvent) => {
+        event.preventDefault()
 
-        const formData = new FormData(event.target);
         try {
             const response = await fetch(`/api/recipe/${params.recipeId}/comments`, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(formData),
+                body: JSON.stringify(data),
             })
 
-            if(response.ok) {
-                console.log(response)
-                const updatedComments = await response.json();
+            if(response.status === 200) {
+                const updatedComments = response.json()
+                console.log(updatedComments);
                 setRecipe(prev => prev ? { ...prev, comments: updatedComments} : null)
             } else {
                 console.error("Error post comment")
@@ -59,6 +65,11 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             console.error("Error submitting comment", error);
         }
     }
+    
+    const handleChange = (e:any) => {
+        setData((prevData) => ({...prevData, [e.target.name]:e.target.value}))
+    }
+
 
     useEffect(() => {
         const fetchrecipe = async () => {
@@ -204,8 +215,8 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 <div className='my-10'>
                     <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Write a comment</h2>
                     <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
-                        <form className='flex flex-col gap-6' action={handleCommentSubmit}>
-                            <input className='bg-transparent' type="text" name="text" placeholder='Write your comment here...'/>
+                        <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
+                            <input className='bg-transparent' type="text" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
                             <button className='w-fit mt-6' type="submit">Submit</button>
                         </form>
                     </div>
