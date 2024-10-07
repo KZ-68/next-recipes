@@ -1,8 +1,7 @@
 import nodemailer from "nodemailer"
 
-export async function sendMail({to, name, subject, body}: {
+export async function sendMail({to, subject, body}: {
     to: string,
-    name: string,
     subject: string,
     body: string
 }){
