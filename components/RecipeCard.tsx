@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from './Button'
 import { useRouter } from 'next/navigation';
-import { Gauge, HeartPulse, LeafIcon, TimerIcon } from 'lucide-react';
+import { Gauge, HeartPulse, ImageIcon, LeafIcon, TimerIcon } from 'lucide-react';
 import Category from './Category';
 import Image from 'next/image';
 
@@ -58,10 +58,16 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
     return (
         <div className='w-72 group rounded-lg bg-slate-800 cursor-pointer duration-300 h-full' key={recipe.id}>
             <div className='relative'>
-                <Image className='rounded-t-lg w-[320px] h-[250px]' src={`/images/${recipe.image_url}`} alt="Recipe Image" width="320" height="250"/>
+                {recipe.image_url == "" ? (
+                    <ImageIcon size={250}/>
+                ) : 
+                (
+                <Image className='rounded-t-lg w-[320px] h-[250px]' src={`/images/${recipe.image_url}`} alt="Recipe Image" width="250" height="250"/>
+                )}
                 <div className='bg-slate-100 bg-opacity-95 rounded-3xl w-fit py-2 px-3 absolute top-2 right-2'>
                     {getVeganAndHealthyStatus()}
                 </div>
+                
             </div>
             
             <div className='flex flex-col items-start px-5 py-4'>
