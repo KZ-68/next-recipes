@@ -97,7 +97,12 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     </div>
                 </aside>
                 <aside>
-                    <Image className='rounded-r-md aspect-video object-cover h-96' src={`/images/${recipe?.image_url}`} alt="Recipe Image" width="1000" height="500"/>
+                    {recipe?.image_url == "" ? (
+                        <Image className='rounded-r-md aspect-video object-cover h-96' src={`https://placehold.co/1000x500/png?text=placeholder&font=roboto`} alt="Recipe Image" width="1000" height="500"/>
+                    ) : 
+                    (
+                        <Image className='rounded-r-md aspect-video object-cover h-96' src={`/images/${recipe?.image_url}`} alt="Recipe Image" width="1000" height="500"/>
+                    )}
                 </aside>
             </section>
 
