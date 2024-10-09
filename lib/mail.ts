@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer"
 
-export async function sendMail({to, subject, body}: {
-    to: string,
+export async function sendMail({subject, body}: {
     subject: string,
     body: string
 }){
@@ -11,8 +10,10 @@ export async function sendMail({to, subject, body}: {
     const transport = nodemailer.createTransport({
         service: "gmail",
         host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+        port: 587,
+        tls: {
+            ciphers: "SSLv3"
+        },
         auth: {
             user: SMTP_EMAIL,
             pass: SMTP_PASSWORD
@@ -29,7 +30,7 @@ export async function sendMail({to, subject, body}: {
 
     try {
         const sendResult = await transport.sendMail({
-            from:SMTP_EMAIL, to, subject, html:body
+            from: SMTP_EMAIL, to: SMTP_EMAIL, subject, html:body
         })
         console.log(sendResult);
     } catch(error) {
