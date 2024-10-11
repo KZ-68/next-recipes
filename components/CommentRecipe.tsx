@@ -1,6 +1,5 @@
 import { formatDate } from '@/lib/utils';
 import { Trash2Icon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import React from 'react'
 
 interface CommentProps {
@@ -9,8 +8,6 @@ interface CommentProps {
 }
 
 const Comment:React.FC<CommentProps> = ({comment, recipe}) => {
-
-    const router = useRouter();
 
     const handleDelete = async () => {
 
