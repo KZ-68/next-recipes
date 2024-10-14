@@ -7,16 +7,15 @@ export async function POST(req:NextRequest) {
     const body = await req.json()
     await clerkClient.users.updateUserMetadata(userId, {
     privateMetadata: {
-      favoriteId: body.favoriteId,
+      favoriteRecipes: body.recipe,
     },
   })
   return NextResponse.json({ success: true })
 }
 
-export async function GET(request: Request) {
+export async function GET() {
     const currentUserData = await currentUser()
     const userId = currentUserData.id;
-    const { favoriteIds } = await request.body.json()
 
     const user = await clerkClient.users.getUser(userId)
     return NextResponse.json(user.privateMetadata)
