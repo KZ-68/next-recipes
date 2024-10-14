@@ -262,7 +262,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 const response = await fetch(`/api/private`, {
                     method: 'POST',
                     body: JSON.stringify({
-                        favoriteId: recipe.id
+                        recipe : recipe
                     }),
                 })
                 if(response.ok) {
