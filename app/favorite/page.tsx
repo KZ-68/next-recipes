@@ -1,17 +1,17 @@
 "use client"
 import RecipeCard from '@/components/RecipeCard'
-import { Link } from 'lucide-react'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const Favorite = () => {
 
-    const [favoriteRecipe, setFavoriteRecipe] = useState<RecipeType[]>([])
+    const [favoriteRecipes, setFavoriteRecipes] = useState<RecipeType[]>([])
 
     useEffect(() => {
         const fetchFavoriteRecipe = async () => {
             const response = await fetch('/api/private')
-            const data : RecipeType[] = await response.json()
-            setFavoriteRecipe(data)
+            const userData = await response.json()
+            setFavoriteRecipes([userData.favoriteRecipes])
         }
         fetchFavoriteRecipe()
     }, [])
@@ -20,9 +20,9 @@ const Favorite = () => {
         <>
             <h1>Favorite List</h1>
             <ul>
-            {favoriteRecipe.map((recipe: RecipeType) => (
-                <Link href={`recipe/${recipe.id}`} key={recipe.id}>
-                    <RecipeCard recipe={recipe} category={recipe.category}/>
+            {favoriteRecipes.map((recipe: RecipeType) => (
+                <Link href={`recipe/${recipe?.id}`} key={recipe?.id}>
+                    <RecipeCard recipe={recipe} category={recipe?.category}/>
                 </Link>
             ))}
             </ul>
