@@ -1,5 +1,7 @@
 "use client"
 
+import { MoonIcon, SunIcon } from "lucide-react";
+
 interface ThemeSwitcherProps {
     darkMode: boolean;
     lightMode: boolean;
@@ -26,16 +28,24 @@ export const ThemeSwitcher:React.FC<ThemeSwitcherProps> = ({darkMode, lightMode}
     } 
     
     return (
-      <div>
+      <div className="flex flex-col justify-center">
         {(lightMode = true) ? (
-            <div>
-                <button onClick={toggleDarkMode}>Dark Mode</button>
-                <button className="hidden" onClick={toggleLightMode}>Light Mode</button>
+            <div className="flex flex-col justify-center">
+                <button onClick={toggleDarkMode}>
+                    <MoonIcon size={36}/>
+                </button>
+                <button className="hidden" onClick={toggleLightMode}>
+                    <SunIcon />
+                </button>
             </div>
         ): (
-            <div>
-                <button className="hidden" onClick={toggleDarkMode}>Dark Mode</button>
-                <button onClick={toggleLightMode}>Light Mode</button>
+            <div className="flex flex-col justify-center">
+                <button className="hidden" onClick={toggleDarkMode}>
+                    <MoonIcon size={36}/>
+                </button>
+                <button onClick={toggleLightMode}>
+                    <SunIcon />
+                </button>
             </div>
         )}
     
