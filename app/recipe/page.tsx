@@ -27,16 +27,23 @@ const RecipePage = () => {
             <h1 className='text-4xl font-bold mt-4 mb-6'>Recipes</h1>
             
                 <Swiper
-                pagination={true}
-                effect='coverflow'
-                modules={[Pagination, EffectCoverflow]}
-                spaceBetween={10}
-                slidesPerView={3}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
+                    effect={'coverflow'}
+                    grabCursor={true}
+                    centeredSlides={true}
+                    slidesPerView={2}
+                    coverflowEffect={{
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                    }}
+                    pagination={true}
+                    modules={[EffectCoverflow, Pagination]}
+                    className="mySwiper"
                 >
                     {recipes.map((recipe: RecipeType) => (
-                        <SwiperSlide className='my-8 mx-4' key={recipe.id}>
+                        <SwiperSlide className='w-72' key={recipe.id}>
                             <RecipeCard recipe={recipe} category={recipe.category}/>
                         </SwiperSlide>
                     ))}
