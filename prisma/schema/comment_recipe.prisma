@@ -5,10 +5,7 @@ model CommentRecipe {
     recipeId String @db.ObjectId
     recipe Recipe? @relation(fields: [recipeId], references: [id], onDelete: Cascade)
  
-    userUsername String
- 
     createdAt DateTime @default(now())
  
     @@index([recipeId])
-    @@unique([userUsername])
 }
