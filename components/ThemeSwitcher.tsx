@@ -1,54 +1,30 @@
-"use client"
+'use client';
 
-import { MoonIcon, SunIcon } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { useTheme } from 'next-themes';
+import { MoonIcon, SunIcon } from 'lucide-react';
 
-interface ThemeSwitcherProps {
-    darkMode: boolean;
-    lightMode: boolean;
-}
+const ThemeSwitcher = () => {
+	const [mounted, setMounted] = useState(false);
+	const { theme, setTheme } = useTheme();
 
-export const ThemeSwitcher:React.FC<ThemeSwitcherProps> = ({darkMode, lightMode}) => {
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
-    async function toggleDarkMode() {
-        darkMode = true;
-        lightMode = false;
-        const key = "darkMode";
-        const value:any = true;
-        localStorage.setItem(key, value);
-        return darkMode;
-    }
+	if (!mounted) {
+		return null;
+	}
 
-    async function toggleLightMode() {
-        lightMode = true;
-        darkMode = false;
-        const key = "lightMode";
-        const value:any = true;
-        localStorage.setItem(key, value);
-        return lightMode;
-    } 
-    
-    return (
-      <div className="flex flex-col justify-center">
-        {(lightMode = true) ? (
-            <div className="flex flex-col justify-center">
-                <button onClick={toggleDarkMode}>
-                    <MoonIcon size={36}/>
-                </button>
-                <button className="hidden" onClick={toggleLightMode}>
-                    <SunIcon />
-                </button>
-            </div>
-        ): (
-            <div className="flex flex-col justify-center">
-                <button className="hidden" onClick={toggleDarkMode}>
-                    <MoonIcon size={36}/>
-                </button>
-                <button onClick={toggleLightMode}>
-                    <SunIcon />
-                </button>
-            </div>
-        )}
-    
-      </div>
-    )
-  };
+	return (
+		<div className="flex flex-col justify-center bg-slate-800 text-primary-green">
+            {theme === "dark" ? (
+                <button onClick={() => {setTheme('light');  console.log("Theme set to dark but in reality it is", theme) }}><SunIcon size={36}/></button>
+            ):(
+                <button onClick={() => setTheme('dark')}><MoonIcon size={36} /></button>    
+            )}	
+		</div>
+	);
+};
+
+export default ThemeSwitcher;
