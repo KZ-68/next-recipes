@@ -11,7 +11,6 @@ interface TagArticleType {
 interface CommentType {
     id: string;
     text: string;
-    userId: string;
     createdAt: Date;
 }
  
@@ -77,4 +76,27 @@ interface RecipeType {
     tools: ToolRecipeType[];
     comments: CommentType[];
     steps: StepType[];
+    mealrecipes: MealRecipeType[];
+}
+
+interface MenuType {
+    id: string;
+    date:Date;
+    recipe: RecipeType;
+    meals: MealType[];
+}
+
+interface MealType {
+    id: string;
+    name:string;
+    createdAt:Date;
+    menu: MenuType;
+    mealrecipes: MealRecipeType[];
+}
+
+interface MealRecipeType {
+    id: string;
+    recipe: RecipeType;
+    meal: MealType;
+    date: Date;
 }
