@@ -56,8 +56,8 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
     }
 
     return (
-        <div className='w-72 group rounded-lg bg-slate-800 cursor-pointer duration-300 h-full' key={recipe.id}>
-            <div className='relative'>
+        <div className='flex flex-col w-72 group rounded-lg bg-slate-800 cursor-pointer duration-300 h-full' key={recipe.id}>
+            <div className='relative flex flex-row justify-center'>
                 {recipe.image_url == "" ? (
                     <ImageIcon size={250}/>
                 ) : 
