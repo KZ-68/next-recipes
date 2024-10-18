@@ -15,7 +15,7 @@ const Comment:React.FC<CommentProps> = ({comment, article}) => {
         if(!confirmDelete) return;
 
         try {
-            const res = await fetch(`/api/comment/${comment.id}/delete`, {
+            const res = await fetch(`/api/comment-blog/${comment.id}/delete`, {
                 method: 'DELETE'
             })
 
@@ -28,7 +28,6 @@ const Comment:React.FC<CommentProps> = ({comment, article}) => {
     return (
         <li key={comment.id} className='flex-row m-5 group border border-slate-500 p-6 rounded-sm'>
             <div className='flex flex-col gap-1'>
-                <h3>{comment.userId}</h3>
                 <p className='text-sm text-slate-300'>{formatDate(article.createdAt)}</p>
                 <p>{comment.text}</p>
             </div>
