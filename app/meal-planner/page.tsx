@@ -7,6 +7,7 @@ import ReactDOM from "react-dom";
 import Modal from '@/components/Modal';
 import Button from '@/components/Button';
 import Link from 'next/link';
+import { formatDateCalendar } from '@/lib/utils';
 
 const MealPlannerPage = () => {
 
@@ -14,6 +15,13 @@ const MealPlannerPage = () => {
     const [meals, setMeals] = useState<MealType[]>([])
     const [mealrecipes, setMealRecipes] = useState<MealRecipeType[]>([])
     const [showModal, setShowModal] = useState(false);
+
+    const dateMealPlanner = dateHandler;
+
+    function dateHandler(e){
+        const date = formatDateCalendar(e.target.value);
+        return date;
+    }
 
     useEffect(() => {
         const multiFetch = async () => {
@@ -36,34 +44,44 @@ const MealPlannerPage = () => {
             <form className='my-6' action="">
                 <label>Select Date :</label>
                 <div className='flex flex-row items-center bg-white w-fit rounded-md py-1 px-1 my-1'>
-                <input className='py-1 bg-white text-black' type="date" id="start" name="trip-start" max="2099-12-31" />
+                <input onChange={dateHandler} className='py-1 bg-white text-black' type="date" id="start" name="trip-start" max="2099-12-31" />
                 <CalendarDays className='text-black' />
                 </div>
-                <div className='flex flex-row my-9 gap-3'>
+                <div className='flex flex-row my-9 gap-8'>
                     {
                         meals.map((meal:MealType) => (
-                        <div className='flex flex-row gap-5 bg-slate-700 rounded-md w-fit py-3 px-4'>
-                            <div className='flex flex-col'>
-                                <h2 className='my-2'>{meal.name}</h2>
+                        <div key={meal.id} className='flex flex-col gap-5 bg-slate-700 rounded-md w-96 py-3 px-4'>
+                            <div className='flex flex-row justify-between gap-16'>
+                                <div className='flex flex-col'>
+                                    <h2 className='my-2'>{meal.name}</h2>
+                                </div>
+                                <button onClick={() => setShowModal(true)} className='bg-blue-400 px-3 rounded-lg w-fit'>+</button>
                             </div>
-                            <button onClick={() => setShowModal(true)} className='bg-blue-400 p-2 rounded-lg'>+</button>
-                            <ul>
-                            {meal.mealrecipes.length > 0 ? (
-                                <li></li>
+                            <ul className='flex flex-col py-3 px-4 rounded-md bg-slate-700'>
+                            {mealrecipes.length > 0 ? (
+                                mealrecipes.map((mealrecipe:MealRecipeType) => (
+                                    <li key={mealrecipe.id}>{mealrecipe.recipe.title}</li>
+                                ))
                             ):(
-                                <p>No recipes added yet</p>
+                                <li>No recipes added yet</li>
                             )}
                             </ul>
                         </div>
                         ))
                     }
-                    {showModal &&
-                        <Modal onClose={() => setShowModal(false)}>
-                            <RecipeOption recipes={recipes} title='Select Recipes' />
-                        </Modal>
-                    }
+                    <div id='modal-root'>
+                        {showModal === true ? (
+                            <Modal onClose={() => setShowModal(false)}>
+                                <RecipeOption recipes={recipes} title='Select Recipes' />
+                            </Modal>
+                        ) :
+                        (
+                            ''
+                        )}
+                    </div>
                     
                 </div>
+                <button className='py-2 px-5 bg-green-700 text-white rounded-md' type='submit'>Validate Meal Plan</button>
             </form>
         </section>
     )
