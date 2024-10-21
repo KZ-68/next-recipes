@@ -41,18 +41,18 @@ const MenuPage = () => {
             <h1 className='text-3xl'>Your Meal Plans</h1>
             <div className='flex flex-row flex-wrap my-5'>
                 {menus.map((menu: MenuType) => (
-                    <div className='relative flex flex-col gap-4 py-4 px-5 rounded-md bg-slate-800'>
+                    <div key={menu.id} className='relative flex flex-col gap-4 py-4 px-5 rounded-md bg-slate-800'>
                         <button className='absolute py-3 px-3 right-0 top-0 bg-slate-700 rounded-tr-md text-orange-600' onClick={handleDelete}>
                             <Trash2Icon />
                         </button>
                         <h3 className='text-2xl'>{formatDateCalendar(menu.date)}</h3>                                                    
                             {menu.meals.map((meal:MealType)=> (
-                                <div>
+                                <div key={meal.id}>
                                     <h4 className='flex flex-row text-xl my-2 gap-3 text-orange-600'><CroissantIcon/>{meal.name}</h4>
                                     <ul className='flex flex-col gap-3'>
                                         {meal.mealrecipes.length > 0 ? (
                                             meal.mealrecipes.map((mealrecipe: MealRecipeType)=> (
-                                                <li className='flex flex-row justify-between items-center gap-32 bg-slate-700 py-2 px-3 rounded-md'>
+                                                <li key={mealrecipe.id} className='flex flex-row justify-between items-center gap-32 bg-slate-700 py-2 px-3 rounded-md'>
                                                     <hgroup>
                                                         <h5>{mealrecipe.recipe.title}</h5>
                                                         <p className='flex flex-row gap-2 text-slate-400'><TimerIcon />{mealrecipe.recipe.duration} mins</p>
