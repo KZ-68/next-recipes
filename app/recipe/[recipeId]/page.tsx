@@ -423,11 +423,11 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 </div>
             </section>
             
-            <section className='my-7 px-6 bg-slate-900 rounded-md'>
+            <section className='my-7 py-4 px-6 bg-slate-900 rounded-md'>
                 
                     {isSignedIn ? 
                         <div className='flex flex-row gap-3 rounded-md mt-8 mb-14 pl-6 py-6 bg-slate-700 justify-start items-center'>
-                            <Image className='rounded-full' src={user.imageUrl} alt="User Avatar" width="80" height="80"/>
+                            <Image className='rounded-full' src={user.imageUrl} alt="User Avatar" width="60" height="60"/>
                             <div>
                                 <h3 className='text-2xl'>{user.username}</h3>
                                 <p></p>
