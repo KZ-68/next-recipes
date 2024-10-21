@@ -11,6 +11,9 @@ export async function GET() {
                 "mealrecipes":{
                     "orderBy": {
                         "date": "desc"
+                    },
+                    "include": {
+                        "recipe": true
                     }
                 }
             }
