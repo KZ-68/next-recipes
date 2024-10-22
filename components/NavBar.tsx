@@ -8,6 +8,7 @@ const NavBar:React.FC<any> = () => {
       <h1 className='text-orange-500 text-xl'>MyRecipes</h1>
       <div className='flex flex-row gap-6 text-white'>
         <Link href='/recipe'>Recipes</Link>
+        <Link href='/meal-planner'>Meal Planner</Link>
         <Link href='/article'>Blog</Link>
         <Link href='/contact'>Contact</Link>
       </div>
