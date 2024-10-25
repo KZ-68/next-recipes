@@ -5,6 +5,7 @@ import {Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure} from
 import { CalendarDays } from 'lucide-react';
 import Link from 'next/link';
 import { formatDateCalendar } from '@/lib/utils';
+import DraggableItem from '@/components/DraggableItem';
 
 const MealPlannerPage = () => {
     const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
@@ -18,18 +19,35 @@ const MealPlannerPage = () => {
     const [selectedRecipes, setSelectedRecipes] = useState<RecipeType[]>([])
 
     function handleModalClick(e) {
-        setMealRecipes(mealrecipes);
-        selectedRecipes.forEach(async selectedRecipe => {
-            
-            mealrecipes.push({recipe:dataRecipe, meal:meal?.id, date:date})
+        let mealRecipesData : MealRecipeType[] = [];
+        setMealRecipes(mealRecipesData);
+        selectedRecipes.forEach(selectedRecipe => {
+            recipes.forEach(recipe => {
+                if(recipe.id === selectedRecipe) {
+                    mealrecipes.push({recipe:recipe, meal:meal?.id, date:date})
+                }
+            })
         });
+        menu.date = date;
+        menu?.menumeals.push({menu:menu.id, meal:meal?.id});
 
         mealrecipes.forEach(mealrecipe => {
             meal?.mealrecipes.push(mealrecipe);
         })
-        console.log(mealrecipes);
     
-        return onClose(e.target)
+        return onClose()
+    }
+
+    async function handleValidateClick(e) {
+        const response = await fetch(`/api/menu/new`, {
+            method: 'POST',
+            body: JSON.stringify(menu),
+        })
+    }
+
+    function changeMealRecipesState() {
+        meal.mealrecipes = [];
+        setMeals(meals);
     }
 
     function onPress(mealData) {
@@ -38,8 +56,9 @@ const MealPlannerPage = () => {
     }
 
     function dateHandler(e){
-        const dateFormat = formatDateCalendar(e.target.value);
-        setDate(dateFormat);
+        const dateTarget = new Date(e.target.value).toISOString();
+        console.log(dateTarget);
+        setDate(dateTarget);
     }
 
     function getSelectedOptions(e) {
@@ -62,9 +81,15 @@ const MealPlannerPage = () => {
             const data : RecipeType[] = await response.json()
             const responseMeals = await fetch('/api/meal')
             const dataMeals : MealType[] = await responseMeals.json()
+            dataMeals.forEach(dataMeal => {
+                dataMeal.mealrecipes = [];
+            })
             setRecipes(data)
             setMeals(dataMeals)
+            const dataMenu : MenuType = {menumeals:[]};
+            setMenu(dataMenu);
         }
+        
         multiFetch()
     }, [])
 
@@ -119,9 +144,9 @@ const MealPlannerPage = () => {
                             <Button onPress={() => onPress(meal)} value={meal.id} className='bg-blue-400 px-3 rounded-lg w-fit'>+</Button>
                         </div>
                         <ul className='flex flex-col py-3 px-4 rounded-md bg-slate-700'>
-                        {mealrecipes.length > 0 ? (
-                            mealrecipes.map((mealrecipe:MealRecipeType) => (
-                                <li key={mealrecipe.recipe.id}>{mealrecipe.recipe.title}</li>
+                        {meal.mealrecipes.length > 0 ? (
+                            meal.mealrecipes.map((mealrecipe:MealRecipeType) => (
+                                <DraggableItem key={mealrecipe.recipe.id} meal={meal} setmeal={changeMealRecipesState} mealrecipe={mealrecipe} />
                             ))
                         ):(
                             <li>No recipes added yet</li>
@@ -131,7 +156,7 @@ const MealPlannerPage = () => {
                     ))
                 }
             </div>
-            <button className='py-2 px-5 bg-green-700 text-white rounded-md' type='submit'>Validate Meal Plan</button>
+            <Button className='py-2 px-5 bg-green-700 text-white rounded-md' onPress={handleValidateClick}>Validate Meal Plan</Button>
         </section>
     )
 }
