@@ -82,15 +82,14 @@ interface RecipeType {
 interface MenuType {
     id: string;
     date:Date;
-    recipe: RecipeType;
-    meals: MealType[];
+    menumeals: MenuMealType[];
 }
 
 interface MealType {
     id: string;
     name:string;
     createdAt:Date;
-    menu: MenuType;
+    menumeals: MenuMealType[];
     mealrecipes: MealRecipeType[];
 }
 
@@ -99,4 +98,10 @@ interface MealRecipeType {
     recipe: RecipeType;
     meal: MealType;
     date: Date;
+}
+
+interface MenuMealType {
+    id: string;
+    menu: MenuType;
+    meal: MealType;
 }
