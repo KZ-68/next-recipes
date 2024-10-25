@@ -8,17 +8,18 @@ export async function GET() {
                 "date": 'desc'
             },
             "include": {
-                "meals": {
+                "menumeals": {
                     "orderBy": {
                         "createdAt": "desc"
                     },
                     "include": {
-                        "mealrecipes": {
-                            "orderBy":{
-                                "date": "desc"
-                            },
+                        "meal": {
                             "include": {
-                                "recipe":true,
+                                "mealrecipes": {
+                                    "include" :{
+                                        "recipe": true
+                                    }
+                                }
                             }
                         }
                     }
@@ -31,3 +32,4 @@ export async function GET() {
         return new NextResponse("Internal Error", {status:500})
     }
 }
+
