@@ -4,8 +4,5 @@ model Meal {
     createdAt DateTime @default(now())
 
     mealrecipes MealRecipe[]
-    menuId String @db.ObjectId
-    menu Menu? @relation(fields: [menuId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-    
-    @@index([menuId])
+    menumeals MenuMeal[]
 }
