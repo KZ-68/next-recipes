@@ -1,6 +1,6 @@
 model IngredientRecipe {
     id String @id @default(auto()) @map("_id") @db.ObjectId
-    quantity Int
+    quantity Float
     unit String
 
     recipeId String @db.ObjectId
