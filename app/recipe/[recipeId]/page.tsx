@@ -2,7 +2,7 @@
 import CommentRecipe from '@/components/CommentRecipe'
 import Category from '@/components/Category'
 import React, { useEffect, useState } from 'react'
-import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon, Lightbulb, MessageSquareQuoteIcon, MessageSquareMoreIcon } from 'lucide-react'
+import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon, Lightbulb, MessageSquareQuoteIcon, MessageSquareMoreIcon, LeafIcon } from 'lucide-react'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import Image from 'next/image'
 import { Pagination } from 'swiper/modules';
@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation'
 import { PDFDownloadLink, Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer'
 import { formatDate } from '@/lib/utils'
 import { currentUser } from '@clerk/nextjs/server'
+import NutritionInfo from '@/components/NutritionInfo'
   
 const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: string}}) => {
 
@@ -25,6 +26,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
     const [recipe, setRecipe] = useState<RecipeType | null>(null)
     const [suggestion, setSuggestion] = useState<RecipeType[]>([])
     const [data, setData] = useState({});
+    const [nutritionState, setNutritionState] = useState(null)
 
     const rating = recipe?.rating;
 
@@ -245,7 +247,6 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
 
             if(response.status === 200) {
                 const updatedComments = response.json()
-                console.log(updatedComments);
                 setRecipe(prev => prev ? { ...prev, comments: updatedComments} : null)
             } else {
                 console.error("Error post comment")
@@ -281,16 +282,45 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
     }
 
     useEffect(() => {
-        const fetchrecipe = async () => {
+        const fetchRecipeDetails = async () => {
             const response = await fetch(`/api/recipe/${params.recipeId}`)
             const dataRecipe : RecipeType = await response.json()
             const responseSuggestion = await fetch(`/api/recipe/${dataRecipe.id}/suggestion/${dataRecipe.category.id}/${dataRecipe.id}`)
             const dataSuggestion : RecipeType[] = await responseSuggestion.json()
             setRecipe(dataRecipe)
             setSuggestion(dataSuggestion)
+            let ingredientsDetails = []
+            dataRecipe.ingredients.map((ingredient:IngredientRecipeType) => (
+                ingredientsDetails.push(`${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredient.name}`)
+            ))
+            
+            try {
+                const EDAMAM_APPID = process.env.NEXT_PUBLIC_EDAMAM_APPID;
+                const EDAMAM_KEY = process.env.NEXT_PUBLIC_EDAMAM_KEY;
+                
+                const headers = {
+                    "Content-Type": "application/json"
+                }
+                
+                const response = await fetch(`https://api.edamam.com/api/nutrition-details?app_id=${EDAMAM_APPID}&app_key=${EDAMAM_KEY}`, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        'title': dataRecipe.title,
+                        'ingr': ingredientsDetails
+                    }),
+                    cache: 'force-cache'
+                })
+                if(response.ok) {
+                    const nutritionalDetailsData = await response.json()
+                    setNutritionState(nutritionalDetailsData);
+                }
+            } catch(error) {
+                console.error("Error submitting data", error);
+            }
         }
-
-        fetchrecipe()
+        
+        fetchRecipeDetails()
     }, [params.recipeId, params.categoryId])
     return (
         <div className='mx-8'>
@@ -336,7 +366,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                             <Tab className='py-2 px-4 bg-orange-600 rounded-xl'>Tools</Tab>
                         </TabList>
                     <TabPanels className='py-4 px-2'>
-                        <TabPanel>
+                        <TabPanel className="flex flex-row">
                             {recipe?.ingredients && recipe.ingredients.length > 0 ? (
                                 recipe?.ingredients.map(
                                     (ingredient: IngredientRecipeType) => (
@@ -415,7 +445,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             </section>
 
             <section className='flex flex-col my-5 mx-7'>
-                <h2 className='flex flex-row gap-3 my-3 text-lg text-orange-500'><Lightbulb /> Suggestions</h2>
+                <h2 className='flex flex-row gap-3 my-3 text-xl text-orange-500'><Lightbulb /> Suggestions</h2>
                 <div className='flex flex-row gap-4 h-full'>
                     {suggestion?.map((recipe: RecipeType) => (
                         <SuggestionCard key={recipe.id} recipe={recipe} />
@@ -423,8 +453,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 </div>
             </section>
             
-            <section className='my-7 py-4 px-6 bg-slate-900 rounded-md'>
-                
+            <section className='my-7 py-4 px-6'>
                     {isSignedIn ? 
                         <div className='flex flex-row gap-3 rounded-md mt-8 mb-14 pl-6 py-6 bg-slate-700 justify-start items-center'>
                             <Image className='rounded-full' src={user.imageUrl} alt="User Avatar" width="60" height="60"/>
@@ -459,6 +488,34 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                             <button className='w-fit mt-6' type="submit">Submit</button>
                         </form>
                     </div>
+                </div>
+            </section>
+            <section className='my-7 py-4 px-6'>
+                <div>
+                    <hgroup className='flex flex-row gap-3'>
+                        <LeafIcon className='text-orange-700' />
+                        <h2 className='text-xl text-orange-700'>Nutritional Info</h2>
+                    </hgroup>
+                    <NutritionInfo 
+                        energyLabel={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].label} 
+                        energyQuantity={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].quantity}
+                        energyUnit={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].unit}
+                        totalFatLabel={nutritionState?.["totalNutrients"]["FAT"].label}
+                        totalFatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity}
+                        totalFatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
+                        carbohydrateLabel={nutritionState?.["totalNutrients"]["CHOCDF"].label}
+                        carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity}
+                        carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
+                        protLabel={nutritionState?.["totalNutrients"]["PROCNT"].label}
+                        protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity}
+                        protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
+                        sugarLabel={nutritionState?.["totalNutrients"]["SUGAR"].label}
+                        sugarQuantity={nutritionState?.["totalNutrients"]["SUGAR"].quantity}
+                        sugarUnit={nutritionState?.["totalNutrients"]["SUGAR"].unit}
+                        vitcLabel={nutritionState?.["totalNutrients"]["VITC"].label}
+                        vitcQuantity={nutritionState?.["totalNutrients"]["VITC"].quantity}
+                        vitcUnit={nutritionState?.["totalNutrients"]["VITC"].unit}
+                    />
                 </div>
             </section>
         </div>
