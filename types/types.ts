@@ -38,8 +38,9 @@ interface IngredientType {
 
 interface IngredientRecipeType {
     id: string;
-    quantity: number;
+    quantity: string;
     unit: string;
+    recipe: RecipeType;
     ingredient: IngredientType;
 }
 
@@ -51,6 +52,7 @@ interface ToolType {
 
 interface ToolRecipeType {
     id: string;
+    recipe: RecipeType;
     tool: ToolType;
 }
 
