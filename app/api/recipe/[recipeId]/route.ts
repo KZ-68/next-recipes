@@ -44,7 +44,7 @@ export async function GET(req: NextRequest, {params} : {params : {recipeId: stri
         })
         return NextResponse.json(recipe)
     } catch (error) {
-        console.log("{ARTICLE}", error)
+        console.log("{RECIPE}", error)
         return new NextResponse("Internal Error", {status:500})
     }
 }

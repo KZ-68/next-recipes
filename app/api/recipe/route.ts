@@ -9,7 +9,12 @@ export async function GET() {
                 "createdAt": 'desc'
             },
             "include": {
-                "category":true
+                "category":true,
+                "ingredients" : {
+                    "orderBy" : {
+                        "unit":"asc"
+                    }
+                }
             }
         })
         return NextResponse.json(recipes)
