@@ -16,6 +16,7 @@ import { PDFDownloadLink, Page, Text, View, Document, StyleSheet, Font } from '@
 import { formatDate } from '@/lib/utils'
 import { currentUser } from '@clerk/nextjs/server'
 import NutritionInfo from '@/components/NutritionInfo'
+import MacronutrientsChartDoughnut from '@/components/MacronutrientsChartDoughnut'
   
 const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: string}}) => {
 
@@ -515,6 +516,15 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                         vitcLabel={nutritionState?.["totalNutrients"]["VITC"].label}
                         vitcQuantity={nutritionState?.["totalNutrients"]["VITC"].quantity}
                         vitcUnit={nutritionState?.["totalNutrients"]["VITC"].unit}
+                    />
+                    <h3 className='my-5 text-lg'>Macronutrients Breakdown</h3>
+                    <MacronutrientsChartDoughnut 
+                        protLabel={nutritionState?.["totalNutrients"]["PROCNT"].label}
+                        protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity}
+                        protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
+                        fatLabel={nutritionState?.["totalNutrients"]["FAT"].label}
+                        fatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity}
+                        fatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
                     />
                 </div>
             </section>
