@@ -77,7 +77,7 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
                 <Category text={category.name} key={category.id}/>
                 </div>
                 
-                <p className='line-clamp-4'><TimerIcon/> {recipe.duration} mins</p>
+                <p className='flex flex-row gap-1 my-2 line-clamp-4'><TimerIcon/> {recipe.duration} mins</p>
 
                 <div className='flex flex-row'>
                     {getGaugeIcon()}
