@@ -6,32 +6,36 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface MacronutrientsProps {
-  protLabel:string
-  protQuantity: number
+  protQuantity: string
   protUnit: string
-  fatLabel:string
-  fatQuantity: number
+  fatQuantity: string
   fatUnit: string
+  carbohydrateQuantity:string
 }
 
-const MacronutrientsChartDoughnut:React.FC<MacronutrientsProps> = ({protLabel, protQuantity, protUnit, fatLabel, fatQuantity, fatUnit}) => {
+const MacronutrientsChartDoughnut:React.FC<MacronutrientsProps> = (
+  {protQuantity, protUnit, fatQuantity, fatUnit, carbohydrateQuantity}
+) => {
 
 let data= [
   {
-    label: protLabel,
+    label: "Protein",
     value: protQuantity,
+    unit: protUnit,
     color: "rgba(0, 43, 73, 1)",
     cutout: "50%",
   },
   {
-    label: fatLabel,
+    label: "Fats",
     value: fatQuantity,
+    unit: fatUnit,
     color: "rgba(0, 103, 160, 1)",
     cutout: "50%",
   },
   {
-    label: "Label 3",
-    value: 80,
+    label: "Carbs",
+    value: carbohydrateQuantity,
+    unit: "",
     color: "rgba(83, 217, 217, 1)",
     cutout: "50%",
   },
@@ -40,8 +44,14 @@ let data= [
   const options: any = {
     plugins: {
       responsive: true,
+      datalabels: {
+        formatter: (val) => {
+          return val + ' kg';
+        }
+      }
     },
     cutout: data.map((item) => item.cutout),
+    aspectRatio: 4
   };
 
   const finalData = {
@@ -56,7 +66,7 @@ let data= [
       },
     ],
   };
-  return <Doughnut data={finalData} options={options} />;
+  return <Doughnut data={finalData} options={options} height={"300px"} width={"300px"} />;
 }
 
 export default MacronutrientsChartDoughnut
