@@ -519,12 +519,12 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     />
                     <h3 className='my-5 text-lg'>Macronutrients Breakdown</h3>
                     <MacronutrientsChartDoughnut 
-                        protLabel={nutritionState?.["totalNutrients"]["PROCNT"].label}
                         protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity}
                         protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
-                        fatLabel={nutritionState?.["totalNutrients"]["FAT"].label}
                         fatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity}
                         fatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
+                        carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity}
+                        carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
                     />
                 </div>
             </section>
