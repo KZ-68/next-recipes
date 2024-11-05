@@ -11,10 +11,11 @@ interface MacronutrientsProps {
   fatQuantity: string
   fatUnit: string
   carbohydrateQuantity:string
+  carbohydrateUnit:string
 }
 
 const MacronutrientsChartDoughnut:React.FC<MacronutrientsProps> = (
-  {protQuantity, protUnit, fatQuantity, fatUnit, carbohydrateQuantity}
+  {protQuantity, protUnit, fatQuantity, fatUnit, carbohydrateQuantity, carbohydrateUnit}
 ) => {
 
 let data= [
@@ -35,7 +36,7 @@ let data= [
   {
     label: "Carbs",
     value: carbohydrateQuantity,
-    unit: "",
+    unit: carbohydrateUnit,
     color: "rgba(83, 217, 217, 1)",
     cutout: "50%",
   },
@@ -43,10 +44,12 @@ let data= [
 
   const options: any = {
     plugins: {
-      responsive: true,
-      datalabels: {
-        formatter: (val) => {
-          return val + ' kg';
+
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            return `${context.raw.value} ${context.raw.unit}`
+          }
         }
       }
     },
@@ -58,7 +61,7 @@ let data= [
     labels: data.map((item) => item.label),
     datasets: [
       {
-        data: data.map((item) => (item.value)),
+        data: data.map((item) => ({"value": item.value, "unit": item.unit})),
         backgroundColor: data.map((item) => item.color),
         borderColor: data.map((item) => item.color),
         borderWidth: 1,
