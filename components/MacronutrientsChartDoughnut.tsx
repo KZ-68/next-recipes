@@ -37,7 +37,7 @@ let data= [
     label: "Carbs",
     value: carbohydrateQuantity,
     unit: carbohydrateUnit,
-    color: "rgba(135,107,0,255)",
+    color: "rgba(234,188,20,1)",
     cutout: "50%",
   },
 ]
