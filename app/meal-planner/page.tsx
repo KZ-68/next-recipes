@@ -45,11 +45,6 @@ const MealPlannerPage = () => {
         })
     }
 
-    function changeMealRecipesState() {
-        meal.mealrecipes = [];
-        setMeals(meals);
-    }
-
     function onPress(mealData) {
         setMeal(mealData);
         onOpen();
@@ -105,8 +100,8 @@ const MealPlannerPage = () => {
                 <input onChange={dateHandler} className='py-1 bg-white text-black' type="date" id="start" name="trip-start" max="2099-12-31" />
                 <CalendarDays className='text-black' />
             </div>
-            <div className='absolute top-64 right-[600px]' id='modal-root'>
-                <Modal className='absolute w-fit' isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
+            <div className='relative right-[600px]' id='modal-root'>
+                <Modal className='absolute left-80 bottom-72 w-fit' isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
                     <ModalContent className='flex flex-col bg-slate-800 rounded-md py-3 px-5'>
                     {(onClose) => (
                         <>
@@ -146,7 +141,7 @@ const MealPlannerPage = () => {
                         <ul className='flex flex-col py-3 px-4 rounded-md bg-slate-700'>
                         {meal.mealrecipes.length > 0 ? (
                             meal.mealrecipes.map((mealrecipe:MealRecipeType) => (
-                                <DraggableItem key={mealrecipe.recipe.id} meal={meal} setmeal={changeMealRecipesState} mealrecipe={mealrecipe} />
+                                <DraggableItem key={mealrecipe.recipe.id} meal={meal} setMeal={setMeal} mealrecipe={mealrecipe} />
                             ))
                         ):(
                             <li>No recipes added yet</li>
