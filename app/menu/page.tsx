@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Button from '@/components/Button'
 import { formatDate, formatDateCalendar } from '@/lib/utils'
 import Image from 'next/image'
-import { CroissantIcon, ImageIcon, TimerIcon, Trash2Icon } from 'lucide-react'
+import { CroissantIcon, EggFriedIcon, HamIcon, ImageIcon, TimerIcon, Trash2Icon } from 'lucide-react'
 
 const MenuPage = () => {
 
@@ -48,7 +48,28 @@ const MenuPage = () => {
                         <h3 className='text-2xl'>{formatDateCalendar(menu.date)}</h3>                                                    
                             {menu.menumeals.map((menumeal:MenuMealType)=> (
                                 <div key={menumeal.meal.id}>
-                                    <h4 className='flex flex-row text-xl my-2 gap-3 text-orange-600'><CroissantIcon/>{menumeal.meal.name}</h4>
+                                    {menumeal.meal.name == 'Dinner' ? 
+                                        (
+                                        <h4 className='flex flex-row text-xl my-2 gap-3 text-orange-600'>
+                                            <EggFriedIcon/>{menumeal.meal.name}
+                                        </h4>
+                                        ):menumeal.meal.name == 'Breakfast' ? 
+                                        (
+                                        <h4 className='flex flex-row text-xl my-2 gap-3 text-orange-600'>
+                                            <CroissantIcon/>{menumeal.meal.name}
+                                        </h4>
+                                        ):menumeal.meal.name == 'Lunch' ?
+                                        (
+                                        <h4 className='flex flex-row text-xl my-2 gap-3 text-orange-600'>
+                                            <HamIcon/>{menumeal.meal.name}
+                                        </h4> 
+                                        ):
+                                        (
+                                            <h4 className='flex flex-row text-xl my-2 gap-3 text-orange-600'>
+                                                {menumeal.meal.name}
+                                            </h4>
+                                        )
+                                    }
                                     <ul className='flex flex-col gap-3'>
                                         {menumeal.meal.mealrecipes.length > 0 ? (
                                             menumeal.meal.mealrecipes.map((mealrecipe: MealRecipeType)=> (
