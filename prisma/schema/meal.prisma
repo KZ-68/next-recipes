@@ -3,6 +3,10 @@ model Meal {
     name String
     createdAt DateTime @default(now())
 
-    mealrecipes MealRecipe[]
-    menumeals MenuMeal[]
+    recipes Recipe[]
+
+    menuId String @db.ObjectId
+    menu Menu? @relation(fields: [menuId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+    @@index([menuId])
 }

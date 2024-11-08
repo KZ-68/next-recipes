@@ -2,5 +2,5 @@ model Menu {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     date DateTime @default(now())
  
-    menumeals MenuMeal[]
+    meals Meal[]
 }
