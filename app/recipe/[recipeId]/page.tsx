@@ -499,33 +499,37 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     </hgroup>
                     <NutritionInfo 
                         energyLabel={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].label} 
-                        energyQuantity={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].quantity}
+                        energyQuantity={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].quantity.toFixed(2)}
                         energyUnit={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].unit}
                         totalFatLabel={nutritionState?.["totalNutrients"]["FAT"].label}
-                        totalFatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity}
+                        totalFatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity.toFixed(2)}
                         totalFatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
                         carbohydrateLabel={nutritionState?.["totalNutrients"]["CHOCDF"].label}
-                        carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity}
+                        carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity.toFixed(2)}
                         carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
                         protLabel={nutritionState?.["totalNutrients"]["PROCNT"].label}
-                        protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity}
+                        protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity.toFixed(2)}
                         protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
                         sugarLabel={nutritionState?.["totalNutrients"]["SUGAR"].label}
-                        sugarQuantity={nutritionState?.["totalNutrients"]["SUGAR"].quantity}
+                        sugarQuantity={nutritionState?.["totalNutrients"]["SUGAR"].quantity.toFixed(2)}
                         sugarUnit={nutritionState?.["totalNutrients"]["SUGAR"].unit}
                         vitcLabel={nutritionState?.["totalNutrients"]["VITC"].label}
-                        vitcQuantity={nutritionState?.["totalNutrients"]["VITC"].quantity}
+                        vitcQuantity={nutritionState?.["totalNutrients"]["VITC"].quantity.toFixed(2)}
                         vitcUnit={nutritionState?.["totalNutrients"]["VITC"].unit}
                     />
                     <h3 className='my-5 text-lg'>Macronutrients Breakdown</h3>
-                    <MacronutrientsChartDoughnut 
-                        protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity}
-                        protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
-                        fatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity}
-                        fatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
-                        carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity}
-                        carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
-                    />
+                    <div className='flex flex-row justify-start'>
+                        <div className='w-[1000px]'>
+                            <MacronutrientsChartDoughnut 
+                                protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity.toFixed(2)}
+                                protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
+                                fatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity.toFixed(2)}
+                                fatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
+                                carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity.toFixed(2)}
+                                carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
+                            />
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
