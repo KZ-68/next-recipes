@@ -78,32 +78,19 @@ interface RecipeType {
     tools: ToolRecipeType[];
     comments: CommentType[];
     steps: StepType[];
-    mealrecipes: MealRecipeType[];
+    meal: MealType;
 }
 
 interface MenuType {
     id: string;
     date:Date;
-    menumeals: MenuMealType[];
+    meals: MealType[];
 }
 
 interface MealType {
     id: string;
     name:string;
     createdAt:Date;
-    menumeals: MenuMealType[];
-    mealrecipes: MealRecipeType[];
-}
-
-interface MealRecipeType {
-    id: string;
-    recipe: RecipeType;
-    meal: MealType;
-    date: Date;
-}
-
-interface MenuMealType {
-    id: string;
     menu: MenuType;
-    meal: MealType;
+    recipes: RecipeType[];
 }
