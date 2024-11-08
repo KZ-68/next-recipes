@@ -24,27 +24,26 @@ let data= [
     value: protQuantity,
     unit: protUnit,
     color: "rgba(86,73,231,255)",
-    cutout: "50%",
+    cutout: "80%",
   },
   {
     label: "Fats",
     value: fatQuantity,
     unit: fatUnit,
     color: "rgba(226,76,74,255)",
-    cutout: "50%",
+    cutout: "80%",
   },
   {
     label: "Carbs",
     value: carbohydrateQuantity,
     unit: carbohydrateUnit,
     color: "rgba(234,188,20,1)",
-    cutout: "50%",
+    cutout: "80%",
   },
 ]
 
   const options: any = {
     plugins: {
-
       tooltip: {
         callbacks: {
           label: (context) => {
@@ -54,7 +53,7 @@ let data= [
       }
     },
     cutout: data.map((item) => item.cutout),
-    aspectRatio: 4
+    aspectRatio: 3
   };
 
   const finalData = {
@@ -69,7 +68,7 @@ let data= [
       },
     ],
   };
-  return <Doughnut data={finalData} options={options} height={"300px"} width={"300px"} />;
+  return <Doughnut data={finalData} options={options} />;
 }
 
 export default MacronutrientsChartDoughnut
