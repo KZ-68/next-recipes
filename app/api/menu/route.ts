@@ -8,20 +8,12 @@ export async function GET() {
                 "date": 'desc'
             },
             "include": {
-                "menumeals": {
+                "meals": {
                     "orderBy": {
                         "createdAt": "desc"
                     },
                     "include": {
-                        "meal": {
-                            "include": {
-                                "mealrecipes": {
-                                    "include" :{
-                                        "recipe": true
-                                    }
-                                }
-                            }
-                        }
+                        "recipes": true
                     }
                 },
             }

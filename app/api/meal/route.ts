@@ -7,6 +7,9 @@ export async function GET() {
             "orderBy": {
                 "createdAt": 'desc'
             },
+            "include" :{
+                "recipes": true
+            }
         })
         return NextResponse.json(meals)
     } catch (error) {
