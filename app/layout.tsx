@@ -29,7 +29,7 @@ export default function RootLayout({
         <body className={`${merriWeather.className} antialiased dark:bg-slate-800`}>
           <ThemeProvider>
           <header>
-            <nav className="flex flex-row justify-between pr-20 bg-slate-800 text-white">
+            <nav className="flex flex-row justify-between pr-20 bg-slate-700 text-white">
               <NavBar />
               <div className="flex flex-row gap-3">
                 <ThemeSwitcher />

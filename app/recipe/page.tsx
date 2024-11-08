@@ -41,6 +41,13 @@ const RecipePage = () => {
                     pagination={true}
                     modules={[EffectCoverflow, Pagination]}
                     className="mySwiper"
+                    style={{
+                        "--swiper-pagination-color": "rgb(234 88 12)",
+                        "--swiper-pagination-bullet-inactive-color": "#999999",
+                        "--swiper-pagination-bullet-inactive-opacity": "1",
+                        "--swiper-pagination-bullet-size": "16px",
+                        "--swiper-pagination-bullet-horizontal-gap": "6px"
+                    }}
                 >
                     {recipes.map((recipe: RecipeType) => (
                         <SwiperSlide className='w-72' key={recipe.id}>

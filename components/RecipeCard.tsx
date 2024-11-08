@@ -57,7 +57,7 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
 
     return (
         <div className='flex flex-col w-72 group rounded-lg bg-slate-800 cursor-pointer duration-300 h-full' key={recipe.id}>
-            <div className='relative flex flex-row justify-center'>
+            <div className='relative flex flex-row justify-center bg-slate-800'>
                 {recipe.image_url == "" ? (
                     <ImageIcon size={250}/>
                 ) : 
@@ -70,8 +70,8 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
                 
             </div>
             
-            <div className='flex flex-col items-start px-5 py-4'>
-                <h2 className='text-2xl md:text-xl font-bold'>{recipe.title}</h2>
+            <div className='flex flex-col items-start px-5 py-4 bg-slate-800'>
+                <h2 className='text-2xl md:text-xl font-bold light:text-white'>{recipe.title}</h2>
                 
                 <div className='flex flex-wrap gap-2 my-4 md:leading-8'>
                 <Category text={category.name} key={category.id}/>
@@ -84,6 +84,7 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
                 </div>
                 
                 <Button href={`recipe/${recipe.id}`} key={recipe.id} label='View Recipe ->' />
+
             </div>
         </div>
     )
