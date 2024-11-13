@@ -41,11 +41,18 @@ const ArticlePage = () => {
             <h1 className='text-4xl font-bold mt-4 mb-6'>Blog</h1>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                 {/* Liste des articles */}
-                {articles.map((article: ArticleWithTagsAndComments) => (
-                    <Link href={`article/${article.id}`} key={article.id}>
-                        <ArticleCard article={article}/>
-                    </Link>
-                ))}
+                {articles.length > 0 ? 
+                (
+                    articles.map((article: ArticleWithTagsAndComments) => (
+                        <Link href={`article/${article.id}`} key={article.id}>
+                            <ArticleCard article={article}/>
+                        </Link>
+                    ))
+                ):
+                (
+                    <p>Articles list is empty for now</p>
+                )}
+                
             </div>
         </>
     )
