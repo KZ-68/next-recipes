@@ -17,9 +17,9 @@ const ThemeSwitcher = () => {
 	}
 
 	return (
-		<div className="flex flex-col justify-center bg-slate-800 text-primary-green">
+		<div className="flex flex-col my-4 py-2 px-2 justify-center bg-slate-800 rounded-full text-primary-green">
             {theme === "dark" ? (
-                <button onClick={() => {setTheme('light');  console.log("Theme set to dark but in reality it is", theme) }}><SunIcon size={36}/></button>
+                <button onClick={() => {setTheme('light');  console.log("Theme set to dark but in reality it is", theme) }}><SunIcon className='text-yellow-400' size={36}/></button>
             ):(
                 <button onClick={() => setTheme('dark')}><MoonIcon size={36} /></button>    
             )}	
