@@ -1,3 +1,4 @@
+"use server"
 import nodemailer from "nodemailer"
 
 export async function sendMail({subject, body}: {
@@ -33,6 +34,7 @@ export async function sendMail({subject, body}: {
             from: SMTP_EMAIL, to: SMTP_EMAIL, subject, html:body
         })
         console.log(sendResult);
+        return sendResult.response;
     } catch(error) {
         console.log(error)
     }
