@@ -137,86 +137,86 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
     const PdfFile = () => {
         return (
             <Document>
-            <Page size="A4" style={styles.page}>
-                <View style={styles.section_1}>
-                    <Text style={styles.title}>{recipe?.title}</Text>
-                    <View style={styles.section_1_line_2}>
-                        <Text style={styles.category_tag}>{recipe?.category.name}</Text>
-                        <Text>{recipe?.duration} mins</Text>
-                    </View>
-                </View>
-                <View style={styles.section_2}>
-                    <View style={styles.section_2_aside_left}>
-                        <Text style={styles.title_h2}> Instructions</Text>
-                        <Text>{recipe?.instruction}</Text>
-                    </View>
-                    <View style={styles.section_2_aside_left}>
-                        <Text style={styles.title_h2}>Ingredients and Tools</Text>
-                        <View style={styles.tabs_block}>
-                            <Text style={styles.tabs}>Ingredients</Text>
-                            <Text style={styles.tabs}>Tools</Text>    
-                        </View>
-                        <View style={styles.ingredients_or_tools_list}>
-                        {recipe?.ingredients && recipe.ingredients.length > 0 ? (
-                            recipe?.ingredients.map(
-                                (ingredient: IngredientRecipeType) => (
-                                    <View style={styles.ingredients_or_tools_block} key={ingredient.id}>
-                                        <Text>{ingredient.ingredient.name}</Text>
-                                        <Text>{ingredient.quantity} {ingredient.unit}</Text>
-                                    </View>
-                                )
-                            )
-                            ) : 
-                            (
-                                <View style={styles.ingredients_or_tools_block}>
-                                    <Text>Aucun ingrédient à été ajouté sur cette recette.</Text>
-                                </View>
-                            )
-                        }
+                <Page size="A4" style={styles.page}>
+                    <View style={styles.section_1}>
+                        <Text style={styles.title}>{recipe?.title}</Text>
+                        <View style={styles.section_1_line_2}>
+                            <Text style={styles.category_tag}>{recipe?.category.name}</Text>
+                            <Text>{recipe?.duration} mins</Text>
                         </View>
                     </View>
-                </View>
-                <View style={styles.section_3}>
-                    <Text style={styles.title_h2}>Steps ({recipe?.steps.length})</Text>
-                    <View style={styles.section_3_wrapper}>
-                        {recipe?.steps && recipe.steps.length > 0 ? (
-                                recipe?.steps.map(
-                                    (step: StepType) => (
-                                    <View style={styles.section_3_block} key={step.id}>
-                                        <Text>{step.order}</Text>
-                                        <Text>{step.text}</Text>
-                                    </View>
+                    <View style={styles.section_2}>
+                        <View style={styles.section_2_aside_left}>
+                            <Text style={styles.title_h2}> Instructions</Text>
+                            <Text>{recipe?.instruction}</Text>
+                        </View>
+                        <View style={styles.section_2_aside_left}>
+                            <Text style={styles.title_h2}>Ingredients and Tools</Text>
+                            <View style={styles.tabs_block}>
+                                <Text style={styles.tabs}>Ingredients</Text>
+                                <Text style={styles.tabs}>Tools</Text>    
+                            </View>
+                            <View style={styles.ingredients_or_tools_list}>
+                            {recipe?.ingredients && recipe.ingredients.length > 0 ? (
+                                recipe?.ingredients.map(
+                                    (ingredient: IngredientRecipeType) => (
+                                        <View style={styles.ingredients_or_tools_block} key={ingredient.id}>
+                                            <Text>{ingredient.ingredient.name}</Text>
+                                            <Text>{ingredient.quantity} {ingredient.unit}</Text>
+                                        </View>
                                     )
                                 )
-                            ) : 
-                            (
-                            <View style={styles.section_3_block}>
-                                <Text>No step can be found for this recipe</Text>
+                                ) : 
+                                (
+                                    <View style={styles.ingredients_or_tools_block}>
+                                        <Text>Aucun ingrédient à été ajouté sur cette recette.</Text>
+                                    </View>
+                                )
+                            }
                             </View>
-                            )
-                        }
-                    </View>
-                </View>
-                <View style={styles.section_4}>
-                    <Text style={styles.title_h2}>Comments ({recipe?.comments.length})</Text>
-                    {recipe?.comments && recipe.comments.length > 0 ? (
-                        recipe?.comments.map((comment: CommentType) => (
-                            <View style={styles.comments_block} key={comment.id}>
-                                <View style={styles.comments_block_top}>
-                                    <Text>{formatDate(recipe.createdAt)}</Text>
-                                    <Text>{comment.text}</Text>
-                                </View>
-                            </View>
-                        ))
-                    ) : (
-                        <View style={styles.comments_block}>
-                            <Text>
-                                Aucun commentaire ajouté sur cet article.
-                            </Text>
                         </View>
-                    )}
-                </View>
-            </Page>
+                    </View>
+                    <View style={styles.section_3}>
+                        <Text style={styles.title_h2}>Steps ({recipe?.steps.length})</Text>
+                        <View style={styles.section_3_wrapper}>
+                            {recipe?.steps && recipe.steps.length > 0 ? (
+                                    recipe?.steps.map(
+                                        (step: StepType) => (
+                                        <View style={styles.section_3_block} key={step.id}>
+                                            <Text>{step.order}</Text>
+                                            <Text>{step.text}</Text>
+                                        </View>
+                                        )
+                                    )
+                                ) : 
+                                (
+                                <View style={styles.section_3_block}>
+                                    <Text>No step can be found for this recipe</Text>
+                                </View>
+                                )
+                            }
+                        </View>
+                    </View>
+                    <View style={styles.section_4}>
+                        <Text style={styles.title_h2}>Comments ({recipe?.comments.length})</Text>
+                        {recipe?.comments && recipe.comments.length > 0 ? (
+                            recipe?.comments.map((comment: CommentType) => (
+                                <View style={styles.comments_block} key={comment.id}>
+                                    <View style={styles.comments_block_top}>
+                                        <Text>{formatDate(recipe.createdAt)}</Text>
+                                        <Text>{comment.text}</Text>
+                                    </View>
+                                </View>
+                            ))
+                        ) : (
+                            <View style={styles.comments_block}>
+                                <Text>
+                                    Aucun commentaire ajouté sur cet article.
+                                </Text>
+                            </View>
+                        )}
+                    </View>
+                </Page>
             </Document>
         )
     };
@@ -325,8 +325,8 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
     }, [params.recipeId, params.categoryId])
     return (
         <div className='mx-8'>
-            <section className='flex flex-row mx-5'>
-                <aside className='flex flex-col flex-wrap rounded-l-md py-16 px-56 bg-slate-700 justify-center items-center'>
+            <section className='flex xl:flex-row max-[768px]:items-center flex-col-reverse mx-5 '>
+                <aside className='flex flex-col flex-wrap rounded-l-md py-16 px-32 md:px-56 bg-slate-700 justify-center items-center'>
                     <h1 className='mb-3 text-3xl w-72 text-center'>{recipe?.title}</h1>
                     <div className='my-5 flex flex-row gap-4 content-center'>
                         <Category key={recipe?.category.id} text={recipe?.category.name}/>
@@ -346,10 +346,10 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 </aside>
                 <aside>
                     {recipe?.image_url == "" ? (
-                        <Image className='rounded-r-md aspect-video object-cover h-96' src={`https://placehold.co/1000x500/png?text=placeholder&font=roboto`} alt="Recipe Image" width="1000" height="500"/>
+                        <Image className='rounded-t-md md:rounded-r-md aspect-video object-cover h-96' src={`https://placehold.co/1000x500/png?text=placeholder&font=roboto`} alt="Recipe Image" width="1000" height="500"/>
                     ) : 
                     (
-                        <Image className='rounded-r-md aspect-video object-cover h-96' src={`/images/${recipe?.image_url}`} alt="Recipe Image" width="1000" height="500"/>
+                        <Image className='rounded-t-md md:rounded-r-md aspect-video object-cover h-96' src={`/images/${recipe?.image_url}`} alt="Recipe Image" width="1000" height="500"/>
                     )}
                 </aside>
             </section>
@@ -429,7 +429,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                         recipe?.steps.map(
                             (step: StepType) => (
                                 <SwiperSlide key={step.id}>
-                                    <div className='flex flex-col gap-3 rounded-md mt-8 mb-14 px-24 py-24 h-96 bg-slate-700 justify-center items-center' key={step.id}>
+                                    <div className='flex flex-col gap-3 rounded-md mt-8 mb-14 px-24 py-24 xl:h-96 bg-slate-700 justify-center items-center' key={step.id}>
                                         <h3 className='text-xl text-orange-600' >{step.order}</h3>
                                         <p>{step.text}</p>
                                     </div>
@@ -438,7 +438,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                         )
                     ) : 
                     (
-                        <div className='flex flex-col gap-3 rounded-md mt-8 mb-14 mx-80 px-24 py-24 h-96 bg-slate-700 justify-center items-center'>
+                        <div className='flex flex-col gap-3 rounded-md mt-8 mb-14 mx-14 xl:mx-80 px-24 py-24 xl:h-96 bg-slate-700 justify-center items-center'>
                             No step can be found for this recipe
                         </div>
                     )}
