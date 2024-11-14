@@ -46,7 +46,7 @@ const NutritionInfo:React.FC<NutritionInfoProps> = (
 ) => {
 
     return (
-        <div className='flex flex-row flex-wrap justify-center gap-2 py-2 px-2 bg-slate-700 rounded-md'>
+        <div className='flex flex-row flex-wrap justify-center gap-2 py-4 px-2 bg-slate-700 rounded-md'>
             <div className='flex flex-col items-center py-8 px-14 rounded-md bg-slate-900 w-[32%]'>
                 <AppleIcon className='p-2 rounded-full bg-green-700' size={48} strokeWidth={1}/>
                 <h3>{energyLabel}</h3>

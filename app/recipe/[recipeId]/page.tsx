@@ -336,7 +336,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                         </div>
                     </div>
                     <div className='flex flex-row gap-5'>
-                        <div className='rounded-3xl bg-orange-600 py-2 px-3' key={recipe?.id}>
+                        <div className='rounded-3xl hover:bg-orange-700 bg-orange-600 py-2 px-3' key={recipe?.id}>
                             <PDFDownloadLink document={<PdfFile />} fileName='test.pdf' > 
                                 Download PDF
                             </PDFDownloadLink>
@@ -354,17 +354,17 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 </aside>
             </section>
 
-            <section className='flex flex-row my-7'>
+            <section className='flex flex-col lg:flex-row items-center lg:items-start my-7'>
                 <aside className='flex flex-col w-3/6 px-6'>
                     <h2 className='flex flex-row text-xl text-orange-500'><ListChecksIcon className='mr-5'/>Instructions</h2>
                     <p className='py-4'>{recipe?.instruction}</p>
                 </aside>
                 <aside className='flex flex-col w-3/6 px-4 gap-4'>
                     <h2 className='flex flex-row text-orange-500'><CookingPotIcon className='mr-4'/>Ingredients and Tools</h2>
-                    <TabGroup className='border border-gray-600 rounded-lg'>
+                    <TabGroup className='border-2 border-gray-700 rounded-lg'>
                         <TabList className='flex flex-row gap-4 py-4 px-4 bg-slate-700 rounded-t-md'>
-                            <Tab className='py-2 px-4 bg-orange-600 rounded-xl'>Ingredients</Tab>
-                            <Tab className='py-2 px-4 bg-orange-600 rounded-xl'>Tools</Tab>
+                            <Tab className='py-2 px-4 hover:bg-orange-700 bg-orange-600 rounded-xl'>Ingredients</Tab>
+                            <Tab className='py-2 px-4 hover:bg-orange-700 bg-orange-600 rounded-xl'>Tools</Tab>
                         </TabList>
                     <TabPanels className='py-4 px-2'>
                         <TabPanel className="flex flex-row">
@@ -494,8 +494,8 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             <section className='my-7 py-4 px-6'>
                 <div>
                     <hgroup className='flex flex-row gap-3'>
-                        <LeafIcon className='text-orange-700' />
-                        <h2 className='text-xl text-orange-700'>Nutritional Info</h2>
+                        <LeafIcon className='text-orange-600' />
+                        <h2 className='text-xl text-orange-600'>Nutritional Info</h2>
                     </hgroup>
                     <NutritionInfo 
                         energyLabel={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].label} 
