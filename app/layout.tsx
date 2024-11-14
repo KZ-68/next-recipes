@@ -26,6 +26,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <link rel='preconnect' href="https://healthy-lobster-13.clerk.accounts.dev"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </head>
         <body className={`${merriWeather.className} antialiased dark:bg-slate-800`}>
           <ThemeProvider>
           <header>
