@@ -9,7 +9,7 @@ interface SuggestionCardProps {
 const SuggestionCard:React.FC<SuggestionCardProps> = ({recipe}) => {
     
     return (
-        <div className='group h-full pb-6 rounded-t-md bg-slate-800 cursor-pointer hover:translate-y-2 duration-300' key={recipe?.id}>
+        <div className='group h-full pb-2 rounded-md bg-slate-800 cursor-pointer hover:translate-y-2 duration-300' key={recipe?.id}>
             {recipe.image_url == "" ? (
                 <Image className='rounded-t-lg h-[250px]' src={`https://placehold.co/250x250/png?text=placeholder&font=roboto`} alt="Recipe Image" width="250" height="250"/>
             ) : 
