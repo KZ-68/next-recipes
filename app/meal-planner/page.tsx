@@ -1,14 +1,17 @@
 "use client"
 // import { db } from '@/lib/db'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
-import { CalendarDays } from 'lucide-react';
+import { CalendarDays, CircleCheckIcon } from 'lucide-react';
 import Link from 'next/link';
 import { formatDateCalendar } from '@/lib/utils';
 import DraggableItem from '@/components/DraggableItem';
+import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
 
 const MealPlannerPage = () => {
     const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
+
+    const [successAlert, setSuccessAlert] = useState<boolean>(false)
 
     const [recipes, setRecipes] = useState<RecipeType[]>([])
     const [meals, setMeals] = useState<MealType[]>([])
@@ -17,8 +20,9 @@ const MealPlannerPage = () => {
     const [menu, setMenu] = useState<MenuType | null>(null)
     const [date, setDate] = useState<string>("");
     const [selectedRecipes, setSelectedRecipes] = useState<RecipeType[]>([])
-
+    
     function handleModalClick(e) {
+        console.log(meal);
         let recipesData : RecipeType[] = [];
         setModalRecipes(recipesData);
         selectedRecipes.forEach(selectedRecipe => {
@@ -42,10 +46,14 @@ const MealPlannerPage = () => {
             method: 'POST',
             body: JSON.stringify(menu),
         })
+        if(response.ok) {
+            setSuccessAlert(true)
+        }
     }
 
     function onPress(mealData) {
         setMeal(mealData);
+        console.log(mealData);
         onOpen();
     }
 
@@ -85,12 +93,14 @@ const MealPlannerPage = () => {
             const dataMenu : MenuType = {meals:[]};
             setMenu(dataMenu);
         }
-        
         multiFetch()
     }, [])
 
     return (
-        <section className='relative flex flex-col items-start gap-8 mx-8'>
+        <section className='relative flex flex-col items-start gap-4 mx-8'>
+            <div className={successAlert === false ? 'hidden opacity-0' : 'absolute bg-slate-200 py-2 px-4 rounded-lg'} id='success-alert'>
+                <p className={successAlert === false ? 'hidden opacity-0' : 'text-black opacity-100 flex flex-row gap-2'}><CircleCheckIcon className='bg-green-600 text-white rounded-full'/> Menu Plan added !</p>
+            </div>
             <h1 className='text-3xl my-6'>Meal Planer</h1>
             <Link className='bg-red-500 py-3 px-4 rounded-xl' href='/menu' >
                 My Meal Plans
@@ -129,7 +139,7 @@ const MealPlannerPage = () => {
                     </ModalContent>
                 </Modal>
             </div>
-            <div className='flex flex-row my-9 gap-8'>
+            <div className='flex flex-row my-2 gap-8'>
                 {
                     meals.map((meal:MealType) => (
                     <div key={meal.id} className='flex flex-col gap-5 bg-slate-700 rounded-md w-96 py-3 px-4'>
@@ -145,7 +155,7 @@ const MealPlannerPage = () => {
                                 <DraggableItem key={recipe.id} recipes={modalRecipes} setRecipes={setRecipes} recipe={recipe} />
                             ))
                         ):(
-                            <li>No recipes added yet</li>
+                            <li key={0}>No recipes added yet</li>
                         )}
                         </ul>
                     </div>
