@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Gauge, HeartPulse, ImageIcon, LeafIcon, TimerIcon } from 'lucide-react';
 import Category from './Category';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface RecipeCardProps {
     recipe: RecipeType;
@@ -20,7 +21,7 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
         const gaugeArray = [];
         for (let id = 0; id < 5; id++) {
           if(id <= rating) {
-            gaugeArray.push(<Gauge color='#e06020' key={id}></Gauge>);
+            gaugeArray.push(<Gauge color={category.name === 'Dessert' ? '#6dc96a' : category.name === 'Main' ? '#e06020' : '#e06020'} key={id}></Gauge>);
           } else {
             gaugeArray.push(<Gauge key={id}></Gauge>);
           }
@@ -31,10 +32,10 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
     const getVeganAndHealthyStatus = () => {
         const status = [];
         if(recipe.vegan === true) {
-            status.push(<LeafIcon color='#3f8f29' size={30}/>)
+            status.push(<LeafIcon fill='#3f8f29' color='black' strokeWidth={1} size={24}/>)
         }
         if(recipe.healthy === true) {
-            status.push(<HeartPulse color='#de1a24' size={30}/>)
+            status.push(<HeartPulse fill='#de1a24' color='black' strokeWidth={1} size={24}/>)
         }
         return status
     }
@@ -83,7 +84,7 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
                     {getGaugeIcon()}
                 </div>
                 
-                <Button href={`recipe/${recipe.id}`} key={recipe.id} label='View Recipe ->' />
+                <Link className='my-6 py-2 px-4 border-2 text-white rounded-md' href={`recipe/${recipe.id}`} key={recipe.id} >View Recipe {'->'}</Link>
 
             </div>
         </div>
