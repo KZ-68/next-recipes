@@ -2,7 +2,7 @@
 import CommentRecipe from '@/components/CommentRecipe'
 import Category from '@/components/Category'
 import React, { useEffect, useState } from 'react'
-import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon, Lightbulb, MessageSquareQuoteIcon, MessageSquareMoreIcon, LeafIcon } from 'lucide-react'
+import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon, Lightbulb, MessageSquareQuoteIcon, MessageSquareMoreIcon, LeafIcon, HeartIcon, DownloadIcon } from 'lucide-react'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import Image from 'next/image'
 import { Pagination } from 'swiper/modules';
@@ -30,6 +30,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
     const [nutritionState, setNutritionState] = useState(null)
 
     const rating = recipe?.rating;
+    const category = recipe?.category;
 
     const styles = StyleSheet.create({
         title: {
@@ -226,7 +227,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
         for (let id = 0; id < 5; id++) {
             if(rating) {
                 if(id <= rating) {
-                    gaugeArray.push(<Gauge color='#e06020' key={id}></Gauge>);
+                    gaugeArray.push(<Gauge color={category?.name === 'Dessert' ? '#6dc96a' : category?.name === 'Main' ? '#e06020' : '#e06020'} key={id}></Gauge>);
                 } else {
                 gaugeArray.push(<Gauge key={id}></Gauge>);
                 }
@@ -335,13 +336,13 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                             {getGaugeIcon()}
                         </div>
                     </div>
-                    <div className='flex flex-row gap-5'>
-                        <div className='rounded-3xl hover:bg-orange-700 bg-orange-600 py-2 px-3' key={recipe?.id}>
-                            <PDFDownloadLink document={<PdfFile />} fileName='test.pdf' > 
-                                Download PDF
+                    <div className='flex flex-col xl:flex-row items-center xl:items-start gap-5'>
+                        <div className='rounded-3xl hover:bg-orange-700 bg-orange-600 py-2 px-3 min-w-44' key={recipe?.id}>
+                            <PDFDownloadLink className='flex flex-row gap-2 items-center' document={<PdfFile />} fileName='test.pdf' > 
+                            <DownloadIcon/> Download PDF
                             </PDFDownloadLink>
                         </div>
-                        <button type='button' onClick={handleSaveUserData}>Add to Favorites</button>
+                        <button className='flex flex-row items-center gap-2 rounded-3xl hover:bg-orange-700 bg-orange-600 py-2 px-3 min-w-48' type='button' onClick={handleSaveUserData}><HeartIcon color='white'/> Add to Favorites</button>
                     </div>
                 </aside>
                 <aside>
@@ -373,10 +374,10 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                                     (ingredient: IngredientRecipeType) => (
                                         <div className='flex flex-col content-center max-w-fit items-center px-2' key={ingredient.id}>
                                             {ingredient.ingredient.image_url == "" ? (
-                                                <Image className='rounded-2xl object-cover py-2' src={`https://placehold.co/150x150/png?text=placeholder&font=roboto`} alt="Recipe Image" width="150" height="150"/>
+                                                <Image className='rounded-3xl object-cover py-2 h-full' src={`https://placehold.co/150x150/png?text=placeholder&font=roboto`} alt="Recipe Image" width="150" height="150"/>
                                             ) : 
                                             (
-                                                <Image className='rounded-2xl object-cover py-2' src={`/images/${ingredient.ingredient.image_url}`} alt="Recipe Image" width="150" height="150"/>
+                                                <Image className='rounded-3xl object-cover py-2 h-full' src={`/images/${ingredient.ingredient.image_url}`} alt="Recipe Image" width="150" height="150"/>
                                             )
                                             }
                                             <h3>{ingredient.ingredient.name}</h3>
@@ -485,8 +486,8 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Write a comment</h2>
                     <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
                         <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
-                            <input className='bg-transparent' type="text" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
-                            <button className='w-fit mt-6' type="submit">Submit</button>
+                            <input className='bg-slate-700 rounded-md py-1 px-3' type="text" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
+                            <button className='bg-indigo-500 py-2 px-4 rounded-md w-fit mt-6' type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -497,37 +498,40 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                         <LeafIcon className='text-orange-600' />
                         <h2 className='text-xl text-orange-600'>Nutritional Info</h2>
                     </hgroup>
-                    <NutritionInfo 
-                        energyLabel={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].label} 
-                        energyQuantity={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].quantity.toFixed(2)}
-                        energyUnit={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].unit}
-                        totalFatLabel={nutritionState?.["totalNutrients"]["FAT"].label}
-                        totalFatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity.toFixed(2)}
-                        totalFatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
-                        carbohydrateLabel={nutritionState?.["totalNutrients"]["CHOCDF"].label}
-                        carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity.toFixed(2)}
-                        carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
-                        protLabel={nutritionState?.["totalNutrients"]["PROCNT"].label}
-                        protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity.toFixed(2)}
-                        protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
-                        sugarLabel={nutritionState?.["totalNutrients"]["SUGAR"].label}
-                        sugarQuantity={nutritionState?.["totalNutrients"]["SUGAR"].quantity.toFixed(2)}
-                        sugarUnit={nutritionState?.["totalNutrients"]["SUGAR"].unit}
-                        vitcLabel={nutritionState?.["totalNutrients"]["VITC"].label}
-                        vitcQuantity={nutritionState?.["totalNutrients"]["VITC"].quantity.toFixed(2)}
-                        vitcUnit={nutritionState?.["totalNutrients"]["VITC"].unit}
-                    />
-                    <h3 className='my-5 text-lg'>Macronutrients Breakdown</h3>
-                    <div className='flex flex-row justify-start'>
-                        <div className='w-[1000px]'>
-                            <MacronutrientsChartDoughnut 
-                                protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity.toFixed(2)}
-                                protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
-                                fatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity.toFixed(2)}
-                                fatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
-                                carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity.toFixed(2)}
-                                carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
-                            />
+                    <div className='bg-slate-800 my-1 py-4 rounded-lg'>
+                        <NutritionInfo 
+                            energyLabel={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].label} 
+                            energyQuantity={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].quantity.toFixed(2)}
+                            energyUnit={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].unit}
+                            totalFatLabel={nutritionState?.["totalNutrients"]["FAT"].label}
+                            totalFatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity.toFixed(2)}
+                            totalFatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
+                            carbohydrateLabel={nutritionState?.["totalNutrients"]["CHOCDF"].label}
+                            carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity.toFixed(2)}
+                            carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
+                            protLabel={nutritionState?.["totalNutrients"]["PROCNT"].label}
+                            protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity.toFixed(2)}
+                            protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
+                            sugarLabel={nutritionState?.["totalNutrients"]["SUGAR"].label}
+                            sugarQuantity={nutritionState?.["totalNutrients"]["SUGAR"].quantity.toFixed(2)}
+                            sugarUnit={nutritionState?.["totalNutrients"]["SUGAR"].unit}
+                            vitcLabel={nutritionState?.["totalNutrients"]["VITC"].label}
+                            vitcQuantity={nutritionState?.["totalNutrients"]["VITC"].quantity.toFixed(2)}
+                            vitcUnit={nutritionState?.["totalNutrients"]["VITC"].unit}
+                        />
+                    
+                        <h3 className='my-5 mx-3 text-lg'>Macronutrients Breakdown</h3>
+                        <div className='flex flex-row justify-start'>
+                            <div className='w-[1000px]'>
+                                <MacronutrientsChartDoughnut 
+                                    protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity.toFixed(2)}
+                                    protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
+                                    fatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity.toFixed(2)}
+                                    fatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
+                                    carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity.toFixed(2)}
+                                    carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
