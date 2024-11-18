@@ -78,7 +78,7 @@ interface RecipeType {
     tools: ToolRecipeType[];
     comments: CommentType[];
     steps: StepType[];
-    meal: MealType;
+    mealrecipes: MealRecipeType[];
 }
 
 interface MenuType {
@@ -92,5 +92,11 @@ interface MealType {
     name:string;
     createdAt:Date;
     menu: MenuType;
-    recipes: RecipeType[];
+    mealrecipes: MealRecipeType[];
+}
+
+interface MealRecipeType {
+    id: string;
+    meal: MealType;
+    recipe: RecipeType;
 }
