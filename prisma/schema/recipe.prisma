@@ -14,14 +14,11 @@ model Recipe {
     categoryId String @db.ObjectId
     category Category @relation(fields: [categoryId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
-    mealId String? @db.ObjectId
-    meal Meal? @relation(fields: [mealId], references: [id], onUpdate: Cascade)
+    mealrecipes MealRecipe[]
  
     comments CommentRecipe[]
     steps Step[]
  
     ingredients IngredientRecipe[]
     tools ToolRecipe[]
-
-    @@index([mealId])
 }
