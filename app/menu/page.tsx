@@ -76,18 +76,18 @@ const MenuPage = () => {
                                             )
                                         }
                                         <ul className='flex flex-col gap-3'>
-                                            {meal.recipes.length > 0 ? (
-                                                meal.recipes.map((recipe: RecipeType)=> (
-                                                    <li key={recipe.id} className='flex flex-row justify-between items-center gap-32 bg-slate-700 py-2 px-3 rounded-md'>
+                                            {meal.mealrecipes.length > 0 ? (
+                                                meal.mealrecipes.map((mealrecipe: MealRecipeType)=> (
+                                                    <li key={mealrecipe.recipe.id} className='flex flex-row justify-between items-center gap-32 bg-slate-700 py-2 px-3 rounded-md'>
                                                         <hgroup>
-                                                            <h5>{recipe.title}</h5>
-                                                            <p className='flex flex-row gap-2 text-slate-400'><TimerIcon />{recipe.duration} mins</p>
+                                                            <h5>{mealrecipe.recipe.title}</h5>
+                                                            <p className='flex flex-row gap-2 text-slate-400'><TimerIcon />{mealrecipe.recipe.duration} mins</p>
                                                         </hgroup>
-                                                        {recipe.image_url == "" ? (
+                                                        {mealrecipe.recipe.image_url == "" ? (
                                                             <ImageIcon size={64}/>
                                                         ) : 
                                                         (
-                                                        <Image className='rounded-lg w-[64px] h-[64px]' src={`/images/${recipe.image_url}`} alt="Recipe Image" width="64" height="64"/>
+                                                        <Image className='rounded-lg w-[64px] h-[64px]' src={`/images/${mealrecipe.recipe.image_url}`} alt="Recipe Image" width="64" height="64"/>
                                                         )}
                                                     </li>
                                                 ))
