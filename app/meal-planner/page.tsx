@@ -16,6 +16,7 @@ const MealPlannerPage = () => {
     const [recipes, setRecipes] = useState<RecipeType[]>([])
     const [meals, setMeals] = useState<MealType[]>([])
     const [meal, setMeal] = useState<MealType | null>(null)
+    const [mealrecipes, setMealRecipes] = useState<MealRecipeType[]>([])
     const [modalRecipes, setModalRecipes] = useState<RecipeType[]>([])
     const [menu, setMenu] = useState<MenuType | null>(null)
     const [date, setDate] = useState<string>("");
@@ -23,19 +24,21 @@ const MealPlannerPage = () => {
     
     function handleModalClick(e) {
         console.log(meal);
-        let recipesData : RecipeType[] = [];
+        const recipesData : RecipeType[] = [];
         setModalRecipes(recipesData);
+        setMealRecipes([]);
         selectedRecipes.forEach(selectedRecipe => {
             recipes.forEach(recipe => {
                 if(recipe.id === selectedRecipe) {
                     modalRecipes.push(recipe)
+                    mealrecipes.push({recipeId: recipe.id, recipe: recipe})
                 }
             })
         });
         menu.date = date;
         menu?.meals.push(meal);
-        modalRecipes.forEach(recipe => {
-            meal.recipes.push(recipe);
+        mealrecipes.forEach(mealrecipe => {
+            meal?.mealrecipes.push(mealrecipe);
         })
     
         return onClose()
@@ -46,8 +49,8 @@ const MealPlannerPage = () => {
             method: 'POST',
             body: JSON.stringify(menu),
         })
-        if(response.ok) {
-            setSuccessAlert(true)
+        if (response.ok) {
+            setSuccessAlert(true);
         }
     }
 
@@ -81,12 +84,12 @@ const MealPlannerPage = () => {
         const multiFetch = async () => {
             const response = await fetch('/api/recipe')
             const data : RecipeType[] = await response.json()
-            const mealDinner : MealType = {name:'Dinner'}
-            const mealLunch : MealType = {name:'Lunch'}
-            const mealBreakfast : MealType = {name:'Breakfast'}
+            const mealDinner : MealType = {id: '0', name:'Dinner'}
+            const mealLunch : MealType = {id: '1', name:'Lunch'}
+            const mealBreakfast : MealType = {id: '2', name:'Breakfast'}
             const dataMeals : MealType[] = [mealDinner, mealLunch, mealBreakfast]
             dataMeals.forEach(dataMeal => {
-                dataMeal.recipes = [];
+                dataMeal.mealrecipes = [];
             })
             setRecipes(data)
             setMeals(dataMeals)
@@ -142,23 +145,23 @@ const MealPlannerPage = () => {
             <div className='flex flex-row my-2 gap-8'>
                 {
                     meals.map((meal:MealType) => (
-                    <div key={meal.id} className='flex flex-col gap-5 bg-slate-700 rounded-md w-96 py-3 px-4'>
-                        <div className='flex flex-row justify-between gap-16'>
-                            <div className='flex flex-col'>
-                                <h2 className='my-2'>{meal.name}</h2>
+                        <div key={meal.id} className='flex flex-col gap-5 bg-slate-700 rounded-md w-96 py-3 px-4'>
+                            <div className='flex flex-row justify-between gap-16'>
+                                <div className='flex flex-col'>
+                                    <h2 className='my-2'>{meal.name}</h2>
+                                </div>
+                                <Button onPress={() => onPress(meal)} value={meal.id} className='bg-blue-400 px-3 rounded-lg w-fit'>+</Button>
                             </div>
-                            <Button onPress={() => onPress(meal)} value={meal.id} className='bg-blue-400 px-3 rounded-lg w-fit'>+</Button>
+                            <ul className='relative flex flex-col py-3 px-4 rounded-md bg-slate-700'>
+                            {meal.mealrecipes.length > 0 ? (
+                                meal.mealrecipes.map((mealrecipe:MealRecipeType) => (
+                                    <DraggableItem key={mealrecipe.recipe.id} recipe={mealrecipe.recipe} meal={meal} setMeal={setMeal} />
+                                ))
+                            ):(
+                                <li key={0}>No recipes added yet</li>
+                            )}
+                            </ul>
                         </div>
-                        <ul className='relative flex flex-col py-3 px-4 rounded-md bg-slate-700'>
-                        {meal.recipes.length > 0 ? (
-                            meal.recipes.map((recipe:RecipeType) => (
-                                <DraggableItem key={recipe.id} recipes={modalRecipes} setRecipes={setRecipes} recipe={recipe} />
-                            ))
-                        ):(
-                            <li key={0}>No recipes added yet</li>
-                        )}
-                        </ul>
-                    </div>
                     ))
                 }
             </div>
