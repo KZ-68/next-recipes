@@ -1,5 +1,4 @@
 import { db } from "@/lib/db";
-import { X } from "lucide-react";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -7,8 +6,7 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         console.log(body)
-        let bodyMeal = [];
-        let bodyRecipes = []
+        const bodyMeal = [];
         
         body.meals.forEach(meal => {
           bodyMeal.push({name:meal.name})
@@ -25,30 +23,36 @@ export async function POST(req: NextRequest) {
           },
         });
 
+
         const findMealMenu = await db.meal.findMany({
           "where": {
             "menuId": newMenu.id
           }
         })
 
-        body.meals.forEach(async(meal) => {
-          meal.recipes.forEach(recipe => {
-            bodyRecipes.push(recipe.id)
+        body.meals.forEach(async(meal:MealType) => {
+          findMealMenu.forEach(async(findMealMenuUnique) => {
+            if(findMealMenuUnique.name === meal.name) {
+              meal.mealrecipes.forEach((mealrecipe:MealRecipeType) => {
+                delete mealrecipe.recipe;
+                mealrecipe.mealId = findMealMenuUnique.id
+              })
+
+              await db.mealRecipe.createMany({
+                "data": meal.mealrecipes
+              })
+    
+              await db.meal.update({
+                "where": {
+                  "id": findMealMenuUnique.id,
+                },
+                "data": {
+                  "mealrecipes": meal.mealrecipes
+                },
+              })
+            }
           })
-        })
-        
-        findMealMenu.forEach(async(mealMenu) => {
-          bodyRecipes.forEach(async(bodyRecipe) => {
-            console.log(bodyRecipe);
-            const updateMeal = await db.recipe.update({
-              "where": {
-                "id": bodyRecipe,
-              },
-              "data": {
-                "mealId": mealMenu.id
-              },
-            })
-          })
+  
           
         })
         
