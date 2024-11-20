@@ -97,6 +97,7 @@ interface MealType {
 
 interface MealRecipeType {
     id: string;
+    mealId: string;
     meal: MealType;
-    recipe: RecipeType;
+    recipe?: RecipeType;
 }
