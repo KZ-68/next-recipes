@@ -32,10 +32,10 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
     const getVeganAndHealthyStatus = () => {
         const status = [];
         if(recipe.vegan === true) {
-            status.push(<LeafIcon fill='#3f8f29' color='black' strokeWidth={1} size={24}/>)
+            status.push(<LeafIcon key={recipe.id} fill='#3f8f29' color='black' strokeWidth={1} size={24}/>)
         }
         if(recipe.healthy === true) {
-            status.push(<HeartPulse fill='#de1a24' color='black' strokeWidth={1} size={24}/>)
+            status.push(<HeartPulse key={recipe.id} fill='#de1a24' color='black' strokeWidth={1} size={24}/>)
         }
         return status
     }
