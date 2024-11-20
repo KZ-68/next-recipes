@@ -13,7 +13,12 @@ export async function GET() {
                         "createdAt": "desc"
                     },
                     "include": {
-                        "recipes": true
+                        "mealrecipes": {
+                            "include": {
+                                "meal": true,
+                                "recipe": true
+                            }
+                        }
                     }
                 },
             }
