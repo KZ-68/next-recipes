@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import Button from '@/components/Button'
-import { formatDate, formatDateCalendar } from '@/lib/utils'
+import { formatDateCalendar } from '@/lib/utils'
 import Image from 'next/image'
 import { CroissantIcon, EggFriedIcon, HamIcon, ImageIcon, TimerIcon, Trash2Icon } from 'lucide-react'
 import Link from 'next/link'
@@ -10,15 +9,15 @@ const MenuPage = () => {
 
     const [menus, setMenus] = useState<MenuType[]>([])
 
-    const handleDelete = async (menuId) => {
+    const handleDelete = async (menuId:string) => {
         console.log(menuId)
         const confirmDelete = window.confirm('Are you sure you want to delete this menu ?')
         if(!confirmDelete) return;
 
         try {
-            for(let menu of menus) {
+            for(const menu of menus) {
                 if(menu.id == menuId) {
-                    const res = await fetch(`/api/menu/${menu.id}/delete`, {
+                    await fetch(`/api/menu/${menu.id}/delete`, {
                         method: 'DELETE'
                     })
                 }
@@ -26,7 +25,7 @@ const MenuPage = () => {
 
             location.reload();
         } catch(error) {
-            console.error("Error during deletion")
+            console.error("Error during deletion : "+error)
         }
     }
 
@@ -78,16 +77,16 @@ const MenuPage = () => {
                                         <ul className='flex flex-col gap-3'>
                                             {meal.mealrecipes.length > 0 ? (
                                                 meal.mealrecipes.map((mealrecipe: MealRecipeType)=> (
-                                                    <li key={mealrecipe.recipe.id} className='flex flex-row justify-between items-center gap-32 bg-slate-700 py-2 px-3 rounded-md'>
+                                                    <li key={mealrecipe.recipe?.id} className='flex flex-row justify-between items-center gap-32 bg-slate-700 py-2 px-3 rounded-md'>
                                                         <hgroup>
-                                                            <h5>{mealrecipe.recipe.title}</h5>
-                                                            <p className='flex flex-row gap-2 text-slate-400'><TimerIcon />{mealrecipe.recipe.duration} mins</p>
+                                                            <h5>{mealrecipe.recipe?.title}</h5>
+                                                            <p className='flex flex-row gap-2 text-slate-400'><TimerIcon />{mealrecipe.recipe?.duration} mins</p>
                                                         </hgroup>
-                                                        {mealrecipe.recipe.image_url == "" ? (
+                                                        {mealrecipe.recipe?.image_url == "" ? (
                                                             <ImageIcon size={64}/>
                                                         ) : 
                                                         (
-                                                        <Image className='rounded-lg w-[64px] h-[64px]' src={`/images/${mealrecipe.recipe.image_url}`} alt="Recipe Image" width="64" height="64"/>
+                                                        <Image className='rounded-lg w-[64px] h-[64px]' src={`/images/${mealrecipe.recipe?.image_url}`} alt="Recipe Image" width="64" height="64"/>
                                                         )}
                                                     </li>
                                                 ))
@@ -103,7 +102,7 @@ const MenuPage = () => {
                     ))
                 ):
                 (
-                    <p>There's no menu for now, please add new menu plans on <span><Link className='text-orange-600' href="/meal-planner">this link</Link></span></p>
+                    <p>Menus list is empty for now, please add new menu plans on <span><Link className='text-orange-600' href="/meal-planner">this link</Link></span></p>
                 )}
             </div>
         </section>

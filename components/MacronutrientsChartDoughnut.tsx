@@ -18,7 +18,7 @@ const MacronutrientsChartDoughnut:React.FC<MacronutrientsProps> = (
   {protQuantity, protUnit, fatQuantity, fatUnit, carbohydrateQuantity, carbohydrateUnit}
 ) => {
 
-let data= [
+const data= [
   {
     label: "Protein",
     value: protQuantity,
@@ -42,7 +42,7 @@ let data= [
   },
 ]
 
-  const options: any = {
+  const options = {
     plugins: {
       tooltip: {
         callbacks: {

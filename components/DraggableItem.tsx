@@ -1,20 +1,19 @@
-import Draggable, {DraggableCore} from 'react-draggable';
-import React, { useEffect, useRef, useState } from 'react'
+import Draggable from 'react-draggable';
+import React, { useRef } from 'react'
 import { GripVerticalIcon, Trash2Icon } from 'lucide-react';
 import { Button } from '@nextui-org/react';
 
 interface DraggableItemProps {
-    recipes: RecipeType[],
+    meal: MealType
     recipe: RecipeType
-    setRecipes: React.Dispatch<React.SetStateAction<RecipeType[]>>
 }
 
-const DraggableItem:React.FC<DraggableItemProps> = ({recipes, recipe, setRecipes}) => {
+const DraggableItem:React.FC<DraggableItemProps> = ({meal, recipe, setMeal}) => {
 
     const nodeRef = useRef(null);
     const dragAreaRef = useRef<HTMLDivElement>(null);
 
-    const eventLogger = (e: MouseEvent, data: Object) => {
+    const eventLogger = (e: MouseEvent, data: object) => {
         console.log('Event: ', e);
         console.log('Data: ', data);
     };
@@ -27,12 +26,9 @@ const DraggableItem:React.FC<DraggableItemProps> = ({recipes, recipe, setRecipes
                     <p>{recipe.title}</p>
                     <Button className="flex items-center text-red-500 ml-auto" 
                     onPress={() => {
-                        const newRecipesList = recipes.filter((recipesItem) => {
-                            if (recipesItem.id != recipe.id) {
-                            return recipesItem;
-                            }
-                        });
-                        setRecipes(newRecipesList);
+                       meal.mealrecipes = [];
+                       setMeal(meal);
+                       meal.mealrecipes.length = 0;
                     }}>
                         <Trash2Icon size={20} />
                     </Button>

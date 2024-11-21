@@ -1,12 +1,10 @@
 "use client"
 // import { db } from '@/lib/db'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import {Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import { CalendarDays, CircleCheckIcon } from 'lucide-react';
 import Link from 'next/link';
-import { formatDateCalendar } from '@/lib/utils';
 import DraggableItem from '@/components/DraggableItem';
-import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
 
 const MealPlannerPage = () => {
     const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
@@ -22,7 +20,7 @@ const MealPlannerPage = () => {
     const [date, setDate] = useState<string>("");
     const [selectedRecipes, setSelectedRecipes] = useState<RecipeType[]>([])
     
-    function handleModalClick(e) {
+    function handleModalClick() {
         console.log(meal);
         const recipesData : RecipeType[] = [];
         setModalRecipes(recipesData);
@@ -44,7 +42,7 @@ const MealPlannerPage = () => {
         return onClose()
     }
 
-    async function handleValidateClick(e) {
+    async function handleValidateClick() {
         const response = await fetch(`/api/menu/new`, {
             method: 'POST',
             body: JSON.stringify(menu),
@@ -60,7 +58,7 @@ const MealPlannerPage = () => {
         onOpen();
     }
 
-    function dateHandler(e){
+    function dateHandler(e:ChangeEvent){
         const dateTarget = new Date(e.target.value).toISOString();
         console.log(dateTarget);
         setDate(dateTarget);
@@ -155,7 +153,7 @@ const MealPlannerPage = () => {
                             <ul className='relative flex flex-col py-3 px-4 rounded-md bg-slate-700'>
                             {meal.mealrecipes.length > 0 ? (
                                 meal.mealrecipes.map((mealrecipe:MealRecipeType) => (
-                                    <DraggableItem key={mealrecipe.recipe.id} recipe={mealrecipe.recipe} meal={meal} setMeal={setMeal} />
+                                    <DraggableItem key={mealrecipe?.recipe?.id} recipe={mealrecipe.recipe} meal={meal} setMeal={setMeal} />
                                 ))
                             ):(
                                 <li key={0}>No recipes added yet</li>

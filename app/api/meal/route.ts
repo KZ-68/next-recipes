@@ -8,7 +8,7 @@ export async function GET() {
                 "createdAt": 'desc'
             },
             "include" :{
-                "recipes": true
+                "mealrecipes": true
             }
         })
         return NextResponse.json(meals)

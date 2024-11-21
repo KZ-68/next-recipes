@@ -5,7 +5,7 @@ const ThemeSwitcherScroll = () => {
 
     const [scrollY, setScrollY] = useState(0);
 
-    const onScroll = useCallback(event => {
+    const onScroll = useCallback(() => {
         const { scrollY } = window;
         console.log("scrollY", scrollY);
         setScrollY(window.scrollY);
@@ -20,7 +20,7 @@ const ThemeSwitcherScroll = () => {
         window.removeEventListener("scroll", onScroll, { passive: true });
         }
 
-    }, []);
+    }, [onScroll]);
 
     return (
         <div>

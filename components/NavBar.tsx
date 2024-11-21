@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 
 
-const NavBar:React.FC<any> = () => {
+const NavBar = () => {
   return (
     <nav className='flex flex-row justify-between gap-20 px-20 py-7 bg-slate-700 '>
       <h1 className='text-orange-500 text-xl'>MyRecipes</h1>

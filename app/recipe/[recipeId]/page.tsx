@@ -2,7 +2,7 @@
 import CommentRecipe from '@/components/CommentRecipe'
 import Category from '@/components/Category'
 import React, { useEffect, useState } from 'react'
-import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, ImageIcon, Lightbulb, MessageSquareQuoteIcon, MessageSquareMoreIcon, LeafIcon, HeartIcon, DownloadIcon } from 'lucide-react'
+import { Gauge, TimerIcon, ListChecksIcon, CookingPotIcon, WaypointsIcon, Lightbulb, MessageSquareQuoteIcon, MessageSquareMoreIcon, LeafIcon, HeartIcon, DownloadIcon } from 'lucide-react'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import Image from 'next/image'
 import { Pagination } from 'swiper/modules';
@@ -12,9 +12,8 @@ import 'swiper/css/pagination';
 import SuggestionCard from '@/components/SuggestionCard'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
-import { PDFDownloadLink, Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer'
+import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer'
 import { formatDate } from '@/lib/utils'
-import { currentUser } from '@clerk/nextjs/server'
 import NutritionInfo from '@/components/NutritionInfo'
 import MacronutrientsChartDoughnut from '@/components/MacronutrientsChartDoughnut'
   
@@ -291,7 +290,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             const dataSuggestion : RecipeType[] = await responseSuggestion.json()
             setRecipe(dataRecipe)
             setSuggestion(dataSuggestion)
-            let ingredientsDetails = []
+            const ingredientsDetails = []
             dataRecipe.ingredients.map((ingredient:IngredientRecipeType) => (
                 ingredientsDetails.push(`${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredient.name}`)
             ))

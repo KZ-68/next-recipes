@@ -19,13 +19,13 @@ const ArticleCard:React.FC<ArticleCardProps> = ({article}) => {
         if(!confirmDelete) return;
 
         try {
-            const res = await fetch(`/api/article/${article.id}/delete`, {
+            await fetch(`/api/article/${article.id}/delete`, {
                 method: 'DELETE'
             })
 
             router.push('/article')
         } catch(error) {
-            console.error("Error deleting article")
+            console.error("Error while deleting article : "+error)
         }
     }
 

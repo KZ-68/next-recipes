@@ -15,13 +15,13 @@ const Comment:React.FC<CommentProps> = ({comment, recipe}) => {
         if(!confirmDelete) return;
 
         try {
-            const res = await fetch(`/api/comment-recipe/${comment.id}/delete`, {
+            await fetch(`/api/comment-recipe/${comment.id}/delete`, {
                 method: 'DELETE'
             })
 
             location.reload();
         } catch(error) {
-            console.error("Error deleting comment")
+            console.error("Error while deleting comment : "+error)
         }
     }
 

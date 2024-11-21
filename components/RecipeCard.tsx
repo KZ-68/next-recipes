@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from './Button'
 import { useRouter } from 'next/navigation';
 import { Gauge, HeartPulse, ImageIcon, LeafIcon, TimerIcon } from 'lucide-react';
 import Category from './Category';
@@ -38,22 +37,6 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
             status.push(<HeartPulse key={recipe.id} fill='#de1a24' color='black' strokeWidth={1} size={24}/>)
         }
         return status
-    }
-
-    const handleDelete = async () => {
-
-        const confirmDelete = window.confirm('Are you sure you want to delete this recipe ?')
-        if(!confirmDelete) return;
-
-        try {
-            const res = await fetch(`/api/recipe/${recipe.id}/delete`, {
-                method: 'DELETE'
-            })
-
-            router.push('/recipe')
-        } catch(error) {
-            console.error("Error deleting recipe")
-        }
     }
 
     return (

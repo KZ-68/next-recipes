@@ -1,5 +1,5 @@
 import { AppleIcon, CandyIcon, CitrusIcon, DropletIcon, Drumstick, WheatIcon } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 interface NutritionInfoProps {
     energyLabel: string
