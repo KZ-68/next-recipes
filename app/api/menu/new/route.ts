@@ -6,9 +6,9 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         console.log(body)
-        const bodyMeal = [];
+        const bodyMeal:Array<MealType[]> = [];
         
-        body.meals.forEach(meal => {
+        body.meals.forEach((meal:MealType) => {
           bodyMeal.push({name:meal.name})
         })
 
