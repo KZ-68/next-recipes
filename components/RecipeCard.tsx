@@ -1,5 +1,4 @@
 import React from 'react'
-import { useRouter } from 'next/navigation';
 import { Gauge, HeartPulse, ImageIcon, LeafIcon, TimerIcon } from 'lucide-react';
 import Category from './Category';
 import Image from 'next/image';
