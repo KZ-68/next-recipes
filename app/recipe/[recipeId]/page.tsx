@@ -11,15 +11,12 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import SuggestionCard from '@/components/SuggestionCard'
 import { useUser } from '@clerk/nextjs'
-import { useRouter } from 'next/navigation'
 import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer'
 import { formatDate } from '@/lib/utils'
 import NutritionInfo from '@/components/NutritionInfo'
 import MacronutrientsChartDoughnut from '@/components/MacronutrientsChartDoughnut'
   
 const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: string}}) => {
-
-    const router = useRouter();
 
     const {isSignedIn, user} = useUser();
 
@@ -278,7 +275,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
         }
     }
     
-    const handleChange = (e:any) => {
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setData((prevData) => ({...prevData, [e.target.name]:e.target.value}))
     }
 

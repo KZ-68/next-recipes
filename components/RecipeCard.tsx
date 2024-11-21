@@ -12,8 +12,6 @@ interface RecipeCardProps {
 
 const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
 
-    const router = useRouter();
-
     const rating = recipe.rating;
 
     const getGaugeIcon = () => {

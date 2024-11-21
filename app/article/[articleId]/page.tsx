@@ -41,7 +41,7 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
         }
     }
     
-    const handleChange = (e:any) => {
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setData((prevData) => ({...prevData, [e.target.name]:e.target.value}))
     }
 
