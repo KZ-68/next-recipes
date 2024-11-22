@@ -3,7 +3,7 @@ import { sendMail } from '@/lib/mail';
 import { CheckCircle2, XCircleIcon } from 'lucide-react';
 import { useFormState } from 'react-dom';
 
-async function sendMessage(prevState, formData:FormData){
+async function sendMessage(formData:FormData){
     
     const contactFormEmail = formData.get("email") as string;
     const contactFormSubject = formData.get("subject") as string;
