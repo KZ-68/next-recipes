@@ -33,8 +33,7 @@ const MealPlannerPage = () => {
                 }
             })
         });
-        
-        menu ? menu.date = date : new Date();
+        menu.date = date;
 
         menu?.meals.push(meal?meal:{id:'', name:'', createdAt:new Date(), menu:{id:'', date:new Date(), meals:[]}, mealrecipes:[]});
         mealrecipes.forEach(mealrecipe => {
