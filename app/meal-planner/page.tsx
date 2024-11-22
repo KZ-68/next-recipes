@@ -16,7 +16,7 @@ const MealPlannerPage = () => {
     const [meal, setMeal] = useState<MealType | null>(null)
     const [mealrecipes, setMealRecipes] = useState<MealRecipeType[]>([])
     const [modalRecipes, setModalRecipes] = useState<RecipeType[]>([])
-    const [menu, setMenu] = useState<MenuType | null>(null)
+    const [menu, setMenu] = useState<MenuType>({id:'', date:new Date(), meals:[]})
     const [date, setDate] = useState<Date>(new Date());
     const [selectedRecipes, setSelectedRecipes] = useState<Array<string>>([])
     
@@ -34,10 +34,9 @@ const MealPlannerPage = () => {
             })
         });
         menu.date = date;
-
-        menu?.meals.push(meal?meal:{id:'', name:'', createdAt:new Date(), menu:{id:'', date:new Date(), meals:[]}, mealrecipes:[]});
+        menu?.meals.push(meal ? meal : {id:'', name:'', createdAt:new Date(), menu:{id:'', date:new Date(), meals:[]}, mealrecipes:[]})
         mealrecipes.forEach(mealrecipe => {
-            meal?.mealrecipes.push(mealrecipe);
+            meal?.mealrecipes.push(mealrecipe)
         })
     
         return onClose()
