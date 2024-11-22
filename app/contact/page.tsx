@@ -3,12 +3,13 @@ import { sendMail } from '@/lib/mail';
 import { CheckCircle2, XCircleIcon } from 'lucide-react';
 import { useFormState } from 'react-dom';
 
-async function sendMessage(formData:FormData){
+async function sendMessage(prevState:{ success: boolean; message: string; } | Promise<{ success: boolean; message: string; } | null> | null, formData:FormData){
     
+    prevState = null;
+
     const contactFormEmail = formData.get("email") as string;
     const contactFormSubject = formData.get("subject") as string;
     const contactFormBody = formData.get("body") as string;
-
     
     const sendmailResponse = await sendMail({
         email: contactFormEmail,
