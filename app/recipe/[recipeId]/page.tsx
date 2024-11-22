@@ -23,7 +23,29 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
     const [recipe, setRecipe] = useState<RecipeType | null>(null)
     const [suggestion, setSuggestion] = useState<RecipeType[]>([])
     const [data, setData] = useState({});
-    const [nutritionState, setNutritionState] = useState(null)
+    const [nutritionState, setNutritionState] = 
+    useState<{
+        totalNutrientsKCal:{ENERC_KCAL:{label:string, quantity:number, unit:string}},
+        totalNutrients:{
+            FAT:{label:string, quantity:number, unit:string},
+            CHOCDF:{label:string, quantity:number, unit:string},
+            PROCNT:{label:string, quantity:number, unit:string},
+            SUGAR:{label:string, quantity:number, unit:string},
+            VITC:{label:string, quantity:number, unit:string}
+        }
+    }>
+    (
+        {
+            totalNutrientsKCal:{ENERC_KCAL:{label:'',quantity:0,unit:''}},
+            totalNutrients:{
+                FAT:{label:'', quantity:0, unit:''},
+                CHOCDF:{label:'', quantity:0, unit:''},
+                PROCNT:{label:'', quantity:0, unit:''},
+                SUGAR:{label:'', quantity:0, unit:''},
+                VITC:{label:'', quantity:0, unit:''}
+            }
+        }
+    )
 
     const rating = recipe?.rating;
     const category = recipe?.category;
@@ -238,24 +260,17 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
         event.preventDefault()
 
         try {
-            const response = await fetch(`/api/recipe/${params.recipeId}/comments`, {
+            await fetch(`/api/recipe/${params.recipeId}/comments`, {
                 method: 'POST',
                 body: JSON.stringify(data),
             })
 
-            if(response.status === 200) {
-                const updatedComments = response.json()
-                setRecipe(prev => prev ? { ...prev, comments: updatedComments} : null)
-            } else {
-                console.error("Error post comment")
-            }
         } catch(error) {
             console.error("Error submitting comment", error);
         }
     }
 
-    const handleSaveUserData = async(e) => {
-        e.preventDefault()
+    const handleSaveUserData = async() => {
         if(isSignedIn) {
             try {
                 const response = await fetch(`/api/private`, {
@@ -287,7 +302,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             const dataSuggestion : RecipeType[] = await responseSuggestion.json()
             setRecipe(dataRecipe)
             setSuggestion(dataSuggestion)
-            const ingredientsDetails = []
+            const ingredientsDetails:Array<string> = []
             dataRecipe.ingredients.map((ingredient:IngredientRecipeType) => (
                 ingredientsDetails.push(`${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredient.name}`)
             ))
@@ -326,7 +341,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 <aside className='flex flex-col flex-wrap rounded-l-md py-16 px-32 md:px-56 bg-slate-700 justify-center items-center'>
                     <h1 className='mb-3 text-3xl w-72 text-center'>{recipe?.title}</h1>
                     <div className='my-5 flex flex-row gap-4 content-center'>
-                        <Category key={recipe?.category.id} text={recipe?.category.name}/>
+                        <Category key={recipe?.category.id} text={recipe ? recipe.category.name : ""}/>
                         <p className='flex flex-row gap-1 w-24'><TimerIcon/>{recipe?.duration} mins</p>
                         <div className='flex flex-row'>
                             {getGaugeIcon()}
@@ -496,24 +511,24 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     </hgroup>
                     <div className='bg-slate-800 my-1 py-4 rounded-lg'>
                         <NutritionInfo 
-                            energyLabel={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].label} 
-                            energyQuantity={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].quantity.toFixed(2)}
-                            energyUnit={nutritionState?.["totalNutrientsKCal"]["ENERC_KCAL"].unit}
-                            totalFatLabel={nutritionState?.["totalNutrients"]["FAT"].label}
-                            totalFatQuantity={nutritionState?.["totalNutrients"]["FAT"].quantity.toFixed(2)}
-                            totalFatUnit={nutritionState?.["totalNutrients"]["FAT"].unit}
-                            carbohydrateLabel={nutritionState?.["totalNutrients"]["CHOCDF"].label}
-                            carbohydrateQuantity={nutritionState?.["totalNutrients"]["CHOCDF"].quantity.toFixed(2)}
-                            carbohydrateUnit={nutritionState?.["totalNutrients"]["CHOCDF"].unit}
-                            protLabel={nutritionState?.["totalNutrients"]["PROCNT"].label}
-                            protQuantity={nutritionState?.["totalNutrients"]["PROCNT"].quantity.toFixed(2)}
-                            protUnit={nutritionState?.["totalNutrients"]["PROCNT"].unit}
-                            sugarLabel={nutritionState?.["totalNutrients"]["SUGAR"].label}
-                            sugarQuantity={nutritionState?.["totalNutrients"]["SUGAR"].quantity.toFixed(2)}
-                            sugarUnit={nutritionState?.["totalNutrients"]["SUGAR"].unit}
-                            vitcLabel={nutritionState?.["totalNutrients"]["VITC"].label}
-                            vitcQuantity={nutritionState?.["totalNutrients"]["VITC"].quantity.toFixed(2)}
-                            vitcUnit={nutritionState?.["totalNutrients"]["VITC"].unit}
+                            energyLabel={nutritionState["totalNutrientsKCal"]["ENERC_KCAL"].label} 
+                            energyQuantity={nutritionState["totalNutrientsKCal"]["ENERC_KCAL"].quantity.toFixed(2)}
+                            energyUnit={nutritionState["totalNutrientsKCal"]["ENERC_KCAL"].unit}
+                            totalFatLabel={nutritionState["totalNutrients"]["FAT"].label}
+                            totalFatQuantity={nutritionState["totalNutrients"]["FAT"].quantity.toFixed(2)}
+                            totalFatUnit={nutritionState["totalNutrients"]["FAT"].unit}
+                            carbohydrateLabel={nutritionState["totalNutrients"]["CHOCDF"].label}
+                            carbohydrateQuantity={nutritionState["totalNutrients"]["CHOCDF"].quantity.toFixed(2)}
+                            carbohydrateUnit={nutritionState["totalNutrients"]["CHOCDF"].unit}
+                            protLabel={nutritionState["totalNutrients"]["PROCNT"].label}
+                            protQuantity={nutritionState["totalNutrients"]["PROCNT"].quantity.toFixed(2)}
+                            protUnit={nutritionState["totalNutrients"]["PROCNT"].unit}
+                            sugarLabel={nutritionState["totalNutrients"]["SUGAR"].label}
+                            sugarQuantity={nutritionState["totalNutrients"]["SUGAR"].quantity.toFixed(2)}
+                            sugarUnit={nutritionState["totalNutrients"]["SUGAR"].unit}
+                            vitcLabel={nutritionState["totalNutrients"]["VITC"].label}
+                            vitcQuantity={nutritionState["totalNutrients"]["VITC"].quantity.toFixed(2)}
+                            vitcUnit={nutritionState["totalNutrients"]["VITC"].unit}
                         />
                     
                         <h3 className='my-5 mx-3 text-lg'>Macronutrients Breakdown</h3>
