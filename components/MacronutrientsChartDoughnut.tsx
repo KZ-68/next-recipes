@@ -46,7 +46,7 @@ const data= [
     plugins: {
       tooltip: {
         callbacks: {
-          label: (context) => {
+          label: (context:{raw:{value:string,unit:string}}) => {
             return `${context.raw.value} ${context.raw.unit}`
           }
         }
