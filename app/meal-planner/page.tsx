@@ -1,6 +1,6 @@
 "use client"
 // import { db } from '@/lib/db'
-import React, { BaseSyntheticEvent, ChangeEvent, ChangeEventHandler, SyntheticEvent, useEffect, useState } from 'react'
+import React, { BaseSyntheticEvent, useEffect, useState } from 'react'
 import {Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import { CalendarDays, CircleCheckIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -33,7 +33,9 @@ const MealPlannerPage = () => {
                 }
             })
         });
+        
         menu ? menu.date = date : new Date();
+
         menu?.meals.push(meal?meal:{id:'', name:'', createdAt:new Date(), menu:{id:'', date:new Date(), meals:[]}, mealrecipes:[]});
         mealrecipes.forEach(mealrecipe => {
             meal?.mealrecipes.push(mealrecipe);
