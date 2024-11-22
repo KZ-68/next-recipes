@@ -1,6 +1,6 @@
 "use client"
 // import { db } from '@/lib/db'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { BaseSyntheticEvent, ChangeEvent, ChangeEventHandler, SyntheticEvent, useEffect, useState } from 'react'
 import {Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import { CalendarDays, CircleCheckIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -58,14 +58,15 @@ const MealPlannerPage = () => {
         onOpen();
     }
 
-    function dateHandler(e:any){
+    function dateHandler(e:BaseSyntheticEvent){
         const dateTarget = new Date(e.target.value);
         console.log(dateTarget);
         setDate(dateTarget);
     }
 
-    function getSelectedOptions(e:any) {
+    function getSelectedOptions(e:BaseSyntheticEvent) {
         const options = e.target.options;
+        console.log(options);
         const selectedOptions = [];
         const selectedValues = [];
 
