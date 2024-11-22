@@ -5,9 +5,10 @@ export async function POST(req: NextRequest) {
 
     try {
         const body = await req.json();
-        console.log(body)
         const bodyMeal: { name: string; }[] = [];
-        
+        const mealRecipesData: { mealId: string; meal: MealType; recipe: RecipeType; recipeId: string; }[] = [];
+        const mealUpdate = []
+
         body.meals.forEach((meal:MealType) => {
           bodyMeal.push({name:meal.name})
         })
@@ -23,7 +24,6 @@ export async function POST(req: NextRequest) {
           },
         });
 
-
         const findMealMenu = await db.meal.findMany({
           "where": {
             "menuId": newMenu.id
@@ -36,10 +36,16 @@ export async function POST(req: NextRequest) {
               meal.mealrecipes.forEach((mealrecipe:MealRecipeType) => {
                 delete mealrecipe.recipe;
                 mealrecipe.mealId = findMealMenuUnique.id
+                mealRecipesData.push({
+                  mealId: mealrecipe.mealId,
+                  meal: mealrecipe.meal,
+                  recipe: mealrecipe.recipe,
+                  recipeId: mealrecipe.recipeId
+                })
               })
 
               await db.mealRecipe.createMany({
-                "data": meal.mealrecipes
+                "data": mealRecipesData
               })
     
               await db.meal.update({
@@ -47,8 +53,12 @@ export async function POST(req: NextRequest) {
                   "id": findMealMenuUnique.id,
                 },
                 "data": {
-                  "mealrecipes": meal.mealrecipes
-                },
+                  "mealrecipes": {
+                    "createMany": {
+                      "data": mealRecipesData
+                    }
+                  }
+                }
               })
             }
           })
