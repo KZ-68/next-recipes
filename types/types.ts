@@ -14,6 +14,7 @@ interface CommentType {
     createdAt: Date;
 }
  
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ArticleWithTagsAndComments {
     id: string;
     title: string;
@@ -100,5 +101,4 @@ interface MealRecipeType {
     recipeId: string;
     recipe: RecipeType;
     mealId: string;
-    meal: MealType;
 }

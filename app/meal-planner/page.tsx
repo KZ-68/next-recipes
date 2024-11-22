@@ -17,8 +17,8 @@ const MealPlannerPage = () => {
     const [mealrecipes, setMealRecipes] = useState<MealRecipeType[]>([])
     const [modalRecipes, setModalRecipes] = useState<RecipeType[]>([])
     const [menu, setMenu] = useState<MenuType | null>(null)
-    const [date, setDate] = useState<string>("");
-    const [selectedRecipes, setSelectedRecipes] = useState<RecipeType[]>([])
+    const [date, setDate] = useState<Date>(new Date());
+    const [selectedRecipes, setSelectedRecipes] = useState<Array<string>>([])
     
     function handleModalClick() {
         console.log(meal);
@@ -29,12 +29,12 @@ const MealPlannerPage = () => {
             recipes.forEach(recipe => {
                 if(recipe.id === selectedRecipe) {
                     modalRecipes.push(recipe)
-                    mealrecipes.push({recipeId: recipe.id, recipe: recipe})
+                    mealrecipes.push({id:'', mealId: meal?meal.id:'', recipeId: recipe.id, recipe: recipe})
                 }
             })
         });
-        menu.date = date;
-        menu?.meals.push(meal);
+        menu ? menu.date = date : new Date();
+        menu?.meals.push(meal?meal:{id:'', name:'', createdAt:new Date(), menu:{id:'', date:new Date(), meals:[]}, mealrecipes:[]});
         mealrecipes.forEach(mealrecipe => {
             meal?.mealrecipes.push(mealrecipe);
         })
@@ -52,19 +52,19 @@ const MealPlannerPage = () => {
         }
     }
 
-    function onPress(mealData) {
+    function onPress(mealData:MealType) {
         setMeal(mealData);
         console.log(mealData);
         onOpen();
     }
 
-    function dateHandler(e:ChangeEvent){
-        const dateTarget = new Date(e.target.value).toISOString();
+    function dateHandler(e:any){
+        const dateTarget = new Date(e.target.value);
         console.log(dateTarget);
         setDate(dateTarget);
     }
 
-    function getSelectedOptions(e) {
+    function getSelectedOptions(e:any) {
         const options = e.target.options;
         const selectedOptions = [];
         const selectedValues = [];
@@ -82,16 +82,16 @@ const MealPlannerPage = () => {
         const multiFetch = async () => {
             const response = await fetch('/api/recipe')
             const data : RecipeType[] = await response.json()
-            const mealDinner : MealType = {id: '0', name:'Dinner'}
-            const mealLunch : MealType = {id: '1', name:'Lunch'}
-            const mealBreakfast : MealType = {id: '2', name:'Breakfast'}
+            const mealDinner : MealType = {id: '0', name:'Dinner', createdAt:new Date(), mealrecipes:[], menu:{id:'', date:new Date(), meals:[]}}
+            const mealLunch : MealType = {id: '1', name:'Lunch', createdAt:new Date(), mealrecipes:[], menu:{id:'', date:new Date(), meals:[]}}
+            const mealBreakfast : MealType = {id: '2', name:'Breakfast', createdAt:new Date(), mealrecipes:[], menu:{id:'', date:new Date(), meals:[]}}
             const dataMeals : MealType[] = [mealDinner, mealLunch, mealBreakfast]
             dataMeals.forEach(dataMeal => {
                 dataMeal.mealrecipes = [];
             })
             setRecipes(data)
             setMeals(dataMeals)
-            const dataMenu : MenuType = {meals:[]};
+            const dataMenu : MenuType = {id:'', meals:[], date: new Date()};
             setMenu(dataMenu);
         }
         multiFetch()
