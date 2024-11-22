@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         const bodyMeal: { name: string; }[] = [];
-        const mealRecipesData: { mealId: string; meal: MealType; recipe: RecipeType; recipeId: string; }[] = [];
+        const mealRecipesData: { mealId: string; meal: MealType; recipeId: string; }[] = [];
 
         body.meals.forEach((meal:MealType) => {
           bodyMeal.push({name:meal.name})
@@ -33,12 +33,10 @@ export async function POST(req: NextRequest) {
           findMealMenu.forEach(async(findMealMenuUnique) => {
             if(findMealMenuUnique.name === meal.name) {
               meal.mealrecipes.forEach((mealrecipe:MealRecipeType) => {
-                delete mealrecipe.recipe;
                 mealrecipe.mealId = findMealMenuUnique.id
                 mealRecipesData.push({
                   mealId: mealrecipe.mealId,
                   meal: mealrecipe.meal,
-                  recipe: mealrecipe.recipe,
                   recipeId: mealrecipe.recipeId
                 })
               })
