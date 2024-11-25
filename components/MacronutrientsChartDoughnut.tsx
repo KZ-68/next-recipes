@@ -18,29 +18,29 @@ const MacronutrientsChartDoughnut:React.FC<MacronutrientsProps> = (
   {protQuantity, protUnit, fatQuantity, fatUnit, carbohydrateQuantity, carbohydrateUnit}
 ) => {
 
-const data= [
-  {
-    label: "Protein",
-    value: protQuantity,
-    unit: protUnit,
-    color: "rgba(86,73,231,255)",
-    cutout: "80%",
-  },
-  {
-    label: "Fats",
-    value: fatQuantity,
-    unit: fatUnit,
-    color: "rgba(226,76,74,255)",
-    cutout: "80%",
-  },
-  {
-    label: "Carbs",
-    value: carbohydrateQuantity,
-    unit: carbohydrateUnit,
-    color: "rgba(234,188,20,1)",
-    cutout: "80%",
-  },
-]
+  const data = [
+    {
+      label: "Protein",
+      value: protQuantity,
+      unit: protUnit,
+      color: "rgba(86,73,231,255)",
+      cutout: "80%",
+    },
+    {
+      label: "Fats",
+      value: fatQuantity,
+      unit: fatUnit,
+      color: "rgba(226,76,74,255)",
+      cutout: "80%",
+    },
+    {
+      label: "Carbs",
+      value: carbohydrateQuantity,
+      unit: carbohydrateUnit,
+      color: "rgba(234,188,20,1)",
+      cutout: "80%",
+    },
+  ]
 
   const options = {
     plugins: {
@@ -68,6 +68,7 @@ const data= [
       },
     ],
   };
+  // @ts-expect-error Trigger errors for context.raw properties, but didn't create any conflict
   return <Doughnut data={finalData} options={options} />;
 }
 
