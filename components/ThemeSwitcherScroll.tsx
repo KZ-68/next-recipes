@@ -17,7 +17,7 @@ const ThemeSwitcherScroll = () => {
         window.addEventListener("scroll", onScroll, { passive: true });
         // remove event on unmount to prevent a memory leak with the cleanup
         return () => {
-        window.removeEventListener("scroll", onScroll, { passive: true });
+        window.removeEventListener("scroll", onScroll, true);
         }
 
     }, [onScroll]);
