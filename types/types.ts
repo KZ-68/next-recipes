@@ -71,6 +71,7 @@ interface RecipeType {
     slug: string;
     rating: number;
     image_url: string;
+    image_url_cloud: string;
     vegan: boolean;
     healthy: boolean
     createdAt: Date;
