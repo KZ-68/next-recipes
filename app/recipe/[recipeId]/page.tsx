@@ -357,11 +357,16 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     </div>
                 </aside>
                 <aside>
-                    {recipe?.image_url == "" ? (
+                    {recipe?.image_url == "" && recipe?.image_url_cloud == "" ? (
                         <Image className='rounded-t-md md:rounded-r-md aspect-video object-cover h-96' src={`https://placehold.co/1000x500/png?text=placeholder&font=roboto`} alt="Recipe Image" width="1000" height="500"/>
-                    ) : 
+                    ) :
                     (
-                        <Image className='rounded-t-md md:rounded-r-md aspect-video object-cover h-96' src={`/images/${recipe?.image_url}`} alt="Recipe Image" width="1000" height="500"/>
+                        recipe?.image_url_cloud != "" ? (
+                            <Image className='rounded-t-md md:rounded-r-md aspect-video object-cover h-96' src={!recipe?.image_url_cloud ? '' : recipe?.image_url_cloud} alt="Recipe Image" width="1000" height="500"/>
+                        ) : 
+                        (
+                            <Image className='rounded-t-md md:rounded-r-md aspect-video object-cover h-96' src={`/images/${recipe?.image_url}`} alt="Recipe Image" width="1000" height="500"/>
+                        )
                     )}
                 </aside>
             </section>
@@ -378,7 +383,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                             <Tab className='py-2 px-4 hover:bg-orange-700 bg-orange-600 rounded-xl'>Ingredients</Tab>
                             <Tab className='py-2 px-4 hover:bg-orange-700 bg-orange-600 rounded-xl'>Tools</Tab>
                         </TabList>
-                    <TabPanels className='py-4 px-2'>
+                    <TabPanels className='py-4 px-2 rounded-lg'>
                         <TabPanel className="flex flex-row">
                             {recipe?.ingredients && recipe.ingredients.length > 0 ? (
                                 recipe?.ingredients.map(
