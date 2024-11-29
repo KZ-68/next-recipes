@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { CroissantIcon, EggFriedIcon, HamIcon, ImageIcon, TimerIcon, Trash2Icon } from 'lucide-react'
 import Link from 'next/link'
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
-import Button from '@/components/Button'
 
 const MenuPage = () => {
 

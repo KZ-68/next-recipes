@@ -504,7 +504,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-600 font-bold'><MessageSquareMoreIcon/> Write a comment</h2>
                     <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
                         <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
-                            <input className='bg-slate-700 rounded-md py-1 px-3' type="text-area" name="text" row placeholder='Write your comment here...' onChange={handleChange}/>
+                            <input className='bg-slate-700 rounded-md py-1 px-3' type="text-area" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
                             <button className='bg-indigo-500 py-2 px-4 rounded-md w-fit mt-6' type="submit">Submit</button>
                         </form>
                     </div>
