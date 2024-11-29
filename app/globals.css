@@ -34,7 +34,11 @@ body {
   background-color: #edf3ff;
 }
 
-[data-theme="light"] li {
+[data-theme="light"] div[class="flex flex-col gap-5 bg-slate-700 rounded-md w-96 py-3 px-4"] > ul > p {
+  color: #ffffff;
+}
+
+[data-theme="light"] div[class="flex flex-col gap-5 bg-slate-700 rounded-md w-96 py-3 px-4"] > ul > div > li {
   color: #ffffff;
 }
 
@@ -107,6 +111,15 @@ body {
 
 [data-theme="light"] div[class="bg-slate-800 my-1 py-4 rounded-lg"] > h3 {
   color: rgb(249 115 22);
+}
+
+[data-theme="light"] div#recipe-page > section#comments-section > ul > li {
+  background-color: rgb(73 90 114);
+  color: #ffffff;
+}
+
+[data-theme="light"] div#recipe-page > section#comments-section > div > div > form > button {
+  color: #ffffff;
 }
 
 .mySwiper {
