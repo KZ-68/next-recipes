@@ -30,6 +30,14 @@ body {
   background-color: rgb(15 23 42);
 }
 
+[data-theme="dark"] div[class="group border border-slate-500 dark:bg-white p-6 rounded-md cursor-pointer hover:translate-y-2 duration-300 md:h-full"] > h2 {
+  color: #ffffff;
+}
+
+[data-theme="dark"] div[class="group border border-slate-500 dark:bg-white p-6 rounded-md cursor-pointer hover:translate-y-2 duration-300 md:h-full"] > p {
+  color: #ffffff;
+}
+
 [data-theme="light"] {
   background-color: #edf3ff;
 }
@@ -101,6 +109,10 @@ body {
   color: #ffffff;
 }
 
+[data-theme="light"] div[class="group border border-slate-500 p-6 rounded-md cursor-pointer hover:translate-y-2 duration-300 md:h-full"] {
+  background-color: rgb(15 23 42);
+}
+
 [data-theme="light"] div[class="bg-slate-800 my-1 py-4 rounded-lg"] {
   background-color: #edf3ff;
 }
@@ -124,6 +136,14 @@ body {
 }
 
 [data-theme="light"] section#instructions-section > div > div[class="flex flex-col gap-3 rounded-md mt-8 mb-14 mx-14 xl:mx-80 px-24 py-24 xl:h-96 bg-slate-700 justify-center items-center"] {
+  color: #ffffff;
+}
+
+[data-theme="light"] section#ingredients-tools-section > aside > h3 {
+  color: #ffffff;
+}
+
+[data-theme="light"] section#ingredients-tools-section > aside > p {
   color: #ffffff;
 }
 
