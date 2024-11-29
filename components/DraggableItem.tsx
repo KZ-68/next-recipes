@@ -3,13 +3,11 @@ import React, { useRef, useState } from 'react'
 import { GripVerticalIcon } from 'lucide-react';
 
 interface DraggableItemProps {
-    meal: MealType
     recipes: RecipeType[]
     recipe: RecipeType
-    setMeal: React.Dispatch<React.SetStateAction<MealType | null>>
 }
 
-const DraggableItem:React.FC<DraggableItemProps> = ({meal, recipes, recipe, setMeal}) => {
+const DraggableItem:React.FC<DraggableItemProps> = ({recipes, recipe}) => {
 
     const nodeRef = useRef(null);
     const dragAreaRef = useRef<HTMLDivElement>(null);

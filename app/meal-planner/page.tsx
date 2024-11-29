@@ -156,7 +156,7 @@ const MealPlannerPage = () => {
                             <ul className='relative h-auto flex flex-col py-3 px-4 rounded-md bg-slate-700'>
                             {meal.mealrecipes.length > 0 ? (
                                 meal.mealrecipes.map((mealrecipe:MealRecipeType) => (
-                                    <DraggableItem key={mealrecipe?.recipe?.id} recipes={recipes} recipe={mealrecipe.recipe} meal={meal} setMeal={setMeal} />
+                                    <DraggableItem key={mealrecipe?.recipe?.id} recipes={recipes} recipe={mealrecipe.recipe} />
                                 ))
                             ):(
                                 <p key={0}>No recipes added yet</p>
