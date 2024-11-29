@@ -6,8 +6,6 @@ const ThemeSwitcherScroll = () => {
     const [scrollY, setScrollY] = useState(0);
 
     const onScroll = useCallback(() => {
-        const { scrollY } = window;
-        console.log("scrollY", scrollY);
         setScrollY(window.scrollY);
     }, []);
 
