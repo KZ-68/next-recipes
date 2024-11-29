@@ -44,15 +44,15 @@ function ContactPage () {
                 <p id="error" className='bg-white w-fit py-2 px-3 my-3 text-black rounded-md'><XCircleIcon className='text-white bg-red-600 rounded-full'/>{formState?.message}</p>
             )}
             <div className='flex flex-col py-8 px-6 mx-80 rounded-lg bg-slate-800'>
-                <h1 className='text-2xl'>Contact Us</h1>
+                <h1 className='text-2xl text-white'>Contact Us</h1>
                 <form action={formAction} className='flex flex-col gap-6 py-8 px-6 rounded-2xl'>
-                    <label>Email</label>
-                    <input placeholder='Enter your email' className='light:text-black text-white bg-slate-600 py-4 px-4 rounded-lg' type="text" name='email' id='email'/>
-                    <label>Subject</label>
-                    <input placeholder='Enter the subject' className='light:text-black text-white bg-slate-600 py-4 px-4 rounded-lg' type="text" name='subject' id='subject'/>
-                    <label>Message</label> 
-                    <textarea placeholder='Type your message here...' className='light:text-black text-white bg-slate-600 py-4 px-4 rounded-lg' name='body' minLength={1} maxLength={500} rows={6}/>
-                    <button className='py-2 px-2 rounded-lg bg-indigo-500' type='submit'>Submit</button>
+                    <label className='text-white'>Email</label>
+                    <input placeholder='Enter your email' className=' text-white bg-slate-600 py-4 px-4 rounded-lg' type="text" name='email' id='email'/>
+                    <label className='text-white'>Subject</label>
+                    <input placeholder='Enter the subject' className=' text-white bg-slate-600 py-4 px-4 rounded-lg' type="text" name='subject' id='subject'/>
+                    <label className='text-white'>Message</label> 
+                    <textarea placeholder='Type your message here...' className=' text-white bg-slate-600 py-4 px-4 rounded-lg' name='body' minLength={1} maxLength={500} rows={6}/>
+                    <button className='py-2 px-2 rounded-lg bg-indigo-500 text-white' type='submit'>Submit</button>
                 </form>
             </div>
         </>

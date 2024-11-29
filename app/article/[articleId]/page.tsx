@@ -51,13 +51,13 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
                 (
                 <div>
                     <ThemeSwitcherScroll/>
-                    <section className='flex flex-col items-center w-full py-36 rounded-lg bg-slate-100 bg-opacity-10'>
+                    <section className='flex flex-col items-center w-full py-36 bg-slate-600 rounded-lg'>
                         <div className='my-5 flex flex-wrap'>
                             {article?.tags.map((tagArticle: TagArticleType) => (
                                 <Tag key={tagArticle.tag.id} text={tagArticle.tag.name}/>
                             ))}
                         </div>
-                        <h1 className='mb-3 text-4xl'>{article?.title}</h1>
+                        <h1 className='mb-3 text-4xl text-white'>{article?.title}</h1>
                         <div>
 
                         <p className='text-sm text-slate-300 my-2'>{formatDate(article.createdAt)}</p>
@@ -67,7 +67,7 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
                         <h2 className='flex flex-row gap-2 text-orange-600 my-5'><NotebookIcon/> Introduction</h2>
                         <p>{article?.text}</p>
                     </section>
-                    <section className='px-16 py-4 mt-8 bg-slate-900 rounded-md'>
+                    <section className='px-16 py-4 mt-8 dark:bg-slate-900 rounded-md'>
                         <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Comments ({article?.comments.length}) :</h2>
                         <ul>
                             {article?.comments && article.comments.length > 0 ? (

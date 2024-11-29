@@ -19,7 +19,7 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
           if(id <= rating) {
             gaugeArray.push(<Gauge color={category.name === 'Dessert' ? '#6dc96a' : category.name === 'Main' ? '#e06020' : '#e06020'} key={id}></Gauge>);
           } else {
-            gaugeArray.push(<Gauge key={id}></Gauge>);
+            gaugeArray.push(<Gauge color='white' key={id}></Gauge>);
           }
         }
         return gaugeArray;
@@ -40,7 +40,7 @@ const RecipeCard:React.FC<RecipeCardProps> = ({recipe, category}) => {
         <div className='flex flex-col w-72 group rounded-lg bg-slate-800 cursor-pointer duration-300 h-full' key={recipe.id}>
             <div className='relative flex flex-row rounded-xl justify-center bg-slate-800'>
                 {recipe.image_url == "" ? (
-                    <ImageIcon size={250}/>
+                    <ImageIcon className='text-white' size={250}/>
                 ) : 
                 (
                 <Image className='rounded-t-lg w-[320px] h-[250px]' src={`/images/${recipe.image_url}`} alt="Recipe Image" width="250" height="250"/>

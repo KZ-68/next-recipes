@@ -30,10 +30,10 @@ const ArticleCard:React.FC<ArticleCardProps> = ({article}) => {
     }
 
     return (
-        <div className='group border border-slate-500 p-6 rounded-md cursor-pointer hover:translate-y-2 duration-300 md:h-full' key={article.id}>
+        <div className='group border dark:border-slate-500 bg-white p-6 rounded-md cursor-pointer hover:translate-y-2 duration-300 md:h-full' key={article.id}>
             {/* Titre de l'article */}
-            <h2 className='text-2xl md:text-xl font-bold'>{article.title}</h2>
-            <p className='text-sm text-slate-300 my-2'>{formatDate(article.createdAt)}</p>
+            <h2 className='text-2xl md:text-xl font-bold text-black dark:text-white'>{article.title}</h2>
+            <p className='text-sm dark:text-slate-300 text-slate-800 my-2'>{formatDate(article.createdAt)}</p>
             <div className='flex flex-wrap gap-2 my-3 md:leading-8'>
                 {article.tags.map((tagArticle:TagArticleType)=> (
                     <Tag text={tagArticle.tag.name} key={tagArticle.tag.id}/>
@@ -41,7 +41,7 @@ const ArticleCard:React.FC<ArticleCardProps> = ({article}) => {
             </div>
             
             {/* Texte de l'article */}
-            <p className='line-clamp-4 py-1 my-4 text-sm'>{article.text}</p>
+            <p className='line-clamp-4 py-1 my-4 text-sm text-black dark:text-white'>{article.text}</p>
 
             <div className='my-6'>
                 <Link className='text-orange-600' href="https://google.fr">Read more...</Link>

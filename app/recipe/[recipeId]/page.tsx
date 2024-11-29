@@ -373,8 +373,8 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 </aside>
             </section>
 
-            <section className='flex flex-col lg:flex-row items-center lg:items-start my-7'>
-                <aside className='flex flex-col w-3/6 px-6'>
+            <section id="ingredients-tools-section" className='flex flex-col lg:flex-row items-center lg:items-start my-7'>
+                <aside className='flex flex-col w-3/6 px-6 h-full'>
                     <h2 className='flex flex-row text-xl text-orange-500'><ListChecksIcon className='mr-5'/>Instructions</h2>
                     <p className='py-4'>{recipe?.instruction}</p>
                 </aside>
@@ -382,10 +382,10 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     <h2 className='flex flex-row text-orange-500'><CookingPotIcon className='mr-4'/>Ingredients and Tools</h2>
                     <TabGroup className='border-2 border-gray-700 rounded-lg'>
                         <TabList className='flex flex-row gap-4 py-4 px-4 bg-slate-700 rounded-t-md'>
-                            <Tab className='py-2 px-4 hover:bg-orange-700 bg-orange-600 rounded-xl'>Ingredients</Tab>
-                            <Tab className='py-2 px-4 hover:bg-orange-700 bg-orange-600 rounded-xl'>Tools</Tab>
+                            <Tab className='py-2 px-4 hover:bg-orange-700 bg-orange-600 rounded-xl text-white'>Ingredients</Tab>
+                            <Tab className='py-2 px-4 hover:bg-orange-700 bg-orange-600 rounded-xl text-white'>Tools</Tab>
                         </TabList>
-                    <TabPanels className='py-4 px-2 rounded-lg'>
+                    <TabPanels className='py-4 px-4 rounded-b-lg bg-slate-600'>
                         <TabPanel className="flex flex-row">
                             {recipe?.ingredients && recipe.ingredients.length > 0 ? (
                                 recipe?.ingredients.map(
@@ -398,14 +398,14 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                                                 <Image className='rounded-3xl object-cover py-2 h-full' src={`/images/${ingredient.ingredient.image_url}`} alt="Recipe Image" width="150" height="150"/>
                                             )
                                             }
-                                            <h3>{ingredient.ingredient.name}</h3>
-                                            <p>{ingredient.quantity} {ingredient.unit}</p>
+                                            <h3 className='text-white'>{ingredient.ingredient.name}</h3>
+                                            <p className='text-white'>{ingredient.quantity} {ingredient.unit}</p>
                                         </div>
                                     )
                                 )
                                 ) : 
                                 (
-                                    <p>
+                                    <p className='text-white'>
                                         Aucun ingrédient à été ajouté sur cette recette.
                                     </p>
                                 )}
@@ -415,13 +415,13 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                                 recipe?.tools.map(
                                     (tool: ToolRecipeType) => (
                                         <div key={tool.id}>
-                                            <h3>{tool.tool.name}</h3>
+                                            <h3 className='text-white'>{tool.tool.name}</h3>
                                         </div>
                                 )
                             )
                             ) : 
                             (
-                                <p>
+                                <p className='text-white'>
                                     Aucun ustensile a été ajouté sur cette recette.
                                 </p>
                             )}
@@ -431,7 +431,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 </aside>
             </section>
 
-            <section className='mx-7'>
+            <section id="instructions-section" className='mx-7'>
                 <hgroup className='flex flex-row gap-3 text-orange-500 my-5'>
                     <WaypointsIcon />
                     <h2>Steps ({recipe?.steps.length})</h2>
@@ -450,7 +450,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                                 <SwiperSlide key={step.id}>
                                     <div className='flex flex-col gap-3 rounded-md mt-8 mb-14 px-24 py-24 xl:h-96 bg-slate-700 justify-center items-center' key={step.id}>
                                         <h3 className='text-xl text-orange-600' >{step.order}</h3>
-                                        <p>{step.text}</p>
+                                        <p text-white>{step.text}</p>
                                     </div>
                                 </SwiperSlide>
                             )
@@ -458,7 +458,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     ) : 
                     (
                         <div className='flex flex-col gap-3 rounded-md mt-8 mb-14 mx-14 xl:mx-80 px-24 py-24 xl:h-96 bg-slate-700 justify-center items-center'>
-                            No step can be found for this recipe
+                            <p className='text-white'>No step can be found for this recipe</p>
                         </div>
                     )}
                 </Swiper>
@@ -496,7 +496,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                         ))
                     ) : (
                         <div className='py-6 px-14 bg-slate-800 rounded-lg'>
-                            <p>Aucun commentaire ajouté sur cet article.</p>
+                            <p>No comments has been present on this recipe</p>
                         </div>
                     )}
                 </ul>
@@ -504,7 +504,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Write a comment</h2>
                     <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
                         <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
-                            <input className='bg-slate-700 rounded-md py-1 px-3' type="text" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
+                            <input className='bg-slate-700 rounded-md py-1 px-3' type="text-area" name="text" row placeholder='Write your comment here...' onChange={handleChange}/>
                             <button className='bg-indigo-500 py-2 px-4 rounded-md w-fit mt-6' type="submit">Submit</button>
                         </form>
                     </div>
