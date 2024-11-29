@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { CroissantIcon, EggFriedIcon, HamIcon, ImageIcon, TimerIcon, Trash2Icon } from 'lucide-react'
 import Link from 'next/link'
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
+import Button from '@/components/Button'
 
 const MenuPage = () => {
 
@@ -51,7 +52,7 @@ const MenuPage = () => {
                             <button className='absolute py-3 px-3 right-0 top-0 bg-slate-700 rounded-tr-md text-orange-600' onClick={() => handleDelete(menu.id)}>
                                 <Trash2Icon />
                             </button>
-                            <h3 className='text-2xl'>{formatDateCalendar(menu.date)}</h3>                                                    
+                            <h3 className='text-2xl text-white'>{formatDateCalendar(menu.date)}</h3>                                                    
                                 {menu.meals.map((meal:MealType)=> (
                                     <div key={meal.id}>
                                         {meal.name == 'Dinner' ? 
@@ -81,7 +82,7 @@ const MenuPage = () => {
                                                 meal.mealrecipes.map((mealrecipe: MealRecipeType)=> (
                                                     <li key={mealrecipe.recipe?.id} className='flex flex-row justify-between items-center gap-32 bg-slate-700 py-2 px-3 rounded-md'>
                                                         <hgroup>
-                                                            <h5>{mealrecipe.recipe?.title}</h5>
+                                                            <h5 className='text-white'>{mealrecipe.recipe?.title}</h5>
                                                             <p className='flex flex-row gap-2 text-slate-400'><TimerIcon />{mealrecipe.recipe?.duration} mins</p>
                                                         </hgroup>
                                                         {mealrecipe.recipe?.image_url == "" ? (
@@ -104,7 +105,7 @@ const MenuPage = () => {
                     ))
                 ):
                 (
-                    <p>Menus list is empty for now, please add new menu plans on <span><Link className='text-orange-600' href="/meal-planner">this link</Link></span></p>
+                    <p className='text-black dark:text-white'>Menus list is empty for now, please add new menu plans on <span><Link className='text-orange-600' href="/meal-planner">this link</Link></span></p>
                 )}
             </div>
         </section>

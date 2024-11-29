@@ -375,11 +375,11 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
 
             <section id="ingredients-tools-section" className='flex flex-col lg:flex-row items-center lg:items-start my-7'>
                 <aside className='flex flex-col w-3/6 px-6 h-full'>
-                    <h2 className='flex flex-row text-xl text-orange-500'><ListChecksIcon className='mr-5'/>Instructions</h2>
+                    <h2 className='flex flex-row text-xl text-orange-600 font-bold'><ListChecksIcon className='mr-5'/>Instructions</h2>
                     <p className='py-4'>{recipe?.instruction}</p>
                 </aside>
                 <aside className='flex flex-col w-3/6 px-4 gap-4'>
-                    <h2 className='flex flex-row text-orange-500'><CookingPotIcon className='mr-4'/>Ingredients and Tools</h2>
+                    <h2 className='flex flex-row text-xl text-orange-600 font-bold'><CookingPotIcon className='mr-4'/>Ingredients and Tools</h2>
                     <TabGroup className='border-2 border-gray-700 rounded-lg'>
                         <TabList className='flex flex-row gap-4 py-4 px-4 bg-slate-700 rounded-t-md'>
                             <Tab className='py-2 px-4 hover:bg-orange-700 bg-orange-600 rounded-xl text-white'>Ingredients</Tab>
@@ -432,9 +432,9 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             </section>
 
             <section id="instructions-section" className='mx-7'>
-                <hgroup className='flex flex-row gap-3 text-orange-500 my-5'>
+                <hgroup className='flex flex-row gap-3 my-5 text-orange-600'>
                     <WaypointsIcon />
-                    <h2>Steps ({recipe?.steps.length})</h2>
+                    <h2 className='text-xl font-bold'>Steps ({recipe?.steps.length})</h2>
                 </hgroup>
                 <Swiper
                 pagination={true}
@@ -465,7 +465,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             </section>
 
             <section className='flex flex-col my-5 mx-7'>
-                <h2 className='flex flex-row gap-3 my-3 text-xl text-orange-500'><Lightbulb /> Suggestions</h2>
+                <h2 className='flex flex-row gap-3 my-3 text-xl text-orange-600 font-bold'><Lightbulb /> Suggestions</h2>
                 <div className='flex flex-row gap-4 h-full'>
                     {suggestion?.map((recipe: RecipeType) => (
                         <SuggestionCard key={recipe.id} recipe={recipe} />
@@ -488,7 +488,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                         )
                     }
                 
-                <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareQuoteIcon/> Comments ({recipe?.comments.length}) :</h2>
+                <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-600 font-bold'><MessageSquareQuoteIcon/> Comments ({recipe?.comments.length}) :</h2>
                 <ul>
                     {recipe?.comments && recipe.comments.length > 0 ? (
                         recipe?.comments.map((comment: CommentType) => (
@@ -501,7 +501,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     )}
                 </ul>
                 <div className='my-10'>
-                    <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Write a comment</h2>
+                    <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-600 font-bold'><MessageSquareMoreIcon/> Write a comment</h2>
                     <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
                         <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
                             <input className='bg-slate-700 rounded-md py-1 px-3' type="text-area" name="text" row placeholder='Write your comment here...' onChange={handleChange}/>
@@ -514,7 +514,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 <div>
                     <hgroup className='flex flex-row gap-3'>
                         <LeafIcon className='text-orange-600' />
-                        <h2 className='text-xl text-orange-600'>Nutritional Info</h2>
+                        <h2 className='text-xl text-orange-600 font-bold'>Nutritional Info</h2>
                     </hgroup>
                     <div className='bg-slate-800 my-1 py-4 rounded-lg'>
                         <NutritionInfo 
