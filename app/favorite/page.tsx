@@ -1,5 +1,6 @@
 "use client"
 import RecipeCard from '@/components/RecipeCard'
+import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
@@ -18,6 +19,7 @@ const Favorite = () => {
 
     return (
         <>
+            <ThemeSwitcherScroll/>
             <h1>Favorite List</h1>
             <ul>
             {favoriteRecipes.map((recipe: RecipeType) => (

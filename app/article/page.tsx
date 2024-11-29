@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react'
 import ArticleCard from '@/components/ArticleCard'
 import Link from 'next/link'
+import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
 
 
 const ArticlePage = () => {
@@ -36,6 +37,7 @@ const ArticlePage = () => {
 
     return (
         <>
+            <ThemeSwitcherScroll/>
             <Link className="py-2 px-4 text-white bg-orange-700 rounded-md hover:bg-orange-600" href='https://elan-formation.fr/accueil'>Retour</Link>
             <h1 className='text-4xl font-bold mt-8 mb-6'>Blog</h1>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>

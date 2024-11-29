@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
+import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
 
 const RecipePage = () => {
 
@@ -23,6 +24,7 @@ const RecipePage = () => {
 
     return (
         <>
+            <ThemeSwitcherScroll/>
             <Button href='https://elan-formation.fr/accueil' label='Retour'/>
             <h1 className='text-4xl font-bold mt-4 mb-6'>Recipes</h1>
             

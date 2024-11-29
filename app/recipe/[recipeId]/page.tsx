@@ -15,6 +15,7 @@ import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-
 import { formatDate } from '@/lib/utils'
 import NutritionInfo from '@/components/NutritionInfo'
 import MacronutrientsChartDoughnut from '@/components/MacronutrientsChartDoughnut'
+import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
   
 const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: string}}) => {
 
@@ -336,7 +337,8 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
         fetchRecipeDetails()
     }, [params.recipeId, params.categoryId])
     return (
-        <div className='mx-8'>
+        <div id='recipe-page' className='mx-8'>
+            <ThemeSwitcherScroll/>
             <section className='flex xl:flex-row max-[768px]:items-center flex-col-reverse mx-5 '>
                 <aside className='flex flex-col flex-wrap rounded-l-md py-16 px-32 md:px-56 bg-slate-700 justify-center items-center'>
                     <h1 className='mb-3 text-3xl w-72 text-center'>{recipe?.title}</h1>
@@ -471,7 +473,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 </div>
             </section>
             
-            <section className='my-7 py-4 px-6'>
+            <section id="comments-section" className='my-7 py-4 px-6'>
                     {isSignedIn ? 
                         <div className='flex flex-row gap-3 rounded-md mt-8 mb-14 pl-6 py-6 bg-slate-700 justify-start items-center'>
                             <Image className='rounded-full' src={user.imageUrl} alt="User Avatar" width="60" height="60"/>

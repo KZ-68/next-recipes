@@ -1,4 +1,5 @@
 "use client"
+import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
 import { sendMail } from '@/lib/mail';
 import { CheckCircle2, XCircleIcon } from 'lucide-react';
 import { useFormState } from 'react-dom';
@@ -35,6 +36,7 @@ function ContactPage () {
     
     return (
         <>
+            <ThemeSwitcherScroll/>
             {formState?.success === true && (
                 <p id="success" className='bg-white w-fit py-2 px-3 my-3 text-black rounded-md'><CheckCircle2 className='flex flex-row gap-2 text-white bg-green-700 rounded-full'/>{formState?.message}</p>
             )}

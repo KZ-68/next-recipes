@@ -4,6 +4,7 @@ import { formatDateCalendar } from '@/lib/utils'
 import Image from 'next/image'
 import { CroissantIcon, EggFriedIcon, HamIcon, ImageIcon, TimerIcon, Trash2Icon } from 'lucide-react'
 import Link from 'next/link'
+import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
 
 const MenuPage = () => {
 
@@ -40,6 +41,7 @@ const MenuPage = () => {
 
     return (
         <section className='mx-6'> 
+            <ThemeSwitcherScroll/>
             <h1 className='text-3xl'>Your Meal Plans</h1>
             <div className='flex flex-row flex-wrap gap-8 my-5'>
                 {menus.length > 0 ? 

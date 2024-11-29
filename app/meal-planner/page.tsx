@@ -5,6 +5,7 @@ import {Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure} from
 import { CalendarDays, CircleCheckIcon } from 'lucide-react';
 import Link from 'next/link';
 import DraggableItem from '@/components/DraggableItem';
+import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
 
 const MealPlannerPage = () => {
     const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
@@ -100,6 +101,7 @@ const MealPlannerPage = () => {
 
     return (
         <section className='relative flex flex-col items-start gap-4 mx-8'>
+            <ThemeSwitcherScroll/>
             <div className={successAlert === false ? 'hidden opacity-0' : 'absolute bg-slate-200 py-2 px-4 rounded-lg'} id='success-alert'>
                 <p className={successAlert === false ? 'hidden opacity-0' : 'text-black opacity-100 flex flex-row gap-2'}><CircleCheckIcon className='bg-green-600 text-white rounded-full'/> Menu Plan added !</p>
             </div>
@@ -151,13 +153,13 @@ const MealPlannerPage = () => {
                                 </div>
                                 <Button onPress={() => onPress(meal)} value={meal.id} className='bg-blue-400 px-3 rounded-lg w-fit'>+</Button>
                             </div>
-                            <ul className='relative flex flex-col py-3 px-4 rounded-md bg-slate-700'>
+                            <ul className='relative h-auto flex flex-col py-3 px-4 rounded-md bg-slate-700'>
                             {meal.mealrecipes.length > 0 ? (
                                 meal.mealrecipes.map((mealrecipe:MealRecipeType) => (
-                                    <DraggableItem key={mealrecipe?.recipe?.id} recipe={mealrecipe.recipe} meal={meal} setMeal={setMeal} />
+                                    <DraggableItem key={mealrecipe?.recipe?.id} recipes={recipes} recipe={mealrecipe.recipe} meal={meal} setMeal={setMeal} />
                                 ))
                             ):(
-                                <li key={0}>No recipes added yet</li>
+                                <p key={0}>No recipes added yet</p>
                             )}
                             </ul>
                         </div>
