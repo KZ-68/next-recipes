@@ -8,6 +8,7 @@ import DraggableItem from '@/components/DraggableItem';
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
 
 const MealPlannerPage = () => {
+
     const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
 
     const [successAlert, setSuccessAlert] = useState<boolean>(false)
@@ -16,38 +17,49 @@ const MealPlannerPage = () => {
     const [meals, setMeals] = useState<MealType[]>([])
     const [meal, setMeal] = useState<MealType | null>(null)
     const [mealrecipes, setMealRecipes] = useState<MealRecipeType[]>([])
-    const [modalRecipes, setModalRecipes] = useState<RecipeType[]>([])
     const [menu, setMenu] = useState<MenuType>({id:'', date:new Date(), meals:[]})
-    const [date, setDate] = useState<Date>(new Date());
+    const [date, setDate] = useState<Date>(new Date(""));
     const [selectedRecipes, setSelectedRecipes] = useState<Array<string>>([])
     
     function handleModalClick() {
-        console.log(meal);
-        const recipesData : RecipeType[] = [];
-        setModalRecipes(recipesData);
-        setMealRecipes([]);
+        setMealRecipes([])
         selectedRecipes.forEach(selectedRecipe => {
             recipes.forEach(recipe => {
                 if(recipe.id === selectedRecipe) {
-                    modalRecipes.push(recipe)
                     mealrecipes.push({id:'', mealId: meal?meal.id:'', recipeId: recipe.id, recipe: recipe})
                 }
+
             })
+
         });
         menu.date = date;
-        menu?.meals.push(meal ? meal : {id:'', name:'', createdAt:new Date(), menu:{id:'', date:new Date(), meals:[]}, mealrecipes:[]})
-        mealrecipes.forEach(mealrecipe => {
-            meal?.mealrecipes.push(mealrecipe)
+        mealrecipes.forEach(mealrecipe1 => {
+            meal?.mealrecipes.push(mealrecipe1)
         })
-    
+        if(menu.meals.length > 0) {
+            menu.meals.forEach(mealMenu => {
+                console.log(meal?.id);
+                console.log(mealMenu.id);
+                if(mealMenu.id !== meal?.id) {
+                    menu.meals.push(meal ? meal : {id:'', name:'', createdAt:new Date(), menu:{id:'', date:new Date(), meals:[]}, mealrecipes:[]})
+                }
+            })
+        } else {
+            menu.meals.push(meal ? meal : {id:'', name:'', createdAt:new Date(), menu:{id:'', date:new Date(), meals:[]}, mealrecipes:[]})
+        } 
         return onClose()
     }
 
     async function handleValidateClick() {
+        if(date !== new Date("")) {
+            menu.date = date;
+        }
+
         const response = await fetch(`/api/menu/new`, {
             method: 'POST',
             body: JSON.stringify(menu),
         })
+
         if (response.ok) {
             setSuccessAlert(true);
         }
@@ -59,15 +71,13 @@ const MealPlannerPage = () => {
         onOpen();
     }
 
-    function dateHandler(e:BaseSyntheticEvent){
+    const dateHandler = (e:BaseSyntheticEvent) => {
         const dateTarget = new Date(e.target.value);
-        console.log(dateTarget);
         setDate(dateTarget);
     }
 
     function getSelectedOptions(e:BaseSyntheticEvent) {
         const options = e.target.options;
-        console.log(options);
         const selectedOptions = [];
         const selectedValues = [];
 
