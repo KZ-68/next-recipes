@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         const bodyMeal: { name: string; }[] = [];
-        const mealRecipesData: { mealId: string; recipeId: string; }[] = [];
+        let mealRecipesData: { mealId: string; recipeId: string; }[] = [];
 
         body.meals.forEach((meal:MealType) => {
           bodyMeal.push({name:meal.name})
@@ -30,36 +30,39 @@ export async function POST(req: NextRequest) {
         })
 
         body.meals.forEach(async(meal:MealType) => {
+          mealRecipesData = [];
           findMealMenu.forEach(async(findMealMenuUnique) => {
             if(findMealMenuUnique.name === meal.name) {
-              meal.mealrecipes.forEach((mealrecipe:MealRecipeType) => {
+              meal.mealrecipes.forEach(async(mealrecipe:MealRecipeType) => {
                 mealrecipe.mealId = findMealMenuUnique.id
-                mealRecipesData.push({
-                  mealId: mealrecipe.mealId,
-                  recipeId: mealrecipe.recipeId
-                })
-              })
-
-              await db.mealRecipe.createMany({
-                "data": mealRecipesData
-              })
-    
-              await db.meal.update({
-                "where": {
-                  "id": findMealMenuUnique.id,
-                },
-                "data": {
-                  "mealrecipes": {
-                    "createMany": {
-                      "data": mealRecipesData
-                    }
-                  }
-                }
+                meal.id = findMealMenuUnique.id;
               })
             }
           })
+
+          meal.mealrecipes.forEach(async(mealrecipe:MealRecipeType) => {
+            mealRecipesData.push({
+              mealId: mealrecipe.mealId,
+              recipeId: mealrecipe.recipeId
+            })
+          })
   
-          
+          await db.mealRecipe.createMany({
+            "data": mealRecipesData
+          })
+
+          await db.meal.update({
+            "where": {
+              "id": meal.id,
+            },
+            "data": {
+              "mealrecipes": {
+                "createMany": {
+                  "data": mealRecipesData
+                }
+              }
+            }
+          })
         })
         
         console.log(newMenu);
