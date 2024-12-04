@@ -1,6 +1,7 @@
 model CommentBlog {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     text String
+    user String @default("null")
  
     articleId String @db.ObjectId
     article Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)

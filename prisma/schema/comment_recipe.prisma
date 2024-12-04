@@ -1,6 +1,7 @@
 model CommentRecipe {
     id String @id @default(auto()) @map("_id") @db.ObjectId
     text String
+    user String @default("null")
 
     recipeId String @db.ObjectId
     recipe Recipe? @relation(fields: [recipeId], references: [id], onDelete: Cascade)
