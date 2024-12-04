@@ -104,7 +104,7 @@ const MenuPage = () => {
                     ))
                 ):
                 (
-                    <p className='text-black dark:text-white'>Menus list is empty for now, please add new menu plans on <span><Link className='text-orange-600' href="/meal-planner">this link</Link></span></p>
+                    <p className='dark:text-white'>Menus list is empty for now, please add new menu plans on <span><Link className='text-orange-600 dark:text-orange-600' href="/meal-planner">this link</Link></span></p>
                 )}
             </div>
         </section>
