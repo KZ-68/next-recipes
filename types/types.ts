@@ -12,6 +12,7 @@ interface CommentType {
     id: string;
     text: string;
     createdAt: Date;
+    user: string;
 }
  
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
