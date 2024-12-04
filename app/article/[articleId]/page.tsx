@@ -5,11 +5,14 @@ import Tag from '@/components/Tag'
 import React, { useEffect, useState } from 'react'
 import { MessageSquareMoreIcon, NotebookIcon } from 'lucide-react';
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
+import Image from 'next/image';
+import { useUser } from '@clerk/nextjs'
 
 const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
 
     const [article, setArticle] = useState<ArticleWithTagsAndComments | null>(null)
     const [data, setData] = useState({});
+    const {isSignedIn, user} = useUser();
 
     useEffect(() => {
         const fetchArticle = async () => {
@@ -69,10 +72,38 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
                     </section>
                     <section className='px-16 py-4 mt-8 dark:bg-slate-900 rounded-md'>
                         <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Comments ({article?.comments.length}) :</h2>
+                        {isSignedIn ? 
+                        <div className='flex flex-row gap-3 rounded-md mt-8 mb-14 pl-6 py-6 bg-slate-700 justify-start items-center'>
+                            <Image className='rounded-full' src={user.imageUrl} alt="User Avatar" width="60" height="60"/>
+                            <div>
+                                <h3 className='text-2xl'>{user.username}</h3>
+                                <p></p>
+                            </div>
+                        </div>
+                        :
+                        (
+                            ""
+                        )
+                        }
                         <ul>
                             {article?.comments && article.comments.length > 0 ? (
                                 article?.comments.map((comment: CommentType) => (
-                                    <CommentBlog key={comment.id} comment={comment} article={article} />
+                                    
+                                    
+                                    <div key={comment.id}>
+                                        
+                                        <hgroup>
+                                            {comment.user ?
+                                                <h3 className='text-lg'>{comment.user}</h3> 
+                                            : 
+                                            (
+                                                <h3 className='text-lg'>Deleted or Unknown User</h3>
+                                            ) 
+                                            }
+                                            
+                                        </hgroup> 
+                                        <CommentBlog key={comment.id} comment={comment} article={article} />
+                                    </div>
                                 ))
                             ) : (
                                 <p>
