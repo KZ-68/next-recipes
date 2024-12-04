@@ -2,7 +2,7 @@
 // import { db } from '@/lib/db'
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react'
 import {Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
-import { CalendarDays, CircleCheckIcon } from 'lucide-react';
+import { CircleCheckIcon } from 'lucide-react';
 import Link from 'next/link';
 import DraggableItem from '@/components/DraggableItem';
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
@@ -115,15 +115,14 @@ const MealPlannerPage = () => {
             <div className={successAlert === false ? 'hidden opacity-0' : 'absolute bg-slate-200 py-2 px-4 rounded-lg'} id='success-alert'>
                 <p className={successAlert === false ? 'hidden opacity-0' : 'text-black opacity-100 flex flex-row gap-2'}><CircleCheckIcon className='bg-green-600 text-white rounded-full'/> Menu Plan added !</p>
             </div>
-            <h1 className='text-3xl my-6'>Meal Planer</h1>
-            <Link className='bg-red-500 py-3 px-4 rounded-xl' href='/menu' >
+            <h1 className='text-3xl my-2'>Meal Planer</h1>
+            <p className='my-3 dark:text-white'>Create your own menu with one or more meals and their recipes</p>
+            <Link className='text-white bg-red-500 py-3 px-4 mb-6 rounded-xl' href='/menu' >
                 My Meal Plans
             </Link>
-            
             <label>Select Date :</label>
-            <div className='flex flex-row items-center bg-white w-fit rounded-md py-1 px-1 my-1'>
-                <input onChange={dateHandler} className='py-1 bg-white text-black' type="date" id="start" name="trip-start" max="2099-12-31" />
-                <CalendarDays className='text-black' />
+            <div className='bg-white flex flex-row items-center w-fit rounded-md py-1 px-1 my-1'>
+                <input onChange={dateHandler} className='py-1 bg-white text-black dark:text-black' type="date" id="start" name="trip-start" max="2099-12-31" />
             </div>
             <div className='relative right-[600px]' id='modal-root'>
                 <Modal className='absolute left-80 bottom-72 w-fit' isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
@@ -153,6 +152,7 @@ const MealPlannerPage = () => {
                     </ModalContent>
                 </Modal>
             </div>
+            <p>Add recipes for the meals you want in your menu :</p>
             <div className='flex flex-row my-2 gap-8'>
                 {
                     meals.map((meal:MealType) => (
