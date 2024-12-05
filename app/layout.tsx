@@ -50,6 +50,10 @@ export default function RootLayout({
             <main className='min-h-screen p-6'>
               {children}
             </main>
+            <footer className="flex flex-row justify-between px-6 py-8 bg-slate-700 text-white">
+              <small>Created for ELAN Formation by : KZ-68</small>
+              <a href="/privacy">Privacy Policy</a>
+            </footer>
           </ThemeProvider>
         </body>
       </html>
