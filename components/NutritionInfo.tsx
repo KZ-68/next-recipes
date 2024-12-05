@@ -49,33 +49,33 @@ const NutritionInfo:React.FC<NutritionInfoProps> = (
         <div className='flex flex-row flex-wrap justify-center gap-2 py-4 px-2 rounded-md'>
             <div className='flex flex-col items-center py-8 px-14 rounded-md bg-slate-900 w-[32%]'>
                 <AppleIcon className='p-2 rounded-full bg-green-700' size={48} strokeWidth={1}/>
-                <h3>{energyLabel}</h3>
-                <p className='flex flex-row gap-3'>{energyQuantity}{energyUnit}</p>
+                <h3 className='text-white'>{energyLabel}</h3>
+                <p className='text-white flex flex-row gap-3'>{energyQuantity}{energyUnit}</p>
             </div>
             <div className='flex flex-col items-center py-8 px-14 rounded-md bg-slate-900 w-[32%]'>
                 <Drumstick className='p-2 rounded-full bg-blue-700' size={48} strokeWidth={1}/>
-                <h3>{protLabel}</h3>
-                <p className='flex flex-row gap-3'>{protQuantity}{protUnit}</p>
+                <h3 className='text-white'>{protLabel}</h3>
+                <p className='text-white flex flex-row gap-3'>{protQuantity}{protUnit}</p>
             </div>
             <div className='flex flex-col items-center py-8 px-14 rounded-md bg-slate-900 w-[32%]'>
                 <WheatIcon className='p-2 rounded-full bg-yellow-800' size={48} strokeWidth={1}/>
-                <h3>{carbohydrateLabel}</h3>
-                <p className='flex flex-row gap-3'>{carbohydrateQuantity}{carbohydrateUnit}</p>
+                <h3 className='text-white'>{carbohydrateLabel}</h3>
+                <p className='text-white flex flex-row gap-3'>{carbohydrateQuantity}{carbohydrateUnit}</p>
             </div>
             <div className='flex flex-col items-center py-8 px-14 rounded-md bg-slate-900 w-[32%]'>
                 <DropletIcon className='p-2 rounded-full bg-red-800' size={48} strokeWidth={1}/>
-                <h3>{totalFatLabel}</h3>
-                <p className='flex flex-row gap-3'>{totalFatQuantity}{totalFatUnit}</p>
+                <h3 className='text-white'>{totalFatLabel}</h3>
+                <p className='text-white flex flex-row gap-3'>{totalFatQuantity}{totalFatUnit}</p>
             </div>
             <div className='flex flex-col items-center py-8 px-14 rounded-md bg-slate-900 w-[32%]'>
                 <CandyIcon className='p-2 rounded-full bg-pink-800' size={48} strokeWidth={1}/>
-                <h3>{sugarLabel}</h3>
-                <p className='flex flex-row gap-3'>{sugarQuantity}{sugarUnit}</p>
+                <h3 className='text-white'>{sugarLabel}</h3>
+                <p className='text-white flex flex-row gap-3'>{sugarQuantity}{sugarUnit}</p>
             </div>
             <div className='flex flex-col items-center py-8 px-14 rounded-md bg-slate-900 w-[32%]'>
                 <CitrusIcon className='p-2 rounded-full bg-orange-800' size={48} strokeWidth={1}/>
-                <h3>{vitcLabel}</h3>
-                <p className='flex flex-row gap-3'>{vitcQuantity}{vitcUnit}</p>
+                <h3 className='text-white'>{vitcLabel}</h3>
+                <p className='text-white flex flex-row gap-3'>{vitcQuantity}{vitcUnit}</p>
             </div>
         </div>
     )

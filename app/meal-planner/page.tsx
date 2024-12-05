@@ -110,7 +110,7 @@ const MealPlannerPage = () => {
     }, [])
 
     return (
-        <section className='relative flex flex-col items-start gap-4 mx-8'>
+        <section className='bg-slate-600 rounded-lg text-white relative flex flex-col items-start gap-2 px-4 py-8 mx-4'>
             <ThemeSwitcherScroll/>
             <div className={successAlert === false ? 'hidden opacity-0' : 'absolute bg-slate-200 py-2 px-4 rounded-lg'} id='success-alert'>
                 <p className={successAlert === false ? 'hidden opacity-0' : 'text-black opacity-100 flex flex-row gap-2'}><CircleCheckIcon className='bg-green-600 text-white rounded-full'/> Menu Plan added !</p>
@@ -122,7 +122,7 @@ const MealPlannerPage = () => {
             </Link>
             <label>Select Date :</label>
             <div className='bg-white flex flex-row items-center w-fit rounded-md py-1 px-1 my-1'>
-                <input onChange={dateHandler} className='py-1 bg-white text-black dark:text-black' type="date" id="start" name="trip-start" max="2099-12-31" />
+                <input onChange={dateHandler} className='py-1 bg-white text-black' type="date" id="start" name="trip-start" max="2099-12-31" />
             </div>
             <div className='relative right-[600px]' id='modal-root'>
                 <Modal className='absolute left-80 bottom-72 w-fit' isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true}>
