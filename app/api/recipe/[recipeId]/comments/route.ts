@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { useUser } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, { params }: { params: { recipeId: string } }) {
@@ -23,6 +24,10 @@ export async function GET(req: NextRequest, { params }: { params: { recipeId: st
 }
 
 export async function POST(req: NextRequest, { params }: { params: { recipeId: string } }) {
+    const {isSignedIn, user} = useUser();
+    if(!isSignedIn) {
+        return null;
+    }
 
     try {
         const { recipeId } = params;
@@ -32,7 +37,8 @@ export async function POST(req: NextRequest, { params }: { params: { recipeId: s
         const newComment = await db.commentRecipe.create({
           "data": {
             "text": body.text,
-            "recipeId": recipeId
+            "recipeId": recipeId,
+            "user": user.username? user.username : ''
           }
         });
     
