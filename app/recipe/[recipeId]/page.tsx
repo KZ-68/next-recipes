@@ -341,21 +341,21 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
             <ThemeSwitcherScroll/>
             <section className='flex xl:flex-row max-[768px]:items-center flex-col-reverse mx-5 '>
                 <aside className='flex flex-col flex-wrap rounded-l-md py-16 px-32 md:px-56 bg-slate-700 justify-center items-center'>
-                    <h1 className='mb-3 text-3xl w-72 text-center'>{recipe?.title}</h1>
+                    <h1 className='text-white mb-3 text-3xl w-72 text-center'>{recipe?.title}</h1>
                     <div className='my-5 flex flex-row gap-4 content-center'>
                         <Category key={recipe?.category.id} text={recipe ? recipe.category.name : ""}/>
-                        <p className='flex flex-row gap-1 w-24'><TimerIcon/>{recipe?.duration} mins</p>
-                        <div className='flex flex-row'>
+                        <p className='text-white flex flex-row gap-1 w-24'><TimerIcon/>{recipe?.duration} mins</p>
+                        <div className='text-white flex flex-row'>
                             {getGaugeIcon()}
                         </div>
                     </div>
                     <div className='flex flex-col xl:flex-row items-center xl:items-start gap-5'>
                         <div className='rounded-3xl hover:bg-orange-700 bg-orange-600 py-2 px-3 min-w-44' key={recipe?.id}>
-                            <PDFDownloadLink className='flex flex-row gap-2 items-center' document={<PdfFile />} fileName='test.pdf' > 
+                            <PDFDownloadLink className='text-white flex flex-row gap-2 items-center' document={<PdfFile />} fileName='test.pdf' > 
                             <DownloadIcon/> Download PDF
                             </PDFDownloadLink>
                         </div>
-                        <button className='flex flex-row items-center gap-2 rounded-3xl hover:bg-orange-700 bg-orange-600 py-2 px-3 min-w-48' type='button' onClick={handleSaveUserData}><HeartIcon color='white'/> Add to Favorites</button>
+                        <button className='text-white flex flex-row items-center gap-2 rounded-3xl hover:bg-orange-700 bg-orange-600 py-2 px-3 min-w-48' type='button' onClick={handleSaveUserData}><HeartIcon color='white'/> Add to Favorites</button>
                     </div>
                 </aside>
                 <aside>
@@ -478,8 +478,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                         <div className='flex flex-row gap-3 rounded-md mt-8 mb-14 pl-6 py-6 bg-slate-700 justify-start items-center'>
                             <Image className='rounded-full' src={user.imageUrl} alt="User Avatar" width="60" height="60"/>
                             <div>
-                                <h3 className='text-2xl'>{user.username}</h3>
-                                <p></p>
+                                <h3 className='text-white text-2xl'>{user.username}</h3>
                             </div>
                         </div>
                         :
@@ -492,23 +491,46 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 <ul>
                     {recipe?.comments && recipe.comments.length > 0 ? (
                         recipe?.comments.map((comment: CommentType) => (
-                            <CommentRecipe key={comment.id} comment={comment} recipe={recipe}/>
+                            <div key={comment.id}>
+                                <hgroup>
+                                    {comment.user ?
+                                        <h3 className='text-white text-lg'>{comment.user}</h3> 
+                                    : 
+                                    (
+                                        <h3 className='text-white text-lg'>Deleted or Unknown User</h3>
+                                    ) 
+                                    }
+                                </hgroup> 
+                                <CommentRecipe key={comment.id} comment={comment} recipe={recipe}/>
+                            </div>
+                            
                         ))
                     ) : (
                         <div className='py-6 px-14 bg-slate-800 rounded-lg'>
-                            <p>No comments has been present on this recipe</p>
+                            <p className='text-white'>No comments has been present on this recipe</p>
                         </div>
                     )}
                 </ul>
-                <div className='my-10'>
-                    <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-600 font-bold'><MessageSquareMoreIcon/> Write a comment</h2>
-                    <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
-                        <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
-                            <input className='bg-slate-700 rounded-md py-1 px-3' type="text-area" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
-                            <button className='bg-indigo-500 py-2 px-4 rounded-md w-fit mt-6' type="submit">Submit</button>
-                        </form>
+                {isSignedIn ? 
+                    <div className='my-10'>
+                        <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-600 font-bold'><MessageSquareMoreIcon/> Write a comment</h2>
+                        <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
+                            <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
+                                <input className='bg-slate-700 rounded-md py-1 px-3' type="text-area" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
+                                <button className='bg-indigo-500 py-2 px-4 rounded-md w-fit mt-6' type="submit">Submit</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                :
+                (
+                    <div className='my-10'>
+                        <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
+                            <p>Login into your account for post a comment : <a className='text-orange-500' href='/sign-in'>click here</a></p>
+                        </div>
+                    </div>
+                )
+                }
+                
             </section>
             <section className='my-7 py-4 px-6'>
                 <div>

@@ -88,10 +88,7 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
                         <ul>
                             {article?.comments && article.comments.length > 0 ? (
                                 article?.comments.map((comment: CommentType) => (
-                                    
-                                    
                                     <div key={comment.id}>
-                                        
                                         <hgroup>
                                             {comment.user ?
                                                 <h3 className='text-lg'>{comment.user}</h3> 
@@ -100,25 +97,32 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
                                                 <h3 className='text-lg'>Deleted or Unknown User</h3>
                                             ) 
                                             }
-                                            
                                         </hgroup> 
                                         <CommentBlog key={comment.id} comment={comment} article={article} />
                                     </div>
                                 ))
                             ) : (
-                                <p>
+                                <p className='text-white py-6 px-14 bg-slate-600 dark:bg-slate-700 rounded-lg'>
                                     Aucun commentaire ajouté sur cet article.
                                 </p>
                             )}
                         </ul>
                         <div className='my-10'>
-                            <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Write a comment</h2>
-                            <div className='my-6 py-6 px-14 bg-slate-800 rounded-lg'>
-                                <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
-                                    <input className='bg-slate-700 py-2 px-3 rounded-md' type="text" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
-                                    <button className='bg-indigo-500 py-2 px-4 rounded-md w-fit mt-6' type="submit">Submit</button>
-                                </form>
-                            </div>
+                            <h2 className='flex flex-row gap-3 mb-4 text-xl text-orange-500'><MessageSquareMoreIcon/> Write a comment</h2>  
+                            {isSignedIn ? 
+                                <div className='my-6 py-6 px-14 bg-slate-600 rounded-lg'>
+                                    <form id="recipe-comment-form" hidden={false} className='flex flex-col gap-6' onSubmit={handleCommentSubmit}>
+                                        <input className='bg-slate-700 py-2 px-3 rounded-md' type="text" name="text" placeholder='Write your comment here...' onChange={handleChange}/>
+                                        <button className='bg-indigo-500 py-2 px-4 rounded-md w-fit mt-6' type="submit">Submit</button>
+                                    </form>
+                                </div>
+                            :
+                            (
+                                <div className='my-6 py-6 px-14 bg-slate-600 rounded-lg'>
+                                    <p className=' text-white'>Login into your account for post a comment : <a className='text-orange-500' href='/sign-in'>click here</a></p>
+                                </div>
+                            )
+                            }
                         </div>
                     </section>
                 </div>
