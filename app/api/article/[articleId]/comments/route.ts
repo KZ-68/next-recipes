@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { useUser } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: { articleId: string } }) {
@@ -24,15 +25,20 @@ export async function GET(req: Request, { params }: { params: { articleId: strin
 
 export async function POST(req: NextRequest, { params }: { params: { articleId: string } }) {
 
+    const {isSignedIn, user} = useUser();
+    if(!isSignedIn) {
+        return null;
+    }
+
     try {
         const { articleId } = params;
         const body = await req.json();
-        console.log(body.text)
     
         const newComment = await db.commentBlog.create({
           "data": {
             "text": body.text,
-            "articleId": articleId
+            "articleId": articleId,
+            "user": user.username? user.username : ''
           }
         });
     
