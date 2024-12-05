@@ -493,7 +493,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                         recipe?.comments.map((comment: CommentType) => (
                             <div key={comment.id}>
                                 <hgroup>
-                                    {comment.user ?
+                                    {comment.user !== '' ?
                                         <h3 className='text-white text-lg'>{comment.user}</h3> 
                                     : 
                                     (

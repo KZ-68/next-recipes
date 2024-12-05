@@ -90,7 +90,7 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
                                 article?.comments.map((comment: CommentType) => (
                                     <div key={comment.id}>
                                         <hgroup>
-                                            {comment.user ?
+                                            {comment.user !== '' ?
                                                 <h3 className='text-lg'>{comment.user}</h3> 
                                             : 
                                             (
