@@ -38,6 +38,10 @@ body {
   color: #ffffff;
 }
 
+[data-theme="dark"] h1#favorites-list-header {
+  color: #ffffff;
+}
+
 input[type="date"]::-webkit-calendar-picker-indicator {
     color: rgba(0, 0, 0, 0);
     opacity: 1;
