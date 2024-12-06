@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { useUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest, { params }: { params: { recipeId: string } }) {
@@ -24,10 +24,7 @@ export async function GET(req: NextRequest, { params }: { params: { recipeId: st
 }
 
 export async function POST(req: NextRequest, { params }: { params: { recipeId: string } }) {
-    const {isSignedIn, user} = useUser();
-    if(!isSignedIn) {
-        return null;
-    }
+    const currentUserData = await currentUser()
 
     try {
         const { recipeId } = params;
@@ -38,7 +35,7 @@ export async function POST(req: NextRequest, { params }: { params: { recipeId: s
           "data": {
             "text": body.text,
             "recipeId": recipeId,
-            "user": user.username? user.username : ''
+            "user": currentUserData?.username? currentUserData.username : ''
           }
         });
     
