@@ -5,6 +5,7 @@ import NavBar from "@/components/NavBar";
 import { ClerkProvider, SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { ThemeProvider } from "next-themes";
+import Link from "next/link";
 
 const merriWeather = Merriweather({
   weight: ["300", "400", "700", "900"],
@@ -35,7 +36,10 @@ export default function RootLayout({
           <header>
             <nav className="flex flex-row justify-between pr-20 bg-slate-700 text-white">
               <NavBar />
-              <div className="flex flex-row gap-3">
+              <div className="flex flex-row items-center gap-3">
+                <SignedIn>
+                  <Link className='hover:text-orange-500 text-lg' href='/favorite'>Favorites</Link>
+                </SignedIn>
                 <ThemeSwitcher />
                 <SignedOut>
                   <SignInButton />
