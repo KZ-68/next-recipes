@@ -89,15 +89,6 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
                             {article?.comments && article.comments.length > 0 ? (
                                 article?.comments.map((comment: CommentType) => (
                                     <div key={comment.id}>
-                                        <hgroup>
-                                            {comment.user !== '' ?
-                                                <h3 className='text-lg'>{comment.user}</h3> 
-                                            : 
-                                            (
-                                                <h3 className='text-lg'>Deleted or Unknown User</h3>
-                                            ) 
-                                            }
-                                        </hgroup> 
                                         <CommentBlog key={comment.id} comment={comment} article={article} />
                                     </div>
                                 ))

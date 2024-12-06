@@ -274,7 +274,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
     const handleSaveUserData = async() => {
         if(isSignedIn) {
             try {
-                const response = await fetch(`/api/private`, {
+                const response = await fetch(`/api/private/favorites`, {
                     method: 'POST',
                     body: JSON.stringify({
                         recipe : recipe
@@ -492,15 +492,6 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                     {recipe?.comments && recipe.comments.length > 0 ? (
                         recipe?.comments.map((comment: CommentType) => (
                             <div key={comment.id}>
-                                <hgroup>
-                                    {comment.user !== '' ?
-                                        <h3 className='text-white text-lg'>{comment.user}</h3> 
-                                    : 
-                                    (
-                                        <h3 className='text-white text-lg'>Deleted or Unknown User</h3>
-                                    ) 
-                                    }
-                                </hgroup> 
                                 <CommentRecipe key={comment.id} comment={comment} recipe={recipe}/>
                             </div>
                             

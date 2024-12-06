@@ -29,6 +29,15 @@ const Comment:React.FC<CommentProps> = ({comment}) => {
     return (
         <li key={comment.id} className='flex-row m-5 group border-2 dark:border-slate-500 bg-slate-600 p-6 rounded-md'>
             <div className='flex flex-col gap-1'>
+                <hgroup>
+                    {comment.user !== '' ?
+                        <h3 className='text-white text-lg mb-6'>{comment.user}</h3> 
+                    : 
+                    (
+                        <h3 className='text-white text-lg mb-6'>Deleted or Unknown User</h3>
+                    ) 
+                    }
+                </hgroup> 
                 <p className='text-sm text-slate-300'>{formatDate(comment.createdAt)}</p>
                 <p className='my-3 text-white'>{comment.text}</p>
             </div>
