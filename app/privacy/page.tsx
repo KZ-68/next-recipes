@@ -3,7 +3,7 @@ import React from 'react'
 
 const PrivacyPoliciesPage = () => {
     return(
-        <div className='flex flex-col gap-4 my-6'>
+        <div className='flex flex-col gap-4 my-6 mx-6'>
             <h1>Politique de Confidentialité de MyRecipes</h1>
 
             <h2>Date de mise à jour : [Date]</h2>

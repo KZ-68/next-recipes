@@ -76,8 +76,7 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
                         <div className='flex flex-row gap-3 rounded-md mt-8 mb-14 pl-6 py-6 bg-slate-700 justify-start items-center'>
                             <Image className='rounded-full' src={user.imageUrl} alt="User Avatar" width="60" height="60"/>
                             <div>
-                                <h3 className='text-2xl'>{user.username}</h3>
-                                <p></p>
+                                <h3 className='text-white text-2xl'>{user.username}</h3>
                             </div>
                         </div>
                         :
