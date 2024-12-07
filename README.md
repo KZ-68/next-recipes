@@ -55,5 +55,5 @@ Note: Si vous utlilisez déjà un webservice sur le port 80 (ex: Les Macs utilis
 
 Afin d'utiliser pleinement les fonctionnalités du site, vous devez créer un fichier .env et .env.local et les compléter avec vos informations de connexions. 
 
-Pour le fichier ".env", récupérez les lignes présentes dans le fichier [.env.example](https://github.com/iaincollins/next-recipes/blob/master/.env.example) jusqu'à la fin de la ligne "NEXT_PUBLIC_EDAMAM_KEY". Et pour le fichier ".env.local", récupérez les deux dernières lignes.
+Pour le fichier ".env", récupérez les lignes présentes dans le fichier [.env.example](https://github.com/kz-68/next-recipes/blob/master/.env.example) jusqu'à la fin de la ligne "NEXT_PUBLIC_EDAMAM_KEY". Et pour le fichier ".env.local", récupérez les deux dernières lignes.
 
