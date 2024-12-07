@@ -31,15 +31,15 @@ const Comment:React.FC<CommentProps> = ({comment}) => {
             <div className='flex flex-col gap-1'>
                 <hgroup>
                     {comment.user !== '' ?
-                        <h3 className='text-white text-lg mb-6'>{comment.user}</h3> 
+                        <h3 id="comment-blog-header" className='text-black text-lg mb-6'>{comment.user}</h3> 
                     : 
                     (
-                        <h3 className='text-white text-lg mb-6'>Deleted or Unknown User</h3>
+                        <h3 id="comment-blog-header" className='text-black text-lg mb-6'>Deleted or Unknown User</h3>
                     ) 
                     }
                 </hgroup> 
                 <p className='text-sm text-slate-300'>{formatDate(comment.createdAt)}</p>
-                <p className='my-3 text-white'>{comment.text}</p>
+                <p id="comment-blog-text" className='my-3 text-black'>{comment.text}</p>
             </div>
             <div className='sm:top-5 sm:right-5 my-2'>
                 <button className="flex gap-2 px-5 py-2 rounded-md bg-red-500 hover:bg-red-600 text-xs" 
