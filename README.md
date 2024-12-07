@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Projet Recettes Next.js
 
-First, run the development server:
+Ce fichier vous présente le projet Next.js "Recettes" pour ELAN Formation.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* Authentication par Email avec mot de passe.
+* Utilisation du gestionnaire Clerk pour l'authentification et les restrictions sur les routes
+* Gestion du compte - Mise à jour des détails du profil et de la suppression du compte
+* Système de commentaires protéger par authentification.
+* Sécurisation des Sessions à l'aide des jetons JWT
+* Composant Tailwind 3.4.1 pour React
+* Utilisation du composant Lucide-React pour l'affichage des icônes
+* Le gestionnaire de paquets npm est utilisé pour l'installation, la mise à jour, la vérification des vulnérabilités et la désinstallation des dépendances.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## A propos 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Le projet Next.js Recettes à pour objectif de regrouper un ensemble de recettes de cuisine et d'articles de blog en lien avec des plats cuisinés, contenants ces différentes recettes.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Les pages de recettes contiennent différentes sections qui apportent un contenu enrichi à la page :
+* Une section instructions, afin de pouvoir connaître la marche à suivre pour réaliser la recette
+* Une section étapes, pour suivre un ordre de tâches pour réaliser la recette.
+* Une section d'onglets pour les ingrédients et les ustensiles utilisées.
+* Une section suggestions, qui propose aléatoirement un nombre de recette à chaque affichage de la page.
 
-## Learn More
+Les différentes pages de recettes et d'articles comportent une zone de commentaires, pour les utilisateurs connectés. 
+Les pages de recettes affichent également de nombreuses informations relatives à la composition et à l'apport Energie/Fibre/Graisse des ingrédients utilisés.
 
-To learn more about Next.js, take a look at the following resources:
+Dans ce projet, nous utilisons Tailwind, CSS, ChartJS pour le graphique en Donut des valeurs macronutritionnelles, et la librairie Lucide-Reac pour l'affichage des icônes. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Pour gérer les détails des Recettes, des articles du blog, et les plannifications de menus inscrits par les utilisateurs, les données sont affichées et traitées au travers de requêtes vers une API REST, relié à une base de données MongoDB et à un accès aux données utilisateur connecté. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Le projet comporte un système d'authentification qui supporte les connexions via Email, avec utilisation d'un mot de passe.
 
-## Deploy on Vercel
+## Lancer localement le projet en mode développement
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Pour commencer, clôner le repository et lancez la commande `npm install && npm run dev`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    git clone https://github.com/iaincollins/nextjs-starter.git
+    npm install
+    npm run dev
+
+## Construire et deployer en production
+
+Si vous voulez lancer le site en production, vous devez installer les modules puis construire le site avec `npm run build` et lancez-là avec `npm start`:
+
+    npm install
+    npm run build 
+    npm start
+
+Vous devez lancer `npm run build` à nouveau à chaque fois que vous effectuez des changements sur le site.
+
+Note: Si vous utlilisez déjà un webservice sur le port 80 (ex: Les Macs utilisent habituellement un webservice sur le port 80) vous pouvez quand même lancer l'exemple en mode production en passant un port différent comme Variable d'Environnement lors du lancement (ex: `PORT=3000 npm start`).
+
+## Configurer
+
+Afin d'utiliser pleinement les fonctionnalités du site, vous devez créer un fichier .env et .env.local et les compléter avec vos informations de connexions. 
+
+Pour le fichier ".env", récupérez les lignes présentes dans le fichier [.env.example](https://github.com/iaincollins/next-recipes/blob/master/.env.example) jusqu'à la fin de la ligne "NEXT_PUBLIC_EDAMAM_KEY". Et pour le fichier ".env.local", récupérez les deux dernières lignes.
+
