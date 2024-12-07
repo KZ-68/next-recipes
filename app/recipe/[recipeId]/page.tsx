@@ -259,22 +259,23 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
 
     const handleCommentSubmit = async(event: React.FormEvent) => {
         event.preventDefault()
+        if(isSignedIn) {
+            try {
+                await fetch(`/api/recipe/${params.recipeId}/comments`, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                })
 
-        try {
-            await fetch(`/api/recipe/${params.recipeId}/comments`, {
-                method: 'POST',
-                body: JSON.stringify(data),
-            })
-
-        } catch(error) {
-            console.error("Error submitting comment", error);
+            } catch(error) {
+                console.error("Error submitting comment", error);
+            }
         }
     }
 
     const handleSaveUserData = async() => {
         if(isSignedIn) {
             try {
-                const response = await fetch(`/api/private/favorites`, {
+                const response = await fetch(`/api/private/favorite`, {
                     method: 'POST',
                     body: JSON.stringify({
                         recipe : recipe
@@ -282,6 +283,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 })
                 if(response.ok) {
                     console.log("Favorite added !")
+                    console.log(response);
                 }
             } catch(error) {
                 console.error("Error submitting data", error);
@@ -443,6 +445,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 slidesPerView={2}
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
+                className="mySwiper"
                 >
                     {recipe?.steps && recipe.steps.length > 0 ? (
                         recipe?.steps.map(
@@ -450,7 +453,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                                 <SwiperSlide key={step.id}>
                                     <div className='flex flex-col gap-3 rounded-md mt-8 mb-14 px-24 py-24 xl:h-96 bg-slate-700 justify-center items-center' key={step.id}>
                                         <h3 className='text-xl text-orange-600' >{step.order}</h3>
-                                        <p text-white>{step.text}</p>
+                                        <p className='text-white'>{step.text}</p>
                                     </div>
                                 </SwiperSlide>
                             )
@@ -527,7 +530,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                 <div>
                     <hgroup className='flex flex-row gap-3'>
                         <LeafIcon className='text-orange-600' />
-                        <h2 className='text-xl text-orange-600 font-bold'>Nutritional Info</h2>
+                        <h2 className='mb-4 text-xl text-orange-600 font-bold'>Nutritional Info</h2>
                     </hgroup>
                     <div className='bg-slate-800 my-1 py-4 rounded-lg'>
                         <NutritionInfo 
@@ -551,7 +554,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
                             vitcUnit={nutritionState["totalNutrients"]["VITC"].unit}
                         />
                     
-                        <h3 className='my-5 mx-3 text-lg'>Macronutrients Breakdown</h3>
+                        <h3 className='my-5 mx-5 text-lg text-orange-600 font-bold'>Macronutrients Breakdown</h3>
                         <div className='flex flex-row justify-start'>
                             <div className='w-[1000px]'>
                                 <MacronutrientsChartDoughnut 
