@@ -275,7 +275,7 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
     const handleSaveUserData = async() => {
         if(isSignedIn) {
             try {
-                const response = await fetch(`/api/private/favorite`, {
+                const response = await fetch(`/api/private/favorite/add`, {
                     method: 'POST',
                     body: JSON.stringify({
                         recipe : recipe
