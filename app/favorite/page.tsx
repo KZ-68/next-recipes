@@ -39,7 +39,7 @@ const Favorite = () => {
                                         )}
                                         <div className='flex flex-col'>
                                             <h2 className='text-xl text-white my-4'>{recipe.title}</h2>
-                                            <Category text={recipe.category.name} key={recipe.category.id}/>
+                                            <Category text={recipe?.category?.name} key={recipe?.category?.id}/>
                                         </div>
                                     </div>
                                 </li>
