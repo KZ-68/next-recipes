@@ -1,9 +1,7 @@
 "use client"
-import Category from '@/components/Category'
+import FavoritesList from '@/components/FavoritesList'
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
 import { ListIcon } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const Favorite = () => {
@@ -27,23 +25,7 @@ const Favorite = () => {
                 <ul className='flex flex-col justify-start gap-6 rounded-lg py-8 px-6 bg-slate-600'>
                     {favoriteRecipes ?
                         favoriteRecipes.map((recipe: RecipeType) => (
-                            <Link href={`recipe/${recipe?.id}`} key={recipe?.id}>
-                                <li key={recipe?.id}> 
-                                    <p className='my-3 mx-4 text-xl'></p>
-                                    <div className='flex flex-row gap-6 py-8 px-6 my-4 ml-8 mr-20 rounded-md bg-slate-800'>
-                                        {recipe?.image_url == "" ? (
-                                            <Image className='rounded-md h-[200px]' src={`https://placehold.co/200x200/png?text=placeholder&font=roboto`} alt="Recipe Image" width="200" height="200"/>
-                                        ) : 
-                                        (
-                                            <Image className='rounded-md h-[200px]' src={`/images/${recipe?.image_url}`} alt="Recipe Image" width="200" height="200"/>
-                                        )}
-                                        <div className='flex flex-col'>
-                                            <h2 className='text-xl text-white my-4'>{recipe.title}</h2>
-                                            <Category text={recipe?.category?.name} key={recipe?.category?.id}/>
-                                        </div>
-                                    </div>
-                                </li>
-                            </Link>
+                            <FavoritesList key={recipe.id} recipe={recipe}/>
                         ))
                     : 
                     (
