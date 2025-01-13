@@ -8,10 +8,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
+import { useUser } from '@clerk/nextjs';
 
 const RecipePage = () => {
 
     const [recipes, setRecipes] = useState<RecipeType[]>([])
+    const {isSignedIn} = useUser();
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -25,7 +27,14 @@ const RecipePage = () => {
     return (
         <>
             <ThemeSwitcherScroll/>
-            <Button href='https://elan-formation.fr/accueil' label='Retour'/>
+            <nav>
+                <Button href='https://elan-formation.fr/accueil' label='Retour'/>
+                {isSignedIn ? 
+                    <Button href='/recipe/new' label='Ajouter nouvelle recette'/>
+                :  ("")
+                }
+            </nav>
+            
             <h1 className='text-4xl font-bold mt-4 mb-6'>Recipes</h1>
             
                 <Swiper
