@@ -1,9 +1,11 @@
 "use client"
+import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
 import React from 'react'
 
 const PrivacyPoliciesPage = () => {
     return(
         <div className='flex flex-col gap-4 my-6 mx-6'>
+            <ThemeSwitcherScroll/>
             <h1>Politique de Confidentialité de MyRecipes</h1>
 
             <h2>Date de mise à jour : [Date]</h2>
@@ -49,7 +51,7 @@ const PrivacyPoliciesPage = () => {
             
             <section>
                 <h3>4. Cookies</h3>
-                Nous utilisons des cookies pour améliorer votre expérience sur notre site. Les cookies sont de petits fichiers stockés sur votre appareil. Ils nous aident à analyser l&apos;utilisation du site et à personnaliser votre expérience. Vous pouvez gérer ou désactiver les cookies dans les paramètres de votre navigateur.
+                <p>Nous utilisons des cookies pour améliorer votre expérience sur notre site. Les cookies sont de petits fichiers stockés sur votre appareil. Ils nous aident à analyser votre utilisation du site et à personnaliser votre expérience. Vous pouvez gérer ou désactiver les cookies dans les paramètres de votre navigateur.</p>
             </section>
 
             <section>
