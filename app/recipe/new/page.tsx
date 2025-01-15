@@ -4,7 +4,7 @@ import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
 import { useFormState } from 'react-dom';
 
 async function newRecipeForm(prevState: { message: string }, formData:FormData) {
-    "use server";
+    
     const recipeTitle = formData.get("title") as string;
     const recipeInstruction = formData.get("instruction") as string;
     const recipeSlug = formData.get("slug") as string;
