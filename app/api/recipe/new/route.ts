@@ -14,7 +14,7 @@ export async function POST(req: NextRequest){
                 "slug": recipeBody.slug,
                 "rating": recipeBody.rating,
                 "image_url": recipeBody.image_url,
-                "image_url_cloud": recipeBody.image_url_cloud,
+                "image_url_cloud": "NULL",
                 "vegan": recipeBody.vegan,
                 "healthy": recipeBody.healthy,
             }
