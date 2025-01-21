@@ -7,7 +7,6 @@ export async function recipeFormAction(prevState: { success: boolean; message: s
     const recipeInstruction = formData.get("instruction") as string;
     const recipeSlug = formData.get("slug") as string;
     const recipeImageUrl = formData.get("image_url") as string;
-    const recipeImageUrlCloud = formData.get("image_url_cloud") as string;
     const recipeVegan = formData.get("vegan");
     const recipeHealthy = formData.get("healthy");
     const recipeRating = formData.get("rating");
@@ -17,7 +16,6 @@ export async function recipeFormAction(prevState: { success: boolean; message: s
         instruction: recipeInstruction, 
         slug: recipeSlug,
         image_url: recipeImageUrl,
-        image_url_cloud: recipeImageUrlCloud,
         vegan: recipeVegan,
         healthy: recipeHealthy,
         rating: recipeRating,
