@@ -22,8 +22,8 @@ const NewRecipePage = () => {
             <form className='flex flex-col gap-6 py-8 px-6 rounded-2xl' action={formAction} id="signup-form">
                 <label className='text-white text-2xl' htmlFor="title">Title : </label>
                 <input className='py-3 px-2 rounded-lg' type='text' name="recipe-title" id="recipe-title" placeholder="Add a title..." />
-                <label className='text-white text-2xl' htmlFor="text">Text : </label>
-                <input className='py-3 px-2 rounded-lg' type='text' name="recipe-instruction" id="recipe-instruction" placeholder="Add a text..." />
+                <label className='text-white text-2xl' htmlFor="text">Instruction : </label>
+                <input className='py-3 px-2 rounded-lg' type='text' name="recipe-instruction" id="recipe-instruction" placeholder="Add an instruction..." />
                 <label className='text-white text-2xl' htmlFor="title">Slug : </label>
                 <input className='py-3 px-2 rounded-lg' type='text' name="recipe-slug" id="recipe-slug" placeholder="Add a slug..." />
                 <label className='text-white text-2xl' htmlFor="duration">Duration : </label>
