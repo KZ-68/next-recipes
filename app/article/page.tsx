@@ -5,7 +5,8 @@ import React, { useEffect, useState } from 'react'
 import ArticleCard from '@/components/ArticleCard'
 import Link from 'next/link'
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
-
+import { useUser } from '@clerk/nextjs';
+import Button from '@/components/Button'
 
 const ArticlePage = () => {
 
@@ -25,6 +26,7 @@ const ArticlePage = () => {
     
     // VERSION 2 - HOOKS
     const [articles, setArticles] = useState<ArticleWithTagsAndComments[]>([])
+    const {isSignedIn} = useUser();
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -38,7 +40,13 @@ const ArticlePage = () => {
     return (
         <>
             <ThemeSwitcherScroll/>
-            <Link className="py-2 px-4 text-white bg-orange-700 rounded-md hover:bg-orange-600" href='https://elan-formation.fr/accueil'>Retour</Link>
+            <nav>
+                <Button href='https://elan-formation.fr/accueil' label='Return'/>
+                {isSignedIn ? 
+                    <Button href='/article/new' label='Add a new article'/>
+                :  ("")
+                }
+            </nav>
             <h1 className='text-4xl font-bold mt-8 mb-6'>Blog</h1>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                 {/* Liste des articles */}
