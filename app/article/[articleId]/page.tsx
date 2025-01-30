@@ -7,6 +7,7 @@ import { MessageSquareMoreIcon, NotebookIcon } from 'lucide-react';
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll';
 import Image from 'next/image';
 import { useUser } from '@clerk/nextjs'
+import Button from '@/components/Button';
 
 const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
 
@@ -53,6 +54,10 @@ const ArticleDetailPage = ({params} : {params : {articleId: string}}) => {
             {article &&
                 (
                 <div>
+                    {isSignedIn ? 
+                    <Button href={`/article/${article.id}/edit`} label='Edit article'/>
+                    :  ("")
+                    }
                     <ThemeSwitcherScroll/>
                     <section className='flex flex-col items-center w-full py-36 bg-slate-600 rounded-lg'>
                         <div className='my-5 flex flex-wrap'>
