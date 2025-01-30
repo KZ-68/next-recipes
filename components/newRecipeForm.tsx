@@ -1,6 +1,10 @@
 "use server"
+import { auth } from '@clerk/nextjs/server'
 
 export async function recipeFormAction(prevState: { success: boolean; message: string; } | Promise<{ success: boolean; message: string; } | null> | null, formData:FormData) {
+    const { userId } = await auth()
+    
+    if (!userId) return { success: false, message: 'User not authentified'};
     prevState = null;
     
     const recipeTitle = formData.get("title") as string;
