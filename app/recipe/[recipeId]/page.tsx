@@ -16,6 +16,7 @@ import { formatDate } from '@/lib/utils'
 import NutritionInfo from '@/components/NutritionInfo'
 import MacronutrientsChartDoughnut from '@/components/MacronutrientsChartDoughnut'
 import ThemeSwitcherScroll from '@/components/ThemeSwitcherScroll'
+import Button from '@/components/Button'
   
 const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: string}}) => {
 
@@ -340,6 +341,10 @@ const RecipeDetailPage = ({params} : {params : {recipeId: string, categoryId: st
     }, [params.recipeId, params.categoryId])
     return (
         <div id='recipe-page' className='mx-8'>
+            {isSignedIn ? 
+            <Button href={`/recipe/${recipe?.id}/edit`} label='Edit recipe'/>
+            :  ("")
+            }
             <ThemeSwitcherScroll/>
             <section className='flex xl:flex-row max-[768px]:items-center flex-col-reverse mx-5 '>
                 <aside className='flex flex-col flex-wrap rounded-l-md py-16 px-32 md:px-56 bg-slate-700 justify-center items-center'>
