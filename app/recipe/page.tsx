@@ -28,9 +28,9 @@ const RecipePage = () => {
         <>
             <ThemeSwitcherScroll/>
             <nav>
-                <Button href='https://elan-formation.fr/accueil' label='Retour'/>
+                <Button href='https://elan-formation.fr/accueil' label='Return'/>
                 {isSignedIn ? 
-                    <Button href='/recipe/new' label='Ajouter nouvelle recette'/>
+                    <Button href='/recipe/new' label='Add a new recipe'/>
                 :  ("")
                 }
             </nav>
