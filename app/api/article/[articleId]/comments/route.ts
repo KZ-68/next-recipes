@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 export async function GET(req: Request, { params }: { params: { articleId: string } }) {
     try {
@@ -23,6 +24,10 @@ export async function GET(req: Request, { params }: { params: { articleId: strin
     }
 }
 
+const postCommentArticleSchema = z.object({
+    text: z.string().nonempty({ message: "Text is required" }),
+});
+
 export async function POST(req: NextRequest, { params }: { params: { articleId: string } }) {
 
     const currentUserData = await currentUser()
@@ -30,10 +35,14 @@ export async function POST(req: NextRequest, { params }: { params: { articleId: 
     try {
         const { articleId } = params;
         const body = await req.json();
+        const { text } = body;
+
+        const commentArticleData = { text };
+        postCommentArticleSchema.parse(commentArticleData);
     
         const newComment = await db.commentBlog.create({
           "data": {
-            "text": body.text,
+            "text": commentArticleData.text,
             "articleId": articleId,
             "user": currentUserData?.username? currentUserData.username : ''
           }
