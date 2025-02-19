@@ -26,6 +26,7 @@ export async function GET(req: Request, { params }: { params: { articleId: strin
 
 const postCommentArticleSchema = z.object({
     text: z.string().nonempty({ message: "Text is required" }),
+    articleId: z.string().nonempty({message:"Article ID can't be empty"})
 });
 
 export async function POST(req: NextRequest, { params }: { params: { articleId: string } }) {
